@@ -1,0 +1,12 @@
+
+.sideProfile {
+  position:fixed;
+  top:76px !important;
+  right:25px !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .sideProfile {
+			display: none;
+		}
+}

@@ -1,0 +1,148 @@
+<html>
+<head>
+	<style>
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges;
+}
+ 
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+ 
+.loading {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+ 
+.circle {
+    fill: #222;
+}
+body{
+
+}
+</style>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.1.6/d3.min.js"></script>
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
+    <script type="text/javascript" src="jquery.tipsy.js"></script>
+<script type="text/javascript">
+window.onload = function()
+	{
+		var w = 900;
+    var h = 900;
+    var pad = 25;
+    var left_pad = 45;
+
+    var svg = d3.select('#medicaldata')
+    .append("svg")
+    .attr("width",w)
+    .attr("height",h);
+ var x = d3.scale.linear().domain([0, 60]).range([left_pad, w-pad]),
+    y = d3.scale.linear().domain([58, 0]).range([pad, h-pad*2]);
+
+    var xAxis = d3.svg.axis().scale(x).orient("bottom");
+    var yAxis = d3.svg.axis().scale(y).orient("left");
+
+    svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0, "+(h-pad)+")")
+    .call(xAxis);
+ 
+svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate("+(left_pad-pad)+", 0)")
+    .call(yAxis);
+svg.append("text")
+    .attr("class", "loading")
+    .text("Loading ...")
+    .attr("x", function () { return w/2; })
+    .attr("y", function () { return h/2-5; });
+
+d3.csv("example.csv", function(d) {
+//	if(d.dob!=undefined){
+	s=d.dob;
+	s=s.split('.');
+	    var x = s[2];
+	if(s[2]>11)
+	{
+		
+		s[2]= "19"+x;
+	}
+	else
+	{
+		s[2] = "20"+x;
+	}
+
+	
+     var a = +new Date(s[2], s[1], s[0]);
+	var ag = ~~((Date.now() - a) / (31557600000));
+    var ag1 = Math.abs(ag);
+	if(d.sex=='M')
+	{
+		var s = "steelblue";
+
+
+	}
+	else
+	{
+		var s = "red";
+	}
+ var g= {
+  	a: +a,
+   age: +ag1, 
+    name: d.name,
+    s: s,
+    k:d.sex
+  };
+  
+  return g;
+//}
+}, function(error, rows) {
+  console.log(rows);
+  svg.selectAll(".loading").remove();
+ var k = svg.selectAll("circle");
+        k.data(rows)
+        .enter()
+        .append("circle")
+            .style("fill", function(d1) {
+                    return (d1["s"]);
+               })
+
+        .attr("class", "circle")
+        .attr("cx", function(d1) {
+                    return (d1["age"]*15);
+               })
+        .attr("cy", function(d1) {
+                    return ((60-d1["age"])*15);
+               })
+
+        .transition()
+        .duration(100)
+        .attr("r", function(d1) {
+                    return (d1["age"]);
+               });
+
+      $('svg circle').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          var d = this.__data__, c = d.name;c1=d.age;c2=d.k;
+          return 'My name is <span style="color:black">' + c + '<br/>gender:'+c2+'</span>'; 
+        }
+      });
+
+
+});
+};
+
+</script>
+</head>
+<body>
+<div id="medicaldata"></div>
+
+
+</body>
+</html>

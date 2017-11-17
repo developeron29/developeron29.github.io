@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<link rel="icon" href="./narula-ayush.png" type="image/x-icon">
+
+<title>ayushnarula.com</title>
+
+<xmp theme="superhero" style="display:none;">
+<div style="position:fixed;top:10px;right:30px;z-index:1000">
+<a href="./index.html"><button type="button" class="btn btn-link btn-lg"> Home</button></a>
+
+
+</div>
+
+# A PLSQL parser built using ANTLR 4 
+
+[Code](https://github.com/developeron29/PLSQLParser)
+
+## Setup
+
+To install ANTLR 4, if you don't have it already
+
+```
+
+cd /usr/local/lib
+wget http://antlr.org/download/antlr-4.2-complete.jar
+
+```
+
+### Note - Update it to the latest ANTLR, as of when you use it [Reference](http://www.antlr.org/)
+
+```
+ export CLASSPATH=".:/usr/local/lib/antlr-4.2-complete.jar:$CLASSPATH"
+ alias antlr4='java -jar /usr/local/lib/antlr-4.2-complete.jar'
+ alias grun='java org.antlr.v4.runtime.misc.TestRig'
+ 
+ grun PLSQL plsql_block -gui
+ <Your PLSQL Code>
+ Example:
+ declare
+ salary number(6);
+ ^D
+ 
+ ```
+
+</xmp>
+<br/>
+
+<div style="position:fixed;bottom:40px;right:25px;">
+  &copy; Ayush Narula 2013-2017
+</div>
+
+<script src="./v/0.2/strapdown.js"></script>
+</html>

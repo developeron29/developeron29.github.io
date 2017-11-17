@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<link rel="icon" href="./narula-ayush.png" type="image/x-icon">
+
+<title>ayushnarula.com</title>
+
+<xmp theme="superhero" style="display:none;">
+<div style="position:fixed;top:10px;right:30px;z-index:1000">
+<a href="./index.html"><button type="button" class="btn btn-link btn-lg"> Home</button></a>
+
+
+</div>
+#The Meteoric experience- My experience with Meteor.js
+
+
+### [Link to slides](http://www.slideshare.net/magicalayush/osdc-28334341)
+
+Meteor.js is the new kid in the town, but don't consider it as some less powerful. Here are some reasons why
+
+* Meteor.js is the only open source project that has been funded by a whooping $11 million ,so their developers have some more time to focus on their real work
+
+* Meteor.js uses one language, only javascript both on the client and server and after ruby on rails and django javascript on node.js is considered to be the next big developer's help in making web application easely.
+
+* And there is a difference between website and a web application as in ancient years(In the world of web anything is ancient if above 5 years as its one of the fastest changing things) there was a thick server(all business logic was on the server side) an a thin client while now in webapps there is a thick client( as most of us are using some great web browsers -like chrome,safari,firefox so more application logic is put on the client side than the server . Some great examples of website like these are -Trello and Medium.The ease of use on adapting to this methology canbe easily seen .The user experience is just astounding.
+
+* Meteor.js is great for front-end developers as it uses mongo.db on the server and minimongo on the client(yes a database on the client) and their is a complete synchronization between the client and the server, so any change in the database on the server or the client is immediately reflected on the server and beleive me its my personal experience that it makes developing reactive web application just a breeze.
+
+##A quick introduction to meteor
+
+To start with meteor 
+```shell
+npm install meteor
+meteor update
+#Meteorite is a meteor version manager and package manager .Find it here -https://github.com/oortcloud/meteorite
+ 
+meteor create myfirstapp
+ 
+cd myfirstapp
+ 
+meteor
+```
+Install Meteor Package manager-  Meteorite.
+
+
+```shell
+
+##Using npm with meteor
+#Install meteroite
+ 
+npm install -g meteorite 
+ 
+#Install npm smart package from atmosphere, 
+ 
+mrt add npm 
+ 
+#npm is a node.js package manager.
+```
+
+The myfirtapp folder will contain three files -one html,css and javascript 
+Your html file will look like 
+```html
+<head>
+  <title>testapp</title>
+</head>
+ 
+<body>
+  {{> hello}}
+</body>
+ 
+<template name="hello">
+  <h1>Hello World!</h1>
+  {{greeting}}
+  <input type="button" value="Click" />
+</template>
+```
+
+
+Now this uses Handlebars templating ,by default. Your js file will look like  
+
+```javascript
+collection = new Meteor.Collection('collection');
+if (Meteor.isClient) {
+  Template.hello.greeting = function () {
+    return "Welcome to testapp.";
+  };
+ 
+  Template.hello.events({
+    'click input' : function () {
+      // template data, if any, is available in 'this'
+      if (typeof console !== 'undefined')
+        console.log("You pressed the button");
+    }
+  });
+}
+ 
+if (Meteor.isServer) {
+  Meteor.startup(function () {
+    // code to run on server at startup
+  });
+}
+```
+
+so there is one javascript file which contains both client and server code The first line in the code creates a mongo.db collection. (Both on the server and the client) The behavior of `{{greeting}}` in the html file is controlled by `Template .hello.greeting `in the js file and any events like click are controlled by `Template.hello.events ` in the js file.
+There is a reactivity in the code between the code on the client and the server as any change made to the mongodb collection on the client using any input taking by the user changes the database on the server as well and the change is reactive .
+
+I'l discusss more about meteor in my next post
+
+</xmp>
+<br/>
+
+<div style="position:fixed;bottom:40px;right:25px;">
+  &copy; Ayush Narula 2013-2017
+</div>
+
+<script src="./v/0.2/strapdown.js"></script>
+</html>
