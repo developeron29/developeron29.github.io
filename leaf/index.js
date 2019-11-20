@@ -1,5 +1,5 @@
 /* Map */
-var map = L.map('mapid').setView([47.649019, -122.347977], 12);
+var map = L.map('mapid').setView([47.649019, -122.347977], 10);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
@@ -130,7 +130,7 @@ function showInfo(data, tabletop) {
                 if(data[t]["committee"].localeCompare("CDWAC") == 0) {
                     // Marker
                     var marker = L.marker([data[t]["latitude"], data[t]["longitude"]], {icon: getIcon(data[t]["category"])}).addTo(cdwac_layerGroup);
-                    marker.bindPopup(data[t]["neighborhood"] + " \n " + data[t]["source"] + " \n " + data[t]["committee"] + " \n " + data[t]["name"]).openPopup();
+                    marker.bindPopup("Neighborhood: " + data[t]["neighborhood"] + " <br> " + "Source: " + data[t]["source"] + " <br> " + "Committee: " + data[t]["committee"] + " <br> " + "Name: " + data[t]["name"]).openPopup();
                     // Check source
                     sourceObj[data[t]["source"]] = 1;
                 }
@@ -150,7 +150,7 @@ function showInfo(data, tabletop) {
             for(let t = 0; t < data.length; t++) {
                 if(data[t]["committee"].localeCompare("SWAC") == 0) {
                     var marker = L.marker([data[t]["latitude"], data[t]["longitude"]], {icon: getIcon(data[t]["category"])}).addTo(swac_layerGroup);
-                    marker.bindPopup(data[t]["neighborhood"] + " \n " + data[t]["source"] + " \n " + data[t]["committee"] + " \n " + data[t]["name"]).openPopup();
+                    marker.bindPopup("Neighborhood: " + data[t]["neighborhood"] + " <br> " + "Source: " + data[t]["source"] + " <br> " + "Committee: " + data[t]["committee"] + " <br> " + "Name: " + data[t]["name"]).openPopup();
                     // Check source
                     sourceObj[data[t]["source"]] = 1;
                 }
@@ -170,7 +170,7 @@ function showInfo(data, tabletop) {
             for(let t = 0; t < data.length; t++) {
                 if(data[t]["committee"].localeCompare("WSAC") == 0) {
                     var marker = L.marker([data[t]["latitude"], data[t]["longitude"]], {icon: getIcon(data[t]["category"])}).addTo(wsac_layerGroup);
-                    marker.bindPopup(data[t]["neighborhood"] + " \n " + data[t]["source"] + " \n " + data[t]["committee"] + " \n " + data[t]["name"]).openPopup();
+                    marker.bindPopup("Neighborhood: " + data[t]["neighborhood"] + " <br> " + "Source: " + data[t]["source"] + " <br> " + "Committee: " + data[t]["committee"] + " <br> " + "Name: " + data[t]["name"]).openPopup();
                     // Check source
                     sourceObj[data[t]["source"]] = 1;             }
             }
@@ -188,7 +188,7 @@ function showInfo(data, tabletop) {
         for(let t = 0; t < data.length; t++) {
             if(data[t]["alum"].localeCompare("y") == 0) {
                 var marker = L.marker([data[t]["latitude"], data[t]["longitude"]], {icon: getIcon(data[t]["category"])}).addTo(alum_layerGroup);
-                marker.bindPopup(data[t]["neighborhood"] + " \n " + data[t]["source"] + " \n " + data[t]["committee"] + " \n " + data[t]["name"]).openPopup();
+                marker.bindPopup("Neighborhood: " + data[t]["neighborhood"] + " <br> " + "Source: " + data[t]["source"] + " <br> " + "Committee: " + data[t]["committee"] + " <br> " + "Name: " + data[t]["name"]).openPopup();
                 // Check source
                 sourceObj[data[t]["source"]] = 1;
             }
