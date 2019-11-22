@@ -9,11 +9,16 @@
 }
 
 #boxStyle {
-    padding: 12px;
     width: 100%;
+    border: 1px solid gray;
+    padding: 10px;
 }
 
 #sourcePara {
     text-align: center;
     width: 100%;
+}
+
+#chart {
+    margin-left: -25px;;
 }
