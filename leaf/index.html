@@ -9,6 +9,7 @@
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
+        <script src="./leaflet-heat.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <!-- Tabletop allows access of spreadsheet remotely -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
@@ -19,20 +20,24 @@
             <h2>COMMITEE Exercise(2019)</h2>
             <div class="row">
                 <div class="col-md-7">
+                    <div class="custom-control custom-switch" style="float: right;">
+                        <input type="checkbox" class="custom-control-input" id="heatmap-toggle">
+                        <label class="custom-control-label" for="heatmap-toggle">Heatmap</label>
+                    </div> <br> <br>
                     <div id="mapid" style="height: 450px;"></div> <br>
                     <div class="marker-color" id="marker-color" style="display:inline-block;font-size: 11px;">
-                        <span style="background-color:#0000FF;">&nbsp;</span> <span>To School</span> 
-                        <span style="background-color:#7FFF00;">&nbsp;</span> <span>To Work</span> 
-                        <span style="background-color:#DC143C;">&nbsp;</span> <span>To Volunteer</span> 
-                        <span style="background-color:#FF8C00;">&nbsp;</span> <span>To gather in Faith/Spiritual Communities</span> 
-                        <span style="background-color:#FF1493;">&nbsp;</span> <span>To buy groceries, to eat/drink, to shop</span> 
-                        <span style="background-color:#FF00FF;">&nbsp;</span> <span>For building community</span> 
-                        <span style="background-color:#FFD700;">&nbsp;</span> <span>For healthcare</span> 
-                        <span style="background-color:#ADFF2F;">&nbsp;</span> <span>For Arts</span> 
-                        <span style="background-color:#F08080;">&nbsp;</span> <span>For Recreation</span> 
-                        <span style="background-color:#20B2AA;">&nbsp;</span> <span>Electronic Communities</span> 
-                        <span style="background-color:#40E0D0;">&nbsp;</span> <span>Other</span> 
-                        <span style="background-color:#00FFFF;">&nbsp;</span> <span>Default</span> 
+                        <span style="white-space: nowrap;"><span style="background-color:#0000FF;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>To School</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#7FFF00;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>To Work</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#DC143C;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>To Volunteer</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#FF8C00;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>To gather in Faith/Spiritual Communities</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#FF1493;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>To buy groceries, to eat/drink, to shop</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#FF00FF;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>For building community</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#FFD700;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>For healthcare</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#ADFF2F;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>For Arts</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#F08080;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>For Recreation</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#20B2AA;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>Electronic Communities</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#40E0D0;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>Other</span> </span>
+                        <span style="white-space: nowrap;"><span style="background-color:#00FFFF;display: inline-block; width: 13px;height:13px;">&nbsp;</span> <span>Default</span> </span>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -63,7 +68,7 @@
                         <div class="card" id="boxStyle">
                             <h4 id="sourcePara">0</h4>
                     </div><br>
-                    <h5>Graph of Neighbor</h5> 
+                    <h5>Graph of Neighborhoods</h5> 
                     <div id="boxStyle">
                             <div id="chart" style="width: 160px;"></div>
                     </div>
