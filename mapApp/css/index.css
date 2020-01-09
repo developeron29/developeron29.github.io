@@ -32,6 +32,16 @@
     display: inline-block;
 }
 
+#acresBound {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#gallonsBound {
+    overflow: auto;
+    white-space: nowrap;
+}
+
 #sbheadfont11 {
     font-size: 3.43em;
     color: #4c4c4c;
