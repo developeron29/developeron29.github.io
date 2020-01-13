@@ -1,42 +1,16 @@
+var mymap = ''; //globalmap variable
+var globalColorSet1 = ["#4F81BC", "#C0504E", "#9BBB58", "#23BFAA", "#8064A1", "#4AACC5", "#F79647", "#7F6084", "#77A033", "#33558B", "#E59566"]; // Colorset1 default colors
+
 window.onload = function () {
     // set map height
     var newHeight = $(window).height();
-    $("#chartContainer").height(newHeight - $("#totalboxcardcontainer").height() - $("#twoboxcontainer").height()  - $("#fonthead1").height()- 120);
-/*
-    var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        theme: "light2", // "light1", "light2", "dark1", "dark2"
-        title:{
-            text: "Top Oil Reserves"
-        },
-        axisY: {
-            title: "Reserves(MMbbl)"
-        },
-        data: [{        
-            type: "column",  
-            showInLegend: true, 
-            legendMarkerColor: "grey",
-            legendText: "MMbbl = one million barrels",
-            dataPoints: [      
-                { y: 300878, label: "Venezuela" },
-                { y: 266455,  label: "Saudi" },
-                { y: 169709,  label: "Canada" },
-                { y: 158400,  label: "Iran" },
-                { y: 142503,  label: "Iraq" },
-                { y: 101500, label: "Kuwait" },
-                { y: 97800,  label: "UAE" },
-                { y: 80000,  label: "Russia" }
-            ]
-        }]
-    });
-    chart.render();
-    */
+    $("#chartContainer").height(newHeight - $("#totalboxcardcontainer").height() - $("#twoboxcontainer").height()  - $("#fonthead1").height()- 75);
+    
     // set chart height
-    this.console.log(document.documentElement.clientHeight);
     var newHeight = $(window).height();
     $("#mapid").height(newHeight - 15);
 
-    var mymap = L.map('mapid').setView([47.6131746,-122.4821483], 10);
+    mymap = L.map('mapid').setView([47.6131746,-122.4821483], 13); //Seattle
     var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -53,11 +27,46 @@ window.onload = function () {
         Tabletop.init( { key: publicSpreadsheetUrl,
                          callback: showInfo,
                          simpleSheet: true } )
+        
       }
     
       var ism = 0, //Impervious Surface Managed
           tgm = 0, //Total Gallons Managed
             tof = []; //Type of Facility
+
+      function getLtLg(addr) {
+        // Check for '/', 'to', 'and'
+        if(addr.includes(' / ')) {
+          addr = addr.split(' / ')[0];
+        }
+        if(addr.includes(' to ')) {
+          addr = addr.split(' to ')[0];
+        }
+        if(addr.includes(' and ')) {
+          addr = addr.split(' and ')[0];
+        }
+        addr = addr + ' seattle'; // restrict to Seattle
+        //Get Latitude Longitude
+        return jQuery.ajax({
+          url: "https://nominatim.openstreetmap.org/search/" + encodeURI(addr) + "?format=json&limit=1",
+          success: function(result) {
+            console.log(addr, '\n', result, '\n')
+            return result;
+          },
+          async: false
+        });
+      }
+
+      function getImg(lat,lon) {
+        return jQuery.ajax({
+          url: "https://a.mapillary.com/v3/images?client_id=bzUyWlNoYmtvVjVSRjhSMVZrd3QyZzozZTUxZTE4YjEzM2U3NGMw&closeto=" + lon + "," + lat + "&radius=200",
+          success: function(result) {
+            return result;
+          },
+          async: false
+        });
+      }
+
       function showInfo(data, tabletop) {
         console.log(data);
         $("#sbheadfont").text(data.length); // total projects
@@ -66,67 +75,62 @@ window.onload = function () {
             tgm = parseInt(tgm) + parseInt(element["Total Gallons Managed"]);
             console.log(element["Type of Facility"]);
             tof[element["Type of Facility"]] = isNaN(tof[element["Type of Facility"]]) ? 1 : tof[element["Type of Facility"]] = tof[element["Type of Facility"]] + 1;
+
         });
         $("#sbheadfont1").text(ism);
         $("#sbheadfont11").text(tgm);
         console.log(tof);
 
-        // draw chart
-        var options = {
-            series: [{
-              data: Object.values(tof)
-            }],
-            chart: {
-              type: 'bar',
-              height: 380
-            },
-            plotOptions: {
-              bar: {
-                barHeight: '100%',
-                distributed: true,
-                horizontal: true,
+        var dataPointsArr = [];
+        Object.keys(tof).forEach(elem => {
+          dataPointsArr.push({
+            label: elem,
+            y: tof[elem]
+          });
+        });
 
-              }
-            },
-            colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-              '#f48024', '#69d2e7'],
-            xaxis: {
-              categories: Object.keys(tof)
-            },
-            yaxis: {
-              labels: {
-                show: true
-              }
-            },
-            title: {
-                text: 'Project by GSI Type',
-                align: 'center',
-                floating: true
-            },
-            subtitle: {
-                text: '(Click graph to filter)',
-                align: 'center',
-            },
-            tooltip: {
-              theme: 'dark',
-              x: {
-                show: false
-              },
-              y: {
-                title: {
-                  formatter: function () {
-                    return ''
-                  }
-                }
-              }
-            },
-            legend: {
-                show: false
-              }
-        }
-        ;
-        let myChart = new ApexCharts(document.querySelector("#chartContainer"), options);
-        myChart.render();
+        // Render Chart
+        var chart = new CanvasJS.Chart("chartContainer", {
+          theme: "light1", // "light2", "dark1", "dark2"
+          animationEnabled: true, // change to true		
+          data: [
+            {
+              // Change type to "bar", "area", "spline", "pie",etc.
+              type: "column",
+              dataPoints: dataPointsArr
+            }
+          ]
+        });
+        chart.render();
+
+        var tofKeys = Object.keys(tof);
+
+        data.forEach(elem => {
+          //Render map markers
+          var place = getLtLg(elem["Address"])["responseJSON"];
+          if (place && place.length > 0) {
+            console.log('col', globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])])
+            var circle = L.circle([place[0]["lat"], place[0]["lon"]], {
+              color: 'yellow',
+              fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
+              fillOpacity: 1.0,
+              radius: 50
+            }).addTo(mymap);
+            //get nearest street images
+            var imgID = getImg(place[0]["lat"],place[0]["lon"])["responseJSON"];
+            
+            imgID = imgID["features"].length > 0 ? imgID["features"][0]["properties"]["key"] : 0;
+
+            var imgUrl = imgID == 0 ? "https://dummyimage.com/640x4:3/" :  "https://images.mapillary.com/" + imgID + "/thumb-640.jpg"
+            
+            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br>Comments:  " + elem["Comments"] + " <br> <img src='" + imgUrl + "' width='300' height='200' /> ").openPopup();
+          } else {
+            console.log('no place');
+          }
+
+        });
+
+        $("#cover").hide();
     }
       
       window.addEventListener('DOMContentLoaded', ttinit);
