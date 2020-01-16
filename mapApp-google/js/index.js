@@ -14,9 +14,12 @@ window.onload = function () {
   
     this.console.log('h1', newHeight, document.getElementById("padrightblock").offsetHeight,  document.getElementById("chartContainer").offsetHeight, newHeight - document.getElementById("padrightblock").offsetHeight);
   
-    document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight - 15) + "px";
+    this.setTimeout(function() {
 
-    document.getElementById("chartContainer").style.height = (document.getElementById("paddlow").offsetHeight - document.getElementById("fonthead1").offsetHeight - 25) + "px"
+      document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight - 15) + "px";
+
+      document.getElementById("chartContainer").style.height = (document.getElementById("paddlow").offsetHeight - document.getElementById("fonthead1").offsetHeight - 25) + "px";
+    }, 500);
 
     //;
     this.console.log((newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight  - document.getElementById('fonthead1').offsetHeight - 30) + "px", document.getElementById("chartContainer").offsetHeight);
