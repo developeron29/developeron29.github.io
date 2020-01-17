@@ -1,7 +1,9 @@
 var mymap = ''; //globalmap variable
 var globalColorSet1 = ["#4F81BC", "#C0504E", "#9BBB58", "#23BFAA", "#8064A1", "#4AACC5", "#F79647", "#7F6084", "#77A033", "#33558B", "#E59566"]; // Colorset1 default colors
+var markerGroup = '';
 
 window.onload = function () {
+    
     // set map height
     var win = window,
     doc = document,
@@ -12,8 +14,6 @@ window.onload = function () {
 
     var newHeight = y;
   
-    this.console.log('h1', newHeight, document.getElementById("padrightblock").offsetHeight,  document.getElementById("chartContainer").offsetHeight, newHeight - document.getElementById("padrightblock").offsetHeight);
-  
     this.setTimeout(function() {
 
       document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight - 15) + "px";
@@ -21,11 +21,7 @@ window.onload = function () {
       document.getElementById("chartContainer").style.height = (document.getElementById("paddlow").offsetHeight - document.getElementById("fonthead1").offsetHeight - 25) + "px";
     }, 500);
 
-    //;
-    this.console.log((newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight  - document.getElementById('fonthead1').offsetHeight - 30) + "px", document.getElementById("chartContainer").offsetHeight);
     //document.getElementById("chartContainer").style.height  = document.getElementById("chartContainer").style.height + (newHeight - document.getElementById("padrightblock").offsetHeight);
-
-    this.console.log( 'heights', newHeight, document.getElementById("paddlow").offsetHeight );
 
     // set chart height
     $("#mapid").height(newHeight - 15);
@@ -37,6 +33,7 @@ window.onload = function () {
         maxZoom: 19
     });
     CartoDB_DarkMatter.addTo(mymap);
+    markerGroup = L.layerGroup().addTo(mymap);
 
 }
 
@@ -70,7 +67,6 @@ window.onload = function () {
         return jQuery.ajax({
           url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr.replace(' ', '+') + "&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s",
           success: function(result) {
-            console.log(addr, '\n', result, '\n')
             return result;
           },
           async: false
@@ -78,18 +74,15 @@ window.onload = function () {
       }
 
       function showInfo(data, tabletop) {
-        console.log(data);
         $("#sbheadfont").text(data.length); // total projects
         data.forEach(element => {
             ism = parseInt(ism) + parseInt(element["Impervious Surface Managed"]); 
             tgm = parseInt(tgm) + parseInt(element["Total Gallons Managed"]);
-            console.log(element["Type of Facility"]);
             tof[element["Type of Facility"]] = isNaN(tof[element["Type of Facility"]]) ? 1 : tof[element["Type of Facility"]] = tof[element["Type of Facility"]] + 1;
 
         });
         $("#sbheadfont1").text(ism);
         $("#sbheadfont11").text(tgm);
-        console.log(tof);
 
         var dataPointsArr = [];
         Object.keys(tof).forEach(elem => {
@@ -107,6 +100,9 @@ window.onload = function () {
             {
               // Change type to "bar", "area", "spline", "pie",etc.
               type: "column",
+              click: function(e){ 
+                console.log(  e, e["dataPoint"]["label"] );
+              },
               dataPoints: dataPointsArr
             }
           ]
@@ -131,37 +127,18 @@ window.onload = function () {
               fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
               fillOpacity: 1.0,
               radius: 50
-            }).addTo(mymap);
+            }).addTo(markerGroup);
             
-            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br>Comments:  " + elem["Comments"] + " <br> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> ").openPopup();
+            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ").openPopup();
 
           } else {
             console.log("no place");
+            $("#baseError").show();
+            setTimeout(function() {
+              $("#baseError").hide();
+            }, 2000);
           }
 
-          console.log('place', place);
-
-          /*
-          if (place && place.length > 0) {
-            console.log('col', globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])])
-            var circle = L.circle([place[0]["lat"], place[0]["lon"]], {
-              color: 'yellow',
-              fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
-              fillOpacity: 1.0,
-              radius: 50
-            }).addTo(mymap);
-            //get nearest street images
-            var imgID = getImg(place[0]["lat"],place[0]["lon"])["responseJSON"];
-            
-            imgID = imgID["features"].length > 0 ? imgID["features"][0]["properties"]["key"] : 0;
-
-            var imgUrl = imgID == 0 ? "https://dummyimage.com/640x4:3/" :  "https://images.mapillary.com/" + imgID + "/thumb-640.jpg"
-            
-            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br>Comments:  " + elem["Comments"] + " <br> <img src='" + imgUrl + "' width='300' height='200' /> ").openPopup();
-          } else {
-            console.log('no place');
-          }
-*/
         });
 
         $("#cover").hide();
