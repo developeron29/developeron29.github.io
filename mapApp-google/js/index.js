@@ -29,13 +29,36 @@ window.onload = function () {
 
       document.getElementById("mapid").style.height = (newHeight - 20) + "px" ;
 
-      mymap = L.map('mapid').setView([47.6131746,-122.4821483], 13); //Seattle
       var CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: 'abcd',
-          maxZoom: 19
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
       });
-      CartoDB_DarkMatter.addTo(mymap);
+
+      var CartoDB_Voyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      });
+
+      var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+      });
+
+      mymap = L.map('mapid', {
+        center: [47.6131746,-122.4821483], // Seattle
+        zoom: 13,
+        layers: [CartoDB_Voyager, Esri_WorldImagery, CartoDB_DarkMatter]
+      });
+
+      var baseMaps = {
+        "Voyager": CartoDB_Voyager,
+        "World Imagery": Esri_WorldImagery,
+        "Dark Matter": CartoDB_DarkMatter
+      };
+
+      L.control.layers(baseMaps).addTo(mymap);
+
       markerGroup = L.layerGroup().addTo(mymap);
 
     }, 500);
