@@ -238,7 +238,7 @@ window.onload = function () {
             $("#baseError").show();
             setTimeout(function() {
               $("#baseError").hide();
-            }, 2000);
+            }, 30000);
           }
 
         });
