@@ -21,7 +21,7 @@ window.onload = function () {
     // set dimensions of divs after load
     this.setTimeout(function() {
 
-      document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight - 20) + "px";
+      document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - document.getElementById('twoboxcontainer').offsetHeight - 25) + "px";
 
       document.getElementById("chartContainer").style.height = (document.getElementById("paddlow").offsetHeight - document.getElementById("fonthead1").offsetHeight - 25) + "px";
 
@@ -78,7 +78,7 @@ window.onload = function () {
     
       var ism = 0, //Impervious Surface Managed
           tgm = 0, //Total Gallons Managed
-            tof = []; //Type of Facility
+          tof = []; //Type of Facility
 
       // Fetch latitude longitude from the geocoding library
       function getLtLg(addr) {
@@ -135,8 +135,8 @@ window.onload = function () {
         filteredList.forEach(elem => {
           //Render map markers
           var place = getLtLg(elem["Address"])["responseJSON"];
-          
-          if(place && place.results && place.results.length > 0) {
+
+          if(place && place.results && place.results.length > 0 && (place["results"][0]["geometry"]["location_type"]).localeCompare("APPROXIMATE") !== 0) { // If location is approximate, then localtion lat long are not an exact find
                       
             var lat = place["results"][0]["geometry"]["location"]["lat"],
             long = place["results"][0]["geometry"]["location"]["lng"];
@@ -188,16 +188,21 @@ window.onload = function () {
         // Render Chart
         var chart = new CanvasJS.Chart("chartContainer", {
           theme: "light1", // "light2", "dark1", "dark2"
-          animationEnabled: true, // change to true		
+          animationEnabled: true, // set to true		
+          axisX:{
+            labelMaxWidth: 70, //
+			      labelWrap: true,   // so that the x-axis labels stay straight
+			      interval: 1, //
+          },
           data: [
             {
-              // Change type to "bar", "area", "spline", "pie",etc.
+              // Column for column type graphs
               type: "column",
               click: function(e){ 
                 mapPlot(e["dataPoint"]["label"]);
               },
               mousemove: function(e) {
-                document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer";
+                document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer"; // change cursor to pointer on mousemove
               },
               dataPoints: dataPointsArr
             }
@@ -211,7 +216,7 @@ window.onload = function () {
           //Render map markers
           var place = getLtLg(elem["Address"])["responseJSON"];
           
-          if(place && place.results && place.results.length > 0) {
+          if(place && place.results && place.results.length > 0 && (place["results"][0]["geometry"]["location_type"]).localeCompare("APPROXIMATE") !== 0) {
                       
             var lat = place["results"][0]["geometry"]["location"]["lat"],
             long = place["results"][0]["geometry"]["location"]["lng"];
