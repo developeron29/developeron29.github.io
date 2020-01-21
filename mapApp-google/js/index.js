@@ -148,16 +148,19 @@ window.onload = function () {
               opacity: 0.5,
               fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
               fillOpacity: 1.0,
-              radius: 50
+              radius: 220
             }).addTo(markerGroup);
             
             // add popup to circular popups
             circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br># of Swales: " + elem["# of Swales"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
 
           } else {
-            $("#baseError").show();
+            var errorx = document.getElementById("baseError")
             setTimeout(function() {
-              $("#baseError").hide();
+              errorx.style.display = "block";
+            });
+            setTimeout(function() {
+              errorx.style.display = "none";
             }, 30000);
           }
 
@@ -228,22 +231,42 @@ window.onload = function () {
               opacity: 0.5,
               fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
               fillOpacity: 1.0,
-              radius: 50
+              radius: 220
             }).addTo(markerGroup);
             
             // Add popup to markers
             circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br># of Swales: " + elem["# of Swales"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
 
           } else {
-            $("#baseError").show();
+            var errorx = document.getElementById("baseError");
             setTimeout(function() {
-              $("#baseError").hide();
+              errorx.style.display = "block";
+            });
+            setTimeout(function() {
+              errorx.style.display = "none";
             }, 30000);
           }
 
         });
 
-        $("#cover").hide();
+        // Hide Loading screen
+        setTimeout(function() {
+          console.log('caled');
+          document.getElementById("cover").style.display = "none";
+        });
+
+        // Update lat long in the spreadsheet
+        setTimeout(function() {
+          console.log('exec');
+          jQuery.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxlXXo67OTBijK6UbJABKMb_mL8ZgwHW_Sgc483b6DQvtD5Q2eu/exec",
+            success: function(result) {
+              console.log(result);
+              return result;
+            },
+            async: true
+          });
+        });
     }
       
       window.addEventListener('DOMContentLoaded', ttinit);
