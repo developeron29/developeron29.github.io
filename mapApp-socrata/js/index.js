@@ -6,8 +6,11 @@ var mymap = '', //globalmap variable
       "#32d5d6", "#17232", "#608572", "#c79bc2", "#00f87c", "#77772a", "#6995ba","#fc6b57", "#f07815", "#8fd883", "#060e27", "#96e591", "#21d52e", "#d00043","#b47162", "#1ec227", "#4f0f6f", "#1d1d58", "#947002", "#bde052", "#e08c56","#28fcfd", "#bb09b", "#36486a", "#d02e29", "#1ae6db", "#3e464c", "#a84a8f","#911e7e", "#3f16d9", "#0f525f", "#ac7c0a", "#b4c086", "#c9d730", "#30cc49",
       "#3d6751", "#fb4c03", "#640fc1", "#62c03e", "#d3493a", "#88aa0b", "#406df9","#615af0", "#4be47", "#2a3434", "#4a543f", "#79bca0", "#a8b8d4", "#00efd4","#7ad236", "#7260d8", "#1deaa7", "#06f43a", "#823c59", "#e3d94c", "#dc1c06","#f53b2a", "#b46238", "#2dfff6", "#a82b89", "#1a8011", "#436a9f", "#1a806a","#4cf09d", "#c188a2", "#67eb4b", "#b308d3", "#fc7e41", "#af3101", "#ff065","#71b1f4", "#a2f8a5", "#e23dd0", "#d3486d", "#00f7f9", "#474893", "#3cec35","#1c65cb", "#5d1d0c", "#2d7d2a", "#ff3420", "#5cdd87", "#a259a4", "#e4ac44","#1bede6", "#8798a4", "#d7790f", "#b2c24f", "#de73c2", "#d70a9c", "#25b67","#88e9b8", "#c2b0e2", "#86e98f", "#ae90e2", "#1a806b", "#436a9e", "#0ec0ff","#f812b3", "#b17fc9", "#8d6c2f", "#d3277a", "#2ca1ae", "#9685eb", "#8a96c6", "#dba2e6", "#76fc1b", "#608fa4", "#20f6ba", "#07d7f6", "#dce77a", "#77ecca"],
     markerGroup = '',
+    heatGroup = '';
     selected = false,
     globaldataObj = [],
+    filteredList = [],
+    filteredListFlag = false;
     scientNameObj = [];
     tofKeys = []; //empty x graph data initialize
 
@@ -38,16 +41,20 @@ var mymap = '', //globalmap variable
 
     // plot markers to map
     function mapPlot(label) {
+      document.getElementById('heatmap-toggle').checked = false;
       if(label == 1) { // show all
         filteredList = globaldataObj;
+        filteredListFlag = false;
       } else {
         filteredList = globaldataObj.filter(function(obj) {
           return obj["attributes"]["SCIENTIFIC_NAME"] == label;
         });
+        filteredListFlag = true;
       }
 
       //reinstantiate marker group
       mymap.removeLayer(markerGroup);
+      mymap.removeLayer(heatGroup);
       markerGroup = L.layerGroup().addTo(mymap);
 
       var len = filteredList.length;
@@ -89,7 +96,6 @@ var mymap = '', //globalmap variable
       y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
 
       var newHeight = y;
-  
 
       document.getElementById("mapid").style.height = (newHeight - 20) + "px" ;
 
@@ -124,13 +130,69 @@ var mymap = '', //globalmap variable
       L.control.layers(baseMaps).addTo(mymap);
 
       markerGroup = L.layerGroup().addTo(mymap);
+      heatGroup = L.layerGroup().addTo(mymap);
+      
+      // create the control
+      var command = L.control({position: 'topright'});
 
+      command.onAdd = function (map) {
+          var div = L.DomUtil.create('div', 'command');
+
+          div.innerHTML = '<form style="background-color:white; padding:2px;border-radius:5px;"><div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="heatmap-toggle"><label class="custom-control-label" for="heatmap-toggle" style="color:black;padding:5px;">Heatmap</label></div> </form>'; 
+          return div;
+      };
+
+      command.addTo(mymap);
+
+      // add the event handler
+      function handleCommand() {
+
+          if(this.checked) {
+          var tempdata = [];
+          if (filteredListFlag) {
+            tempdata = filteredList;
+          } else {
+            tempdata = globaldataObj;
+          }
+          var tempHeatData = [];
+          tempdata.forEach(function(data) {
+            tempHeatData.push([data["geometry"]["y"],data["geometry"]["x"],5]);
+          });
+
+          mymap.removeLayer(markerGroup);
+          mymap.removeLayer(heatGroup);
+          heatGroup = L.layerGroup().addTo(mymap);
+          var heat = L.heatLayer(tempHeatData, {radius: 25}).addTo(heatGroup);
+        } else {
+          if (filteredListFlag) { 
+            var fs = filteredList[0]["attributes"]["SCIENTIFIC_NAME"];
+            mapPlot(fs);
+          }
+          else {
+            mapPlot(1);
+          }
+        }
+        
+      }
+
+      document.getElementById ("heatmap-toggle").addEventListener ("click", handleCommand, false);
+
+      // create the control
+      var commandlist = L.control({position: 'topleft'});
+
+      commandlist.onAdd = function (map) {
+          var div = L.DomUtil.create('div', 'commandlist');
+
+          div.innerHTML = '<form style="background-color:white; padding:2px;border-radius:5px;"><input type="checkbox" checked/> <span style="padding:5px;">SDOT</span> </form>'; 
+          return div;
+      };
+
+      commandlist.addTo(mymap);
 
       jQuery.ajax({
         url: "https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Assets/MapServer/6/query?where=UPPER(GENUS)%20like%20%27%25FRAXINUS%25%27&outFields=*&outSR=4326&f=json",
         success: function(result) {
-          console.log('res',result);
-          var len = result["features"].length;
+            var len = result["features"].length;
           $("#sbheadfont").text(len);
           globaldataObj = result["features"];
 
