@@ -1,5 +1,10 @@
 var mymap = '', //globalmap variable
     globalColorSet1 = ["#4F81BC", "#C0504E", "#9BBB58", "#23BFAA", "#8064A1", "#4AACC5", "#F79647", "#7F6084", "#77A033", "#33558B", "#E59566"], // Colorset1 default colors
+    globalColorSetExtend = [
+      "#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#648177" ,"#0d5ac1" , "#f205e6" ,"#1c0365" ,"#14a9ad" ,"#4ca2f9" ,"#a4e43f" ,"#d298e2" ,"#6119d0", "#d2737d" ,"#c0a43c" ,"#f2510e" ,"#651be6" ,"#79806e" ,"#61da5e" ,"#cd2f00" , "#9348af" ,"#01ac53" ,"#c5a4fb", "#996635","#b11573" ,"#4bb473" ,"#75d89e" , "#2f3f94" ,"#2f7b99" ,"#da967d" ,"#34891f" ,"#b0d87b" ,"#ca4751" ,"#7e50a8" , "#c4d647" ,"#e0eeb8" ,"#11dec1" ,"#289812" ,"#566ca0" ,"#ffdbe1" ,"#2f1179" ,"#935b6d" ,"#916988" ,"#513d98" ,"#aead3a", "#9e6d71", "#4b5bdc", "#0cd36d","#250662", "#cb5bea", "#228916", "#ac3e1b", "#df514a", "#539397", "#880977","#f697c1", "#ba96ce", "#679c9d", "#c6c42c", "#5d2c52", "#48b41b", "#e1cf3b","#5be4f0", "#57c4d8", "#a4d17a", "#225b8", "#be608b", "#96b00c", "#088baf","#f158bf", "#e145ba", "#ee91e3", "#05d371", "#5426e0", "#4834d0", "#802234","#6749e8", "#0971f0", "#8fb413", "#b2b4f0", "#c3c89d", "#c9a941", "#41d158",
+      "#fb21a3", "#51aed9", "#5bb32d", "#807fb", "#21538e", "#89d534", "#d36647","#7fb411", "#0023b8", "#3b8c2a", "#986b53", "#f50422", "#983f7a", "#ea24a3","#79352c", "#521250", "#c79ed2", "#d6dd92", "#e33e52", "#b2be57", "#fa06ec","#1bb699", "#6b2e5f", "#64820f", "#1c271", "#21538e", "#89d534", "#d36647","#7fb411", "#0023b8", "#3b8c2a", "#986b53", "#f50422", "#983f7a", "#ea24a3","#79352c", "#521250", "#c79ed2", "#d6dd92", "#e33e52", "#b2be57", "#fa06ec","#1bb699", "#6b2e5f", "#64820f", "#1c271", "#9cb64a", "#996c48", "#9ab9b7","#06e052", "#e3a481", "#0eb621", "#fc458e", "#b2db15", "#aa226d", "#792ed8","#73872a", "#520d3a", "#cefcb8", "#a5b3d9", "#7d1d85", "#c4fd57", "#f1ae16","#8fe22a", "#ef6e3c", "#243eeb", "#1dc18", "#dd93fd", "#3f8473", "#e7dbce","#421f79", "#7a3d93", "#635f6d", "#93f2d7", "#9b5c2a", "#15b9ee", "#0f5997", "#409188", "#911e20", "#1350ce", "#10e5b1", "#fff4d7", "#cb2582", "#ce00be",
+      "#32d5d6", "#17232", "#608572", "#c79bc2", "#00f87c", "#77772a", "#6995ba","#fc6b57", "#f07815", "#8fd883", "#060e27", "#96e591", "#21d52e", "#d00043","#b47162", "#1ec227", "#4f0f6f", "#1d1d58", "#947002", "#bde052", "#e08c56","#28fcfd", "#bb09b", "#36486a", "#d02e29", "#1ae6db", "#3e464c", "#a84a8f","#911e7e", "#3f16d9", "#0f525f", "#ac7c0a", "#b4c086", "#c9d730", "#30cc49",
+      "#3d6751", "#fb4c03", "#640fc1", "#62c03e", "#d3493a", "#88aa0b", "#406df9","#615af0", "#4be47", "#2a3434", "#4a543f", "#79bca0", "#a8b8d4", "#00efd4","#7ad236", "#7260d8", "#1deaa7", "#06f43a", "#823c59", "#e3d94c", "#dc1c06","#f53b2a", "#b46238", "#2dfff6", "#a82b89", "#1a8011", "#436a9f", "#1a806a","#4cf09d", "#c188a2", "#67eb4b", "#b308d3", "#fc7e41", "#af3101", "#ff065","#71b1f4", "#a2f8a5", "#e23dd0", "#d3486d", "#00f7f9", "#474893", "#3cec35","#1c65cb", "#5d1d0c", "#2d7d2a", "#ff3420", "#5cdd87", "#a259a4", "#e4ac44","#1bede6", "#8798a4", "#d7790f", "#b2c24f", "#de73c2", "#d70a9c", "#25b67","#88e9b8", "#c2b0e2", "#86e98f", "#ae90e2", "#1a806b", "#436a9e", "#0ec0ff","#f812b3", "#b17fc9", "#8d6c2f", "#d3277a", "#2ca1ae", "#9685eb", "#8a96c6", "#dba2e6", "#76fc1b", "#608fa4", "#20f6ba", "#07d7f6", "#dce77a", "#77ecca"],
     markerGroup = '',
     selected = false,
     globaldataObj = [],
@@ -8,235 +13,82 @@ var mymap = '', //globalmap variable
 
     window.onload = function() {
       this.setTimeout(function() {
-            // set dimensions of divs after load
+      // set dimensions of divs after load
 
-      document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - 25) + "px";
+      var win = window,
+      doc = document,
+      docElem = doc.documentElement,
+      body = doc.getElementsByTagName('body')[0],
+      x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+      y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
 
-      document.getElementById("chartContainer").style.height = (document.getElementById("paddlow").offsetHeight - document.getElementById("fonthead1").offsetHeight - 25) + "px";
+      var newHeight = y;
+     // document.getElementById("paddlow").style.height = (newHeight - document.getElementById('totalboxcardcontainer').offsetHeight - 25) + "px";
+
+      //document.getElementById("chartContainer").style.height = (document.getElementById("paddlow").offsetHeight - document.getElementById("fonthead1").offsetHeight - 25) + "px";
 
     //  document.getElementById("chartContainer").style.width = (document.getElementById("paddlow").offsetWidth + 650) + "px";
 
       }, 10);
     }
 
-    // Read spreadsheet data - Fill in the dashboard
-    function ttinit() {
-        var publicSpreadsheetUrl = "https://docs.google.com/spreadsheets/d/17bGkdKcKbd8ibcRrI7Asw5JhGGN6XJTaEk2nIapWByU/pubhtml";
+    function showAllMarkers() {
+      mapPlot(1); //show all
+    }
 
-        Tabletop.init( { key: publicSpreadsheetUrl,
-                         callback: showInfo1,
-                         simpleSheet: true } )
+    // plot markers to map
+    function mapPlot(label) {
+      if(label == 1) { // show all
+        filteredList = globaldataObj;
+      } else {
+        filteredList = globaldataObj.filter(function(obj) {
+          return obj["attributes"]["SCIENTIFIC_NAME"] == label;
+        });
+      }
+
+      //reinstantiate marker group
+      mymap.removeLayer(markerGroup);
+      markerGroup = L.layerGroup().addTo(mymap);
+
+      var len = filteredList.length;
+      $("#sbheadfont").text(len);
+
+      filteredList.forEach(function(data) {
+        var sc = data["attributes"]["SCIENTIFIC_NAME"];
+        scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
         
-      }
-    
-      var ism = 0, //Impervious Surface Managed
-          tgm = 0, //Total Gallons Managed
-          tof = []; //Type of Facility
-/*
-      // Fetch latitude longitude from the geocoding library
-      function getLtLg(addr) {
-        // Check for '/', 'to', 'and'
-        if(addr.includes(' / ')) {
-          addr = addr.split(' / ')[0];
-        }
-        if(addr.includes(' to ')) {
-          addr = addr.split(' to ')[0];
-        }
-        if(addr.includes(' and ')) {
-          addr = addr.split(' and ')[0];
-        }
-        addr = addr + ' seattle'; // restrict to Seattle
-        //Get Latitude Longitude
-        return jQuery.ajax({
-          url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr.replace(' ', '+') + "&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s",
-          success: function(result) {
-            return result;
-          },
-          async: false
-        });
-      }
-
-      function showAllMarkers() {
-        mapPlot(1); //show all
-      }
-
-      // plot markers to map
-      function mapPlot(label) {
-        if(label == 1) { // show all
-          filteredList = globaldataObj;
-        } else {
-          filteredList = globaldataObj.filter(function(obj) {
-            return obj["Type of Facility"] == label;
-          });
-        }
-        
-        // Update dashboard based on filtered lists
-        $("#sbheadfont").text(filteredList.length); // total projects
-        ism = 0; tgm = 0;
-        filteredList.forEach(element => {
-            ism = parseInt(ism) + parseInt(element["Impervious Surface Managed"]); 
-            tgm = parseInt(tgm) + parseInt(element["Total Gallons Managed"]);
-        });
-        $("#sbheadfont1").text(ism);
-        $("#sbheadfont11").text(tgm);
-
-        //reinstantiate marker group
-        mymap.removeLayer(markerGroup);
-        markerGroup = L.layerGroup().addTo(mymap);
-        
-        // add filtered markers to map
-        filteredList.forEach(elem => {
-          //Render map markers
-          var place = getLtLg(elem["Address"])["responseJSON"];
-
-          if(place && place.results && place.results.length > 0 && (place["results"][0]["geometry"]["location_type"]).localeCompare("APPROXIMATE") !== 0) { // If location is approximate, then localtion lat long are not an exact find
-                      
-            var lat = place["results"][0]["geometry"]["location"]["lat"],
-            long = place["results"][0]["geometry"]["location"]["lng"];
-            
-            // initialize circle markers
-            var circle = L.circle([lat, long], {
-              color: "yellow",
-              weight: 1,
-              opacity: 0.5,
-              fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
-              fillOpacity: 1.0,
-              radius: 220
-            }).addTo(markerGroup);
-            
-            // add popup to circular popups
-            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br># of Swales: " + elem["# of Swales"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
-
-          } else {
-            var errorx = document.getElementById("baseError")
-            setTimeout(function() {
-              errorx.style.display = "block";
-            });
-            setTimeout(function() {
-              errorx.style.display = "none";
-            }, 30000);
-          }
-
-        });
-      }
-*/
-      function showinfo1() {
-
-      }
-      // Process fetched data
-      function showInfo(data, tabletop) {
-        globaldataObj = data; // assign data globally
-        $("#sbheadfont").text(data.length); // total projects
-        data.forEach(element => {
-            ism = parseInt(ism) + parseInt(element["Impervious Surface Managed"]); 
-            tgm = parseInt(tgm) + parseInt(element["Total Gallons Managed"]);
-            tof[element["Type of Facility"]] = isNaN(tof[element["Type of Facility"]]) ? 1 : tof[element["Type of Facility"]] = tof[element["Type of Facility"]] + 1;
-
-        });
-        $("#sbheadfont1").text(ism);
-        $("#sbheadfont11").text(tgm);
-
-        var dataPointsArr = [];
-        Object.keys(tof).forEach(elem => {
-          dataPointsArr.push({
-            label: elem,
-            y: tof[elem]
-          });
-        });
-
-        // Render Chart
-        var chart = new CanvasJS.Chart("chartContainer", {
-          theme: "light1", // "light2", "dark1", "dark2"
-          animationEnabled: true, // set to true		
-          axisX:{
-            labelMaxWidth: 80, //
-            labelFontSize: 14,
-			      labelWrap: true,   // so that the x-axis labels stay straight
-			      interval: 1, //
-          },
-          data: [
-            {
-              // Column for column type graphs
-              type: "column",
-              click: function(e){ 
-                mapPlot(e["dataPoint"]["label"]);
-              },
-              mousemove: function(e) {
-                document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer"; // change cursor to pointer on mousemove
-              },
-              dataPoints: dataPointsArr
-            }
-          ]
-        });
-        chart.render();
-
-        tofKeys = Object.keys(tof);
-
-        data.forEach(elem => {
-          //Render map markers
-          var place = getLtLg(elem["Address"])["responseJSON"];
-          
-          if(place && place.results && place.results.length > 0 && (place["results"][0]["geometry"]["location_type"]).localeCompare("APPROXIMATE") !== 0) {
-                      
-            var lat = place["results"][0]["geometry"]["location"]["lat"],
-            long = place["results"][0]["geometry"]["location"]["lng"];
-            
+        // Markers
+                   
+          var lat = data["geometry"]["y"],
+          long = data["geometry"]["x"];
             // Initialize map circle markers
             var circle = L.circle([lat, long], {
               color: "yellow",
               weight: 1,
               opacity: 0.5,
-              fillColor: globalColorSet1[tofKeys.indexOf(elem["Type of Facility"])],
+              fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
               fillOpacity: 1.0,
-              radius: 220
-            }).addTo(markerGroup);
-            
-            // Add popup to markers
-            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Installed:  " + elem["Installed"] + "<br>Address:  " + elem["Address"] + "<br>Infiltration:   " + elem["Infiltration"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Pond Depth:  " + elem["Pond_Depth"] + "<br># of Swales: " + elem["# of Swales"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
-
-          } else {
-            var errorx = document.getElementById("baseError");
-            setTimeout(function() {
-              errorx.style.display = "block";
-            });
-            setTimeout(function() {
-              errorx.style.display = "none";
-            }, 30000);
-          }
-
-        });
-
-        // Hide Loading screen
-        setTimeout(function() {
-          console.log('caled');
-          document.getElementById("cover").style.display = "none";
-        });
-
-        // Update lat long in the spreadsheet
-        setTimeout(function() {
-          console.log('exec');
-          jQuery.ajax({
-            url: "https://script.google.com/macros/s/AKfycbxlXXo67OTBijK6UbJABKMb_mL8ZgwHW_Sgc483b6DQvtD5Q2eu/exec",
-            success: function(result) {
-              console.log(result);
-              return result;
-            },
-            async: true
-          });
+              radius: 160
+            }).addTo(markerGroup);     
+          
+          var aH = data["attributes"];
+          // Add popup to markers
+          circle.bindPopup("OBJECTID: " + aH["OBJECTID"] + "<br> COMPKEY: " + aH["COMPKEY"] + "<br> UNITID: " + aH["UNITID"] + "<br> UNITDESC: " + aH["UNITDESC"] + "<br> CONDITION: " + aH["CONDITION"] + "<br> CONDITION_ASSESSMENT_DATE: " + aH["CONDITION_ASSESSMENT_DATE"] + "<br>CURRENT_STATUS: " + aH["CURRENT_STATUS"] + "<br> PRIMARYDISTRICTCD: " + aH["PRIMARYDISTRICTCD"] + "<br> SECONDARYDISTRICTCD: " + aH["SECONDARYDISTRICTCD"] + "<br> OVERRIDEYN: " + aH["OVERRIDEYN"] + "<br> COMPTYPE: " + aH["COMPTYPE"] + "<br> SEGKEY: " + aH["SEGKEY"] + "<br> UNITTYPE: " + aH["UNITTYPE"] + "<br> OWNERSHIP: " + aH["OWNERSHIP"] + "<br> CURRENT_STATUS_DATE: " + aH["CURRENT_STATUS_DATE"] + "<br> LAST_VERIFY_DATE: " + aH["LAST_VERIFY_DATE"] + "<br> PLANTED_DATE: " + aH["PLANTED_DATE"] + "<br> BOTANICAL_NAME: " + aH["BOTANICAL_NAME"] + "<br> SCIENTIFIC_NAME: " + aH["SCIENTIFIC_NAME"] + "<br> HERITAGE: " + aH["HERITAGE"] + "<br> EXCEPTIONAL: " + aH["EXCEPTIONAL"] + "<br> CODEREQ: " + aH["CODEREQ"] + "<br> GSI" + aH["GSI"] + "<br> GREEN_FACTOR: " + aH["GREEN_FACTOR"] + "<br> WIRES: " + aH["WIRES"] + "<br> CABLED: " + aH["CABLED"] + "<br> CLEARANCE_PROBLEM: " + aH["CLEARANCE_PROBLEM"] + "<br> SPACETYPE: " + aH["SPACETYPE"] + "<br> SITETYPE: " + aH["SITETYPE"] + "<br> GROWSPACE: " + aH["GROWSPACE"] + "<br> DIAM: " + aH["DIAM"] + "<br> CONDITION_RATING: " + aH["CONDITION_RATING"] + "<br> FUNDING_SOURCE: " + aH["FUNDING_SOURCE"] + "<br> WATER_THROUGH_YR1" + aH["WATER_THROUGH_YR1"] + "<br> WATER_THROUGH_YR2: " + aH["WATER_THROUGH_YR2"] + "<br> WATER_THROUGH_YR3: " + aH["WATER_THROUGH_YR3"] + "<br> OWNERDIAM: " + aH["OWNERDIAM"] + "<br> EXPDATE: " + aH["EXPDATE"] + "<br> COMMON_NAME: " + aH["COMMON_NAME"] + "<br> TREEHEIGHT: " + aH["TREEHEIGHT"] + "<br> ASBUILTPLANNO: " + aH["ASBUILTPLANNO"] + "<br> LANDSCAPEAREAASSOC: " + aH["LANDSCAPEAREAASSOC"] + "<br> COMMENTS: " + aH["COMMENTS"] + "<br> OVERRIDECOMMENT: " + aH["OVERRIDECOMMENT"] + "<br> SHAPE_LNG: " + aH["SHAPE_LNG"] + "<br> SHAPE_LAT: " + aH["SHAPE_LAT"] + "<br> IRRIGATESYSYN: " + aH["IRRIGATESYSYN"] + "<br> ASSETGROUPID: " + aH["ASSETGROUPID"] + "<br> ASSETGROUPDESC: " + aH["ASSETGROUPDESC"] + "<br> MODDATE: " + aH["MODDATE"] + "<br>MODBY: " + aH["MODBY"] + "<br> TOTAL_RANK: " + aH["TOTAL_RANK"] + "<br> TOTAL_COUNT: " + aH["TOTAL_COUNT"] + "<br> GENUS: " + aH["GENUS"] + "<br> UFMAINTMGMTUNIT: " + aH["UFMAINTMGMTUNIT"]);
+  
         });
     }
-      
+
     // Handle Socrata data
     function ttinitsocrata() {
     // set map height
-    var win = window,
-    doc = document,
-    docElem = doc.documentElement,
-    body = doc.getElementsByTagName('body')[0],
-    x = win.innerWidth || docElem.clientWidth || body.clientWidth,
-    y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+      var win = window,
+      doc = document,
+      docElem = doc.documentElement,
+      body = doc.getElementsByTagName('body')[0],
+      x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+      y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
 
-    var newHeight = y;
+      var newHeight = y;
   
 
       document.getElementById("mapid").style.height = (newHeight - 20) + "px" ;
@@ -280,6 +132,7 @@ var mymap = '', //globalmap variable
           console.log('res',result);
           var len = result["features"].length;
           $("#sbheadfont").text(len);
+          globaldataObj = result["features"];
 
       result["features"].forEach(function(data) {
       var sc = data["attributes"]["SCIENTIFIC_NAME"];
@@ -294,9 +147,9 @@ var mymap = '', //globalmap variable
             color: "yellow",
             weight: 1,
             opacity: 0.5,
-            fillColor: 'lightblue',
+            fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
             fillOpacity: 1.0,
-            radius: 220
+            radius: 160
           }).addTo(markerGroup);     
         
         var aH = data["attributes"];
@@ -314,11 +167,12 @@ var mymap = '', //globalmap variable
         });
 
         $("#sbheadfont1").text(Object.keys(scientNameObj).length);
-
+        CanvasJS.addColorSet("customColorset", globalColorSetExtend);
         // Render Chart
         var chart = new CanvasJS.Chart("chartContainer", {
           theme: "light1", // "light2", "dark1", "dark2"
-          animationEnabled: true, // set to true		
+          animationEnabled: true, // set to true	
+          colorSet: "customColorset",	
           axisX:{
             labelMaxWidth: 80, //
             labelFontSize: 14,
@@ -330,7 +184,8 @@ var mymap = '', //globalmap variable
               // Column for column type graphs
               type: "column",
               click: function(e){ 
-                //mapPlot(e["dataPoint"]["label"]);
+                console.log(e);
+                mapPlot(e["dataPoint"]["label"]);
               },
               mousemove: function(e) {
                 document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer"; // change cursor to pointer on mousemove
