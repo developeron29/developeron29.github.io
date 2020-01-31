@@ -44,11 +44,13 @@ var mymap = '', //globalmap variable
       document.getElementById('heatmap-toggle').checked = false;
       if(label == 1) { // show all
         filteredList = globaldataObj;
+        $("#sbheadfont1").text(Object.keys(scientNameObj).length);
         filteredListFlag = false;
       } else {
         filteredList = globaldataObj.filter(function(obj) {
           return obj["attributes"]["SCIENTIFIC_NAME"] == label;
         });
+        $("#sbheadfont1").text(1);
         filteredListFlag = true;
       }
 
@@ -189,14 +191,32 @@ var mymap = '', //globalmap variable
 
       commandlist.addTo(mymap);
 
-      jQuery.ajax({
-        url: "https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Assets/MapServer/6/query?where=UPPER(GENUS)%20like%20%27%25FRAXINUS%25%27&outFields=*&outSR=4326&f=json",
-        success: function(result) {
-            var len = result["features"].length;
-          $("#sbheadfont").text(len);
-          globaldataObj = result["features"];
+      function buildData(offset) {
+        jQuery.ajax({
+          url: "https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Assets/MapServer/6/query?where=UPPER(GENUS)%20like%20%27%25FRAXINUS%25%27&outFields=*&outSR=4326&f=json&resultOffset="+offset,
+          success: function(result) {
+              if(result["features"] && result["features"].length > 0) {
+                globaldataObj = globaldataObj.concat(result["features"]);
+                if(result["features"].length == 1000) {
+                   buildData(parseInt(offset)+1000);
+                }
+              } else {
+                console.log('total', globaldataObj.length);
+              }
+          },
+          error: function(err) {
+            console.log("There is an error: ", err);
+          },
+          async: false
+        }); // end of ajax call
+      }
 
-      result["features"].forEach(function(data) {
+      buildData(0);
+
+      var len = globaldataObj.length;
+      $("#sbheadfont").text(len);
+      
+      globaldataObj.forEach(function(data) {
       var sc = data["attributes"]["SCIENTIFIC_NAME"];
       scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
       
@@ -263,12 +283,7 @@ var mymap = '', //globalmap variable
             setTimeout(function() {
               document.getElementById("cover").style.display = "none";
             });
-        },
-        error: function(err) {
-          console.log("There is an error: ", err);
-        },
-        async: false
-      })
+        
     }
 
       window.addEventListener('DOMContentLoaded', ttinitsocrata);
