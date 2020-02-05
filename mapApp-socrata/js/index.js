@@ -355,7 +355,7 @@ var mymap = '', //globalmap variable
       commandlist.onAdd = function (map) {
           var div = L.DomUtil.create('div', 'commandlist');
 
-          div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;"><b>Select Pest Source</b><div  id="cover1"><b>Loading...</b><img src="../images/load.gif" height="52" width="52" /></div><br><select class="" id="selectPest">'+
+          div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;"><b>Select Pest Source</b><div  id="cover1"><b>Loading...</b><img src="http://ayushnarula.com/mapApp-socrata/images/load.gif" height="52" width="52" /></div><br><select class="" id="selectPest">'+
           '  <optgroup label="Emerald Ash Borer">'+
           '    <option value="sdoteab" selected>SDOT - Emerald Ash Borer</option>'+
           '    <option value="spueab">SPU - Emerald Ash Borer</option>'+
