@@ -43,7 +43,7 @@ var mymap = '', //globalmap variable
     }
 
     function showAllMarkers() {
-      var cs = $("select#selectPest option:selected").val();
+      var cs = $("input[type=radio][name=invasiveSelector]:checked").val();
       if(cs.localeCompare("sdoteab") == 0 || cs.localeCompare("sdotgm") == 0 || cs.localeCompare("sdotalb") == 0 || cs.localeCompare("sdotsww") == 0 || cs.localeCompare("sdotbbb") == 0 ) {
         console.log(1);
         mapPlot(1); //show all
@@ -275,7 +275,8 @@ var mymap = '', //globalmap variable
 
       // add the event handler
       function handleCommand() {
-          var cs = $("select#selectPest option:selected").val();
+          var cs = $("input[type=radio][name=invasiveSelector]:checked").val();
+          console.log('cs', cs);
           if(this.checked) {
           var tempdata = [];
           if (filteredListFlag) {
@@ -355,50 +356,108 @@ var mymap = '', //globalmap variable
       commandlist.onAdd = function (map) {
           var div = L.DomUtil.create('div', 'commandlist');
 
-          div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;"><b>Select Pest Source</b><div  id="cover1"><b>Loading...</b><img src="http://ayushnarula.com/mapApp-socrata/images/load.gif" height="52" width="52" /></div><br><select class="" id="selectPest">'+
-          '  <optgroup label="Emerald Ash Borer">'+
-          '    <option value="sdoteab" selected>SDOT - Emerald Ash Borer</option>'+
-          '    <option value="spueab">SPU - Emerald Ash Borer</option>'+
-          '    <option value="spreab">SPR - Emerald Ash Borer</option>'+
-          '  </optgroup>'+
-          '    <optgroup label="Gypsy Moth">'+
-          '    <option value="sdotgm">SDOT - Gypsy Moth</option>'+
-          '    <option value="spugm">SPU - Gypsy Moth</option>'+
-          '    <option value="sprgm">SPR - Gypsy Moth</option>'+
-          '  </optgroup>'+
-          '    <optgroup label="Asian Longhorn Beetle">'+
-          '    <option value="sdotalb">SDOT - Asian Longhorn Beetle</option>'+
-          '    <option value="spualb">SPU - Asian Longhorn Beetle</option>'+
-          '    <option value="spralb">SPR - Asian Longhorn Beetle</option>'+
-          '  </optgroup>'+
-          '    <optgroup label="Sirex Wood Wasp">'+
-          '    <option value="sdotsww">SDOT - Sirex Wood Wasp</option>'+
-          '    <option value="spusww">SPU - Sirex Wood Wasp</option>'+
-          '    <option value="sprsww">SPR - Sirex Wood Wasp</option>'+
-          '  </optgroup>'+
-          '    <optgroup label="Bronze Birch Borer">'+
-          '    <option value="sdotbbb">SDOT - Bronze Birch Borer</option>'+
-          '    <option value="spubbb">SPU - Bronze Birch Borer</option>'+
-          '    <option value="sprbbb">SPR - Bronze Birch Borer</option>'+
-          '  </optgroup>'+
-          '</select></div>';
+          div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;"><b>Select Pest Source</b><div  id="cover1"><b>Loading...</b><img src="http://ayushnarula.com/mapApp-socrata/images/load.gif" height="52" width="52"/></div><br>'+
+          '<form>'+
+          '    <div><b><input type="radio" name="invasiveName" value="eab" /> Emerald Ash Borer</b></div>'+
+          '    <div id="eabDiv">'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sdoteab" checked> SDOT <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spueab"> SPU <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spreab"> SPR<br>'+
+          '    </div>'+
+          '    <div> <b><input type="radio" name="invasiveName" value="gm" /> Gypsy Moth</b></div>'+
+          '    <div id="gmDiv">'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sdotgm"> SDOT <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spugm"> SPU <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sprgm"> SPR<br>'+
+          '    </div>'+
+          '    <div> <b><input type="radio" name="invasiveName" value="alb" /> Asian Longhorn Beetle</b></div>'+
+          '    <div id="albDiv">'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sdotalb"> SDOT <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spualb"> SPU <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spralb"> SPR<br>'+
+          '    </div>'+
+          '    <div><b> <input type="radio" name="invasiveName" value="sww" /> Sirex Wood Wasp</b></div>'+
+          '    <div id="swwDiv">'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sdotsww"> SDOT <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spusww"> SPU <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sprsww"> SPR<br>'+
+          '    </div>'+
+          '    <div><b> <input type="radio" name="invasiveName" value="bbb" /> Bronze Birch Borer</b></div>'+
+          '    <div id="bbbDiv">'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sdotbbb"> SDOT <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="spubbb"> SPU <br>'+
+          '        &nbsp; <input type="radio" name="invasiveSelector" value="sprbbb"> SPR<br>'+
+          '    </div>'+
+          '</form>'+          
+          '</div>';
             
           
           return div;
       };
       setTimeout(function() {
         $("div#cover1").hide();
+        $("input[type=radio]").attr('disabled', false);
       }, 100);
       commandlist.addTo(mymap);
 
+      $("#eabDiv").show();
+      $("#gmDiv").hide();
+      $("#albDiv").hide();
+      $("#swwDiv").hide();
+      $("#bbbDiv").hide();
+
+      $('input[type=radio][name=invasiveName]').change(function() {
+        if (this.value == 'eab') {
+          $("#eabDiv").show();
+          $("#gmDiv").hide();
+          $("#albDiv").hide();
+          $("#swwDiv").hide();
+          $("#bbbDiv").hide();
+        }
+        else if (this.value == 'gm') {
+          $("#eabDiv").hide();
+          $("#gmDiv").show();
+          $("#albDiv").hide();
+          $("#swwDiv").hide();
+          $("#bbbDiv").hide();
+        }
+        else if (this.value == 'alb') {
+          $("#eabDiv").hide();
+          $("#gmDiv").hide();
+          $("#albDiv").show();
+          $("#swwDiv").hide();
+          $("#bbbDiv").hide();
+        }
+        else if (this.value == 'sww') {
+          $("#eabDiv").hide();
+          $("#gmDiv").hide();
+          $("#albDiv").hide();
+          $("#swwDiv").show();
+          $("#bbbDiv").hide();
+        }
+        else if (this.value == 'bbb') {
+          $("#eabDiv").hide();
+          $("#gmDiv").hide();
+          $("#albDiv").hide();
+          $("#swwDiv").hide();
+          $("#bbbDiv").show();
+        }
+      });
+
+      // $().change(function() {
+      //   var thisVal = this.value;
+      //   console.log('this val', thisVal);
+      // });
+
       // Pest selection handler
-      $("select#selectPest"). change(function(){
-        var selected = $(':selected', this);
-        console.log("You have selected  - " + selected.closest('optgroup').attr('label') + " ", selected.val());
+      $('input[type=radio][name=invasiveSelector]').change(function(){
+        var selected = this.value;
+        console.log('se', selected);
+        $("input[type=radio]").attr('disabled', true);
         // Hide Loading screen
           $("div#cover1").show();
 
-          if(selected.val().localeCompare("sdoteab") == 0) {
+          if(selected.localeCompare("sdoteab") == 0) {
           globaldataObj = [];
           scientNameObj = [];
           setTimeout(function() {
@@ -407,8 +466,9 @@ var mymap = '', //globalmap variable
           },999);
           setTimeout(function() {
             $("div#cover1").hide();
+            $("input[type=radio]").attr('disabled', false);
           },2000);
-        } else if (selected.val().localeCompare("spueab") == 0) {
+        } else if (selected.localeCompare("spueab") == 0) {
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
@@ -421,6 +481,7 @@ var mymap = '', //globalmap variable
               dataMapperSPU();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             } else {
               loadSPU(function() {
@@ -430,13 +491,14 @@ var mymap = '', //globalmap variable
                 dataMapperSPU();
                 setTimeout(function() {
                   $("div#cover1").hide();
+                  $("input[type=radio]").attr('disabled', false);
                 },2000);
               });
             }
 
           },999);
 
-        } else if (selected.val().localeCompare("spreab") == 0) {
+        } else if (selected.localeCompare("spreab") == 0) {
            // Emerald Ash borer SPR data load
           // data
           setTimeout(function() {
@@ -450,6 +512,7 @@ var mymap = '', //globalmap variable
               dataMapperSPR();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             } else {
               loadSPR(function() {
@@ -459,13 +522,14 @@ var mymap = '', //globalmap variable
                 dataMapperSPR();
                 setTimeout(function() {
                   $("div#cover1").hide();
+                  $("input[type=radio]").attr('disabled', false);
                 },2000);
               });
             }
             
           }, 999);
 
-        } else if(selected.val().localeCompare("sdotgm") == 0) {
+        } else if(selected.localeCompare("sdotgm") == 0) {
           setTimeout(function() {
 
           globaldataObj = [];
@@ -475,8 +539,9 @@ var mymap = '', //globalmap variable
           },999);
           setTimeout(function() {
             $("div#cover1").hide();
+            $("input[type=radio]").attr('disabled', false);
           },2000);
-        } else if (selected.val().localeCompare("spugm") == 0) {
+        } else if (selected.localeCompare("spugm") == 0) {
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
@@ -490,6 +555,7 @@ var mymap = '', //globalmap variable
               dataMapperSPU();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             } else {
               loadSPU(function() {
@@ -499,12 +565,13 @@ var mymap = '', //globalmap variable
                 dataMapperSPU();
                 setTimeout(function() {
                   $("div#cover1").hide();
+                  $("input[type=radio]").attr('disabled', false);
                 },2000);
               });
 
             }
           },999);
-        } else if (selected.val().localeCompare("sprgm") == 0) {
+        } else if (selected.localeCompare("sprgm") == 0) {
           // Emerald Ash borer SPR data load
          // data
          setTimeout(function() {
@@ -518,6 +585,7 @@ var mymap = '', //globalmap variable
               dataMapperSPR();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             } else {
               loadSPR(function() {
@@ -527,13 +595,14 @@ var mymap = '', //globalmap variable
                 dataMapperSPR();
                 setTimeout(function() {
                   $("div#cover1").hide();
+                  $("input[type=radio]").attr('disabled', false);
                 },2000);
               });
             }
 
           },999);
 
-          } else if(selected.val().localeCompare("sdotbbb") == 0) {
+          } else if(selected.localeCompare("sdotbbb") == 0) {
           setTimeout(function() {
 
           globaldataObj = [];
@@ -542,8 +611,9 @@ var mymap = '', //globalmap variable
           },999);
           setTimeout(function() {
             $("div#cover1").hide();
+            $("input[type=radio]").attr('disabled', false);
           },2000);
-        } else if (selected.val().localeCompare("spubbb") == 0) {
+        } else if (selected.localeCompare("spubbb") == 0) {
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
@@ -557,6 +627,7 @@ var mymap = '', //globalmap variable
             dataMapperSPU();
             setTimeout(function() {
               $("div#cover1").hide();
+              $("input[type=radio]").attr('disabled', false);
             },2000);
           } else {
             loadSPU(function() {
@@ -566,13 +637,14 @@ var mymap = '', //globalmap variable
               dataMapperSPU();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             });
           }
 
           },999);
 
-        } else if (selected.val().localeCompare("sprbbb") == 0) {
+        } else if (selected.localeCompare("sprbbb") == 0) {
           // Emerald Ash borer SPR data load
         // data
         setTimeout(function() {
@@ -586,6 +658,7 @@ var mymap = '', //globalmap variable
             dataMapperSPR();
             setTimeout(function() {
               $("div#cover1").hide();
+              $("input[type=radio]").attr('disabled', false);
             },2000);
           } else {
             loadSPR(function() {
@@ -595,13 +668,14 @@ var mymap = '', //globalmap variable
               dataMapperSPR();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             });
           }
         
           },999);
 
-        } else if(selected.val().localeCompare("sdotsww") == 0) {
+        } else if(selected.localeCompare("sdotsww") == 0) {
           setTimeout(function() {
 
           globaldataObj = [];
@@ -610,8 +684,9 @@ var mymap = '', //globalmap variable
           },999);
           setTimeout(function() {
             $("div#cover1").hide();
+            $("input[type=radio]").attr('disabled', false);
           },2000);
-        } else if (selected.val().localeCompare("spusww") == 0) {
+        } else if (selected.localeCompare("spusww") == 0) {
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
@@ -625,6 +700,7 @@ var mymap = '', //globalmap variable
             dataMapperSPU();
             setTimeout(function() {
               $("div#cover1").hide();
+              $("input[type=radio]").attr('disabled', false);
             },2000);
           } else {
             loadSPU(function() {
@@ -634,13 +710,14 @@ var mymap = '', //globalmap variable
               dataMapperSPU();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             })
           }
           
           },999);
 
-        } else if (selected.val().localeCompare("sprsww") == 0) {
+        } else if (selected.localeCompare("sprsww") == 0) {
           // Emerald Ash borer SPR data load
           // data
           setTimeout(function() {
@@ -654,6 +731,7 @@ var mymap = '', //globalmap variable
               dataMapperSPR();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             } else {
               loadSPR(function(){
@@ -663,13 +741,14 @@ var mymap = '', //globalmap variable
                 dataMapperSPR();
                 setTimeout(function() {
                   $("div#cover1").hide();
+                  $("input[type=radio]").attr('disabled', false);
                 },2000);
               });
             }
 
           },999);
 
-        } else if(selected.val().localeCompare("sdotalb") == 0) {
+        } else if(selected.localeCompare("sdotalb") == 0) {
           setTimeout(function() {
 
           globaldataObj = [];
@@ -681,7 +760,7 @@ var mymap = '', //globalmap variable
           },2000);
           console.log('called');
 
-        } else if (selected.val().localeCompare("spualb") == 0) {
+        } else if (selected.localeCompare("spualb") == 0) {
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
@@ -695,6 +774,7 @@ var mymap = '', //globalmap variable
             dataMapperSPU();
             setTimeout(function() {
               $("div#cover1").hide();
+              $("input[type=radio]").attr('disabled', false);
             },2000);
           } else {
             loadSPU(function() {
@@ -704,13 +784,14 @@ var mymap = '', //globalmap variable
               dataMapperSPU();
               setTimeout(function() {
                 $("div#cover1").hide();
+                $("input[type=radio]").attr('disabled', false);
               },2000);
             });
           }
           
           },999);
 
-        } else if (selected.val().localeCompare("spralb") == 0) {
+        } else if (selected.localeCompare("spralb") == 0) {
           // Emerald Ash borer SPR data load
         // data
         setTimeout(function() {
@@ -724,6 +805,7 @@ var mymap = '', //globalmap variable
           dataMapperSPR();
           setTimeout(function() {
             $("div#cover1").hide();
+            $("input[type=radio]").attr('disabled', false);
           },2000);
         } else {
           loadSPR(function(){
@@ -733,6 +815,7 @@ var mymap = '', //globalmap variable
             dataMapperSPR();
             setTimeout(function() {
               $("div#cover1").hide();
+              $("input[type=radio]").attr('disabled', false);
             },2000);
           })
         }
