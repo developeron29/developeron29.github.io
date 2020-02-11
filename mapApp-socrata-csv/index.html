@@ -5,6 +5,8 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body id="backgroundclip">
@@ -14,13 +16,13 @@
         <div class="container-fluid" id="pad">
             <div class="row">
                 <div class="col-md-5" id="padrightblock">
-                    <div class="card" id="totalboxcardcontainer" style="margin-bottom: 5px;">
-                        <div class="" id="textcenter">
+                    <div class="card" style="margin-bottom: 5px;text-align: center;">
+                        <div class="" id="">
                             <span id="projecthead">Total count of trees</span> <br>
                             <b id="sbheadfont">0</b>
                         </div>
                     </div>
-                    <div class="card" id="textcenter" style="margin-bottom: 5px;">
+                    <div class="card" id="" style="margin-bottom: 5px;text-align: center;">
                         <div class="card-body" id="pad011">
                                 <span id="projecthead1">Total Count of Species</span> <br>
                                 <div id="acresBound">
@@ -28,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card"  id="textcenter" id="bottomChartCard">
+                    <div class="card"  id="textcenter">
                         <div class="card-body" id="paddlow">
                             <div id="fonthead1">
                                 <b id="smallfont">Tree Species</b> <br>
@@ -57,6 +59,8 @@
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
+        <!--Marker cluster-->
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
         <!-- Sub grouping of markers-->
         <script src="https://unpkg.com/leaflet.featuregroup.subgroup@1.0.2/dist/leaflet.featuregroup.subgroup.js"></script>
         <!--Heat map-->

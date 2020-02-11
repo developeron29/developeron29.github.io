@@ -81,7 +81,7 @@ var mymap = '', //globalmap variable
       //reinstantiate marker group
       mymap.removeLayer(markerGroup);
       mymap.removeLayer(heatGroup);
-      markerGroup = L.layerGroup().addTo(mymap);
+      markerGroup = L.markerClusterGroup().addTo(mymap);
 
       var len = filteredList.length;
       $("#sbheadfont").text(len);
@@ -134,7 +134,7 @@ var mymap = '', //globalmap variable
           //reinstantiate marker group
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
-          markerGroup = L.layerGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup().addTo(mymap);
     
           var len = filteredList.length;
           $("#sbheadfont").text(len);
@@ -184,7 +184,7 @@ var mymap = '', //globalmap variable
           //reinstantiate marker group
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
-          markerGroup = L.layerGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup().addTo(mymap);
     
           var len = filteredList.length;
           $("#sbheadfont").text(len);
@@ -234,7 +234,7 @@ var mymap = '', //globalmap variable
           //reinstantiate marker group
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
-          markerGroup = L.layerGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup().addTo(mymap);
     
           var len = filteredList.length;
           $("#sbheadfont").text(len);
@@ -309,7 +309,7 @@ var mymap = '', //globalmap variable
 
       L.control.layers(baseMaps).addTo(mymap);
 
-      markerGroup = L.layerGroup().addTo(mymap);
+      markerGroup = L.markerClusterGroup().addTo(mymap);
       heatGroup = L.layerGroup().addTo(mymap);
       
       // create the control
@@ -1092,7 +1092,7 @@ var mymap = '', //globalmap variable
       var len = globaldataObj.length;
       $("#sbheadfont").text(len);
       mymap.removeLayer(markerGroup);
-      markerGroup = L.layerGroup().addTo(mymap);
+      markerGroup = L.markerClusterGroup().addTo(mymap);
       console.log('dat', globaldataObj);
       globaldataObj.forEach(function(data) {
       var sc = data["attributes"]["SCIENTIFIC_NAME"];
@@ -1141,11 +1141,11 @@ var mymap = '', //globalmap variable
           animationEnabled: true, // set to true	
           colorSet: "customColorset",	
           axisX:{
-            labelMaxWidth: 80, //
-            labelFontSize: 14,
-			      labelWrap: true,   // so that the x-axis labels stay straight
-            interval: 1, //
-            //labelAutoFit: true 
+            // labelMaxWidth: 80, //
+            // labelFontSize: 14,
+			      // labelWrap: true,   // so that the x-axis labels stay straight
+            // interval: 1, //
+            labelAutoFit: true 
           },
           data: [
             {
@@ -1162,7 +1162,9 @@ var mymap = '', //globalmap variable
             }
           ]
         });
-        chart.render();
+        setTimeout(function() {
+          chart.render();
+        }, 1000);
 
       } // end of data mapper
 
@@ -1172,7 +1174,7 @@ var mymap = '', //globalmap variable
         var len = globaldataObj.length;
         $("#sbheadfont").text(len);
         mymap.removeLayer(markerGroup);
-        markerGroup = L.layerGroup().addTo(mymap);
+        markerGroup = L.markerClusterGroup().addTo(mymap);
         console.log('dat', globaldataObj);
         globaldataObj.forEach(function(data) {
         var sc = data[20];
@@ -1283,7 +1285,7 @@ var mymap = '', //globalmap variable
           var len = globaldataObj.length;
           $("#sbheadfont").text(len);
           mymap.removeLayer(markerGroup);
-          markerGroup = L.layerGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup().addTo(mymap);
 
           globaldataObj.forEach(function(data) {
           var sc = data["UT_SPECIES"];
@@ -1328,11 +1330,11 @@ var mymap = '', //globalmap variable
               animationEnabled: true, // set to true	
               colorSet: "customColorset",	
               axisX:{
-                labelMaxWidth: 80, //
-                labelFontSize: 14,
-                labelWrap: true,   // so that the x-axis labels stay straight
-                interval: 1, //
-                //labelAutoFit: true 
+                // labelMaxWidth: 80, //
+                // labelFontSize: 14,
+                // labelWrap: true,   // so that the x-axis labels stay straight
+                // interval: 1, //
+                labelAutoFit: true 
               },
               data: [
                 {
@@ -1359,7 +1361,7 @@ var mymap = '', //globalmap variable
           var len = globaldataObj.length;
           $("#sbheadfont").text(len);
           mymap.removeLayer(markerGroup);
-          markerGroup = L.layerGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup().addTo(mymap);
 
           globaldataObj.forEach(function(data) {
           var sc = data["SPECIES"];
@@ -1404,11 +1406,11 @@ var mymap = '', //globalmap variable
               animationEnabled: true, // set to true	
               colorSet: "customColorset",	
               axisX:{
-                labelMaxWidth: 80, //
-                labelFontSize: 14,
-                labelWrap: true,   // so that the x-axis labels stay straight
-                interval: 1, //
-                //labelAutoFit: true 
+                // labelMaxWidth: 80, //
+                // labelFontSize: 14,
+                // labelWrap: true,   // so that the x-axis labels stay straight
+                // interval: 1, //
+                labelAutoFit: true 
               },
               data: [
                 {
