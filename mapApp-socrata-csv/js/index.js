@@ -81,7 +81,12 @@ var mymap = '', //globalmap variable
       //reinstantiate marker group
       mymap.removeLayer(markerGroup);
       mymap.removeLayer(heatGroup);
-      markerGroup = L.markerClusterGroup().addTo(mymap);
+      markerGroup = L.markerClusterGroup({
+        disableClusteringAtZoom: 12,
+        iconCreateFunction: function(cluster) {
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+        }
+      }).addTo(mymap);
 
       var len = filteredList.length;
       $("#sbheadfont").text(len);
@@ -134,7 +139,12 @@ var mymap = '', //globalmap variable
           //reinstantiate marker group
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
-          markerGroup = L.markerClusterGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup({
+            disableClusteringAtZoom: 12,
+            iconCreateFunction: function(cluster) {
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            }
+          }).addTo(mymap);
     
           var len = filteredList.length;
           $("#sbheadfont").text(len);
@@ -184,7 +194,12 @@ var mymap = '', //globalmap variable
           //reinstantiate marker group
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
-          markerGroup = L.markerClusterGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup({
+            disableClusteringAtZoom: 12,
+            iconCreateFunction: function(cluster) {
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            }
+          }).addTo(mymap);
     
           var len = filteredList.length;
           $("#sbheadfont").text(len);
@@ -234,7 +249,12 @@ var mymap = '', //globalmap variable
           //reinstantiate marker group
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
-          markerGroup = L.markerClusterGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup({
+            disableClusteringAtZoom: 12,
+            iconCreateFunction: function(cluster) {
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            }
+          }).addTo(mymap);
     
           var len = filteredList.length;
           $("#sbheadfont").text(len);
@@ -309,7 +329,12 @@ var mymap = '', //globalmap variable
 
       L.control.layers(baseMaps).addTo(mymap);
 
-      markerGroup = L.markerClusterGroup().addTo(mymap);
+      markerGroup = L.markerClusterGroup({
+        disableClusteringAtZoom: 12,
+        iconCreateFunction: function(cluster) {
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+        }
+      }).addTo(mymap);
       heatGroup = L.layerGroup().addTo(mymap);
       
       // create the control
@@ -1092,7 +1117,12 @@ var mymap = '', //globalmap variable
       var len = globaldataObj.length;
       $("#sbheadfont").text(len);
       mymap.removeLayer(markerGroup);
-      markerGroup = L.markerClusterGroup().addTo(mymap);
+      markerGroup = L.markerClusterGroup({
+        disableClusteringAtZoom: 12,
+        iconCreateFunction: function(cluster) {
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+        }
+      }).addTo(mymap);
       console.log('dat', globaldataObj);
       globaldataObj.forEach(function(data) {
       var sc = data["attributes"]["SCIENTIFIC_NAME"];
@@ -1174,7 +1204,12 @@ var mymap = '', //globalmap variable
         var len = globaldataObj.length;
         $("#sbheadfont").text(len);
         mymap.removeLayer(markerGroup);
-        markerGroup = L.markerClusterGroup().addTo(mymap);
+        markerGroup = L.markerClusterGroup({
+          disableClusteringAtZoom: 12,
+          iconCreateFunction: function(cluster) {
+            return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          }
+        }).addTo(mymap);
         console.log('dat', globaldataObj);
         globaldataObj.forEach(function(data) {
         var sc = data[20];
@@ -1285,7 +1320,12 @@ var mymap = '', //globalmap variable
           var len = globaldataObj.length;
           $("#sbheadfont").text(len);
           mymap.removeLayer(markerGroup);
-          markerGroup = L.markerClusterGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup({
+            disableClusteringAtZoom: 12,
+            iconCreateFunction: function(cluster) {
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            }
+          }).addTo(mymap);
 
           globaldataObj.forEach(function(data) {
           var sc = data["UT_SPECIES"];
@@ -1361,7 +1401,12 @@ var mymap = '', //globalmap variable
           var len = globaldataObj.length;
           $("#sbheadfont").text(len);
           mymap.removeLayer(markerGroup);
-          markerGroup = L.markerClusterGroup().addTo(mymap);
+          markerGroup = L.markerClusterGroup({
+            disableClusteringAtZoom: 12,
+            iconCreateFunction: function(cluster) {
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            }
+          }).addTo(mymap);
 
           globaldataObj.forEach(function(data) {
           var sc = data["SPECIES"];
