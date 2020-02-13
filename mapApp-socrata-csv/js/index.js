@@ -82,9 +82,11 @@ var mymap = '', //globalmap variable
       mymap.removeLayer(markerGroup);
       mymap.removeLayer(heatGroup);
       markerGroup = L.markerClusterGroup({
-        disableClusteringAtZoom: 12,
+        disableClusteringAtZoom: 13,
+        spiderfyOnMaxZoom: false,
+        singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
         }
       }).addTo(mymap);
 
@@ -107,12 +109,12 @@ var mymap = '', //globalmap variable
               opacity: 0.5,
               fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
               fillOpacity: 1.0,
-              radius: 160
+              radius: 70
             }).addTo(markerGroup);     
           
           var aH = data["attributes"];
           // Add popup to markers
-          circle.bindPopup("OBJECTID: " + aH["OBJECTID"] + "<br> COMPKEY: " + aH["COMPKEY"] + "<br> UNITID: " + aH["UNITID"] + "<br> UNITDESC: " + aH["UNITDESC"] + "<br> CONDITION: " + aH["CONDITION"] + "<br> CONDITION_ASSESSMENT_DATE: " + aH["CONDITION_ASSESSMENT_DATE"] + "<br>CURRENT_STATUS: " + aH["CURRENT_STATUS"] + "<br> PRIMARYDISTRICTCD: " + aH["PRIMARYDISTRICTCD"] + "<br> SECONDARYDISTRICTCD: " + aH["SECONDARYDISTRICTCD"] + "<br> OVERRIDEYN: " + aH["OVERRIDEYN"] + "<br> COMPTYPE: " + aH["COMPTYPE"] + "<br> SEGKEY: " + aH["SEGKEY"] + "<br> UNITTYPE: " + aH["UNITTYPE"] + "<br> OWNERSHIP: " + aH["OWNERSHIP"] + "<br> CURRENT_STATUS_DATE: " + aH["CURRENT_STATUS_DATE"] + "<br> LAST_VERIFY_DATE: " + aH["LAST_VERIFY_DATE"] + "<br> PLANTED_DATE: " + aH["PLANTED_DATE"] + "<br> BOTANICAL_NAME: " + aH["BOTANICAL_NAME"] + "<br> SCIENTIFIC_NAME: " + aH["SCIENTIFIC_NAME"] + "<br> HERITAGE: " + aH["HERITAGE"] + "<br> EXCEPTIONAL: " + aH["EXCEPTIONAL"] + "<br> CODEREQ: " + aH["CODEREQ"] + "<br> GSI" + aH["GSI"] + "<br> GREEN_FACTOR: " + aH["GREEN_FACTOR"] + "<br> WIRES: " + aH["WIRES"] + "<br> CABLED: " + aH["CABLED"] + "<br> CLEARANCE_PROBLEM: " + aH["CLEARANCE_PROBLEM"] + "<br> SPACETYPE: " + aH["SPACETYPE"] + "<br> SITETYPE: " + aH["SITETYPE"] + "<br> GROWSPACE: " + aH["GROWSPACE"] + "<br> DIAM: " + aH["DIAM"] + "<br> CONDITION_RATING: " + aH["CONDITION_RATING"] + "<br> FUNDING_SOURCE: " + aH["FUNDING_SOURCE"] + "<br> WATER_THROUGH_YR1" + aH["WATER_THROUGH_YR1"] + "<br> WATER_THROUGH_YR2: " + aH["WATER_THROUGH_YR2"] + "<br> WATER_THROUGH_YR3: " + aH["WATER_THROUGH_YR3"] + "<br> OWNERDIAM: " + aH["OWNERDIAM"] + "<br> EXPDATE: " + aH["EXPDATE"] + "<br> COMMON_NAME: " + aH["COMMON_NAME"] + "<br> TREEHEIGHT: " + aH["TREEHEIGHT"] + "<br> ASBUILTPLANNO: " + aH["ASBUILTPLANNO"] + "<br> LANDSCAPEAREAASSOC: " + aH["LANDSCAPEAREAASSOC"] + "<br> COMMENTS: " + aH["COMMENTS"] + "<br> OVERRIDECOMMENT: " + aH["OVERRIDECOMMENT"] + "<br> SHAPE_LNG: " + aH["SHAPE_LNG"] + "<br> SHAPE_LAT: " + aH["SHAPE_LAT"] + "<br> IRRIGATESYSYN: " + aH["IRRIGATESYSYN"] + "<br> ASSETGROUPID: " + aH["ASSETGROUPID"] + "<br> ASSETGROUPDESC: " + aH["ASSETGROUPDESC"] + "<br> MODDATE: " + aH["MODDATE"] + "<br>MODBY: " + aH["MODBY"] + "<br> TOTAL_RANK: " + aH["TOTAL_RANK"] + "<br> TOTAL_COUNT: " + aH["TOTAL_COUNT"] + "<br> GENUS: " + aH["GENUS"] + "<br> UFMAINTMGMTUNIT: " + aH["UFMAINTMGMTUNIT"]);
+          circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + aH["OBJECTID"] + "<br> COMPKEY: " + aH["COMPKEY"] + "<br> UNITID: " + aH["UNITID"] + "<br> UNITDESC: " + aH["UNITDESC"] + "<br> CONDITION: " + aH["CONDITION"] + "<br> CONDITION_ASSESSMENT_DATE: " + aH["CONDITION_ASSESSMENT_DATE"] + "<br>CURRENT_STATUS: " + aH["CURRENT_STATUS"] + "<br> PRIMARYDISTRICTCD: " + aH["PRIMARYDISTRICTCD"] + "<br> SECONDARYDISTRICTCD: " + aH["SECONDARYDISTRICTCD"] + "<br> OVERRIDEYN: " + aH["OVERRIDEYN"] + "<br> COMPTYPE: " + aH["COMPTYPE"] + "<br> SEGKEY: " + aH["SEGKEY"] + "<br> UNITTYPE: " + aH["UNITTYPE"] + "<br> OWNERSHIP: " + aH["OWNERSHIP"] + "<br> CURRENT_STATUS_DATE: " + aH["CURRENT_STATUS_DATE"] + "<br> LAST_VERIFY_DATE: " + aH["LAST_VERIFY_DATE"] + "<br> PLANTED_DATE: " + aH["PLANTED_DATE"] + "<br> BOTANICAL_NAME: " + aH["BOTANICAL_NAME"] + "<br> SCIENTIFIC_NAME: " + aH["SCIENTIFIC_NAME"] + "<br> HERITAGE: " + aH["HERITAGE"] + "<br> EXCEPTIONAL: " + aH["EXCEPTIONAL"] + "<br> CODEREQ: " + aH["CODEREQ"] + "<br> GSI" + aH["GSI"] + "<br> GREEN_FACTOR: " + aH["GREEN_FACTOR"] + "<br> WIRES: " + aH["WIRES"] + "<br> CABLED: " + aH["CABLED"] + "<br> CLEARANCE_PROBLEM: " + aH["CLEARANCE_PROBLEM"] + "<br> SPACETYPE: " + aH["SPACETYPE"] + "<br> SITETYPE: " + aH["SITETYPE"] + "<br> GROWSPACE: " + aH["GROWSPACE"] + "<br> DIAM: " + aH["DIAM"] + "<br> CONDITION_RATING: " + aH["CONDITION_RATING"] + "<br> FUNDING_SOURCE: " + aH["FUNDING_SOURCE"] + "<br> WATER_THROUGH_YR1" + aH["WATER_THROUGH_YR1"] + "<br> WATER_THROUGH_YR2: " + aH["WATER_THROUGH_YR2"] + "<br> WATER_THROUGH_YR3: " + aH["WATER_THROUGH_YR3"] + "<br> OWNERDIAM: " + aH["OWNERDIAM"] + "<br> EXPDATE: " + aH["EXPDATE"] + "<br> COMMON_NAME: " + aH["COMMON_NAME"] + "<br> TREEHEIGHT: " + aH["TREEHEIGHT"] + "<br> ASBUILTPLANNO: " + aH["ASBUILTPLANNO"] + "<br> LANDSCAPEAREAASSOC: " + aH["LANDSCAPEAREAASSOC"] + "<br> COMMENTS: " + aH["COMMENTS"] + "<br> OVERRIDECOMMENT: " + aH["OVERRIDECOMMENT"] + "<br> SHAPE_LNG: " + aH["SHAPE_LNG"] + "<br> SHAPE_LAT: " + aH["SHAPE_LAT"] + "<br> IRRIGATESYSYN: " + aH["IRRIGATESYSYN"] + "<br> ASSETGROUPID: " + aH["ASSETGROUPID"] + "<br> ASSETGROUPDESC: " + aH["ASSETGROUPDESC"] + "<br> MODDATE: " + aH["MODDATE"] + "<br>MODBY: " + aH["MODBY"] + "<br> TOTAL_RANK: " + aH["TOTAL_RANK"] + "<br> TOTAL_COUNT: " + aH["TOTAL_COUNT"] + "<br> GENUS: " + aH["GENUS"] + "<br> UFMAINTMGMTUNIT: " + aH["UFMAINTMGMTUNIT"]+"</div>");
          } // end of if check
          else {
            console.log('no geom', data);
@@ -140,9 +142,11 @@ var mymap = '', //globalmap variable
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
           markerGroup = L.markerClusterGroup({
-            disableClusteringAtZoom: 12,
+            disableClusteringAtZoom: 13,
+            spiderfyOnMaxZoom: false,
+            singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
     
@@ -166,12 +170,12 @@ var mymap = '', //globalmap variable
                   opacity: 0.5,
                   fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                   fillOpacity: 1.0,
-                  radius: 160
+                  radius: 70
                 }).addTo(markerGroup);     
               
               var aH = data["attributes"];
               // Add popup to markers
-              circle.bindPopup("FID: " + data["FID"] + "<br> OBJECTID: " + data["OBJECTID"] + "<br> UT_TREE_FE: " + data["UT_TREE_FE"] + "<br> UT_CMN_NAM: " + data["UT_CMN_NAM"] + "<br> UT_COMMON_: " + data["UT_COMMON_"] + "<br> UT_SPCS_NA: " + data["UT_SPCS_NA"] + "<br> UT_SPECIES: " + data["UT_SPECIES"] + "<br> UT_SITE_KE: " + data["UT_SITE_KE"] + "<br> UT_TREE_ID: " + data["UT_TREE_ID"] + "<br> UT_TREESIT: " + data["UT_TREESIT"] + "<br> UT_LAND_US: " + data["UT_LAND_US"] + "<br> UT_LONG_CO: " + data["UT_LONG_CO"] + "<br> UT_LAT_COO: " + data["UT_LAT_COO"] + "<br> UT_OWNER_N: " + data["UT_OWNER_N"] + "<br> UT_PLANTED: " + data["UT_PLANTED"] + "<br> UT_FUNDER_: " + data["UT_FUNDER_"] + "<br> UT_NOTES_T: " + data["UT_NOTES_T"] + "<br> UT_EDITOR_: " + data["UT_EDITOR_"] + "<br> UT_EDIT_DA: " + data["UT_EDIT_DA"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"]);
+              circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>FID: " + data["FID"] + "<br> OBJECTID: " + data["OBJECTID"] + "<br> UT_TREE_FE: " + data["UT_TREE_FE"] + "<br> UT_CMN_NAM: " + data["UT_CMN_NAM"] + "<br> UT_COMMON_: " + data["UT_COMMON_"] + "<br> UT_SPCS_NA: " + data["UT_SPCS_NA"] + "<br> UT_SPECIES: " + data["UT_SPECIES"] + "<br> UT_SITE_KE: " + data["UT_SITE_KE"] + "<br> UT_TREE_ID: " + data["UT_TREE_ID"] + "<br> UT_TREESIT: " + data["UT_TREESIT"] + "<br> UT_LAND_US: " + data["UT_LAND_US"] + "<br> UT_LONG_CO: " + data["UT_LONG_CO"] + "<br> UT_LAT_COO: " + data["UT_LAT_COO"] + "<br> UT_OWNER_N: " + data["UT_OWNER_N"] + "<br> UT_PLANTED: " + data["UT_PLANTED"] + "<br> UT_FUNDER_: " + data["UT_FUNDER_"] + "<br> UT_NOTES_T: " + data["UT_NOTES_T"] + "<br> UT_EDITOR_: " + data["UT_EDITOR_"] + "<br> UT_EDIT_DA: " + data["UT_EDIT_DA"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"]+"</div>");
       
             });
         }
@@ -195,9 +199,11 @@ var mymap = '', //globalmap variable
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
           markerGroup = L.markerClusterGroup({
-            disableClusteringAtZoom: 12,
+            disableClusteringAtZoom: 13,
+            spiderfyOnMaxZoom: false,
+            singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
     
@@ -221,12 +227,12 @@ var mymap = '', //globalmap variable
                   opacity: 0.5,
                   fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                   fillOpacity: 1.0,
-                  radius: 160
+                  radius: 70
                 }).addTo(markerGroup);     
               
               var aH = data["attributes"];
               // Add popup to markers
-              circle.bindPopup("OBJECTID: " + data["OBJECTID"] + "<br> PARK: " + data["PARK"] + "<br> SPECIES: " + data["SPECIES"] + "<br> COMMON: " + data["COMMON"] + "<br> DBH_WL: " + data["DBH_WL:"] + "<br> HEIGHT_WL: " + data["HEIGHT_WL"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"]);
+              circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + data["OBJECTID"] + "<br> PARK: " + data["PARK"] + "<br> SPECIES: " + data["SPECIES"] + "<br> COMMON: " + data["COMMON"] + "<br> DBH_WL: " + data["DBH_WL:"] + "<br> HEIGHT_WL: " + data["HEIGHT_WL"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"] + "</div>");
       
             });
         }
@@ -250,9 +256,11 @@ var mymap = '', //globalmap variable
           mymap.removeLayer(markerGroup);
           mymap.removeLayer(heatGroup);
           markerGroup = L.markerClusterGroup({
-            disableClusteringAtZoom: 12,
+            disableClusteringAtZoom: 13,
+            spiderfyOnMaxZoom: false,
+            singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
     
@@ -275,12 +283,12 @@ var mymap = '', //globalmap variable
                   opacity: 0.5,
                   fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                   fillOpacity: 1.0,
-                  radius: 160
+                  radius: 70
                 }).addTo(markerGroup);     
               
               var aH = data;
               // Add popup to markers
-              circle.bindPopup("OBJECTID: " + aH[2] + "<br> COMPKEY: " + aH[3] + "<br> UNITID: " + aH[4] + "<br> UNITDESC: " + aH[5] + "<br> CONDITION: " + aH[6] + "<br> CONDITION_ASSESSMENT_DATE: " + aH[7] + "<br>CURRENT_STATUS: " + aH[8] + "<br> PRIMARYDISTRICTCD: " + aH[9] + "<br> SECONDARYDISTRICTCD: " + aH[10] + "<br> OVERRIDEYN: " + aH[11] + "<br> COMPTYPE: " + aH[12] + "<br> SEGKEY: " + aH[13] + "<br> UNITTYPE: " + aH[14] + "<br> OWNERSHIP: " + aH[15] + "<br> CURRENT_STATUS_DATE: " + aH[16] + "<br> LAST_VERIFY_DATE: " + aH[17] + "<br> PLANTED_DATE: " + aH[18] + "<br> BOTANICAL_NAME: " + aH[19] + "<br> SCIENTIFIC_NAME: " + aH[20] + "<br> HERITAGE: " + aH[21] + "<br> EXCEPTIONAL: " + aH[22] + "<br> CODEREQ: " + aH[23] + "<br> GSI" + aH[24] + "<br> GREEN_FACTOR: " + aH[25] + "<br> WIRES: " + aH[26] + "<br> CABLED: " + aH[27] + "<br> CLEARANCE_PROBLEM: " + aH[28] + "<br> SPACETYPE: " + aH[29] + "<br> SITETYPE: " + aH[30] + "<br> GROWSPACE: " + aH[31] + "<br> DIAM: " + aH[32] + "<br> CONDITION_RATING: " + aH[33] + "<br> FUNDING_SOURCE: " + aH[34] + "<br> WATER_THROUGH_YR1" + aH[35] + "<br> WATER_THROUGH_YR2: " + aH[36] + "<br> WATER_THROUGH_YR3: " + aH[37] + "<br> OWNERDIAM: " + aH[38] + "<br> EXPDATE: " + aH[39] + "<br> COMMON_NAME: " + aH[40] + "<br> TREEHEIGHT: " + aH[41] + "<br> ASBUILTPLANNO: " + aH[42] + "<br> LANDSCAPEAREAASSOC: " + aH[43] + "<br> COMMENTS: " + aH[44] + "<br> OVERRIDECOMMENT: " + aH[45] + "<br> SHAPE_LNG: " + aH[46] + "<br> SHAPE_LAT: " + aH[47] + "<br> IRRIGATESYSYN: " + aH[48] + "<br> ASSETGROUPID: " + aH[49] + "<br> ASSETGROUPDESC: " + aH[50] + "<br> MODDATE: " + aH[51] + "<br>MODBY: " + aH[52] + "<br> TOTAL_RANK: " + aH[53] + "<br> TOTAL_COUNT: " + aH[54] + "<br> GENUS: " + aH[55] + "<br> UFMAINTMGMTUNIT: " + aH[56]);
+              circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + aH[2] + "<br> COMPKEY: " + aH[3] + "<br> UNITID: " + aH[4] + "<br> UNITDESC: " + aH[5] + "<br> CONDITION: " + aH[6] + "<br> CONDITION_ASSESSMENT_DATE: " + aH[7] + "<br>CURRENT_STATUS: " + aH[8] + "<br> PRIMARYDISTRICTCD: " + aH[9] + "<br> SECONDARYDISTRICTCD: " + aH[10] + "<br> OVERRIDEYN: " + aH[11] + "<br> COMPTYPE: " + aH[12] + "<br> SEGKEY: " + aH[13] + "<br> UNITTYPE: " + aH[14] + "<br> OWNERSHIP: " + aH[15] + "<br> CURRENT_STATUS_DATE: " + aH[16] + "<br> LAST_VERIFY_DATE: " + aH[17] + "<br> PLANTED_DATE: " + aH[18] + "<br> BOTANICAL_NAME: " + aH[19] + "<br> SCIENTIFIC_NAME: " + aH[20] + "<br> HERITAGE: " + aH[21] + "<br> EXCEPTIONAL: " + aH[22] + "<br> CODEREQ: " + aH[23] + "<br> GSI" + aH[24] + "<br> GREEN_FACTOR: " + aH[25] + "<br> WIRES: " + aH[26] + "<br> CABLED: " + aH[27] + "<br> CLEARANCE_PROBLEM: " + aH[28] + "<br> SPACETYPE: " + aH[29] + "<br> SITETYPE: " + aH[30] + "<br> GROWSPACE: " + aH[31] + "<br> DIAM: " + aH[32] + "<br> CONDITION_RATING: " + aH[33] + "<br> FUNDING_SOURCE: " + aH[34] + "<br> WATER_THROUGH_YR1" + aH[35] + "<br> WATER_THROUGH_YR2: " + aH[36] + "<br> WATER_THROUGH_YR3: " + aH[37] + "<br> OWNERDIAM: " + aH[38] + "<br> EXPDATE: " + aH[39] + "<br> COMMON_NAME: " + aH[40] + "<br> TREEHEIGHT: " + aH[41] + "<br> ASBUILTPLANNO: " + aH[42] + "<br> LANDSCAPEAREAASSOC: " + aH[43] + "<br> COMMENTS: " + aH[44] + "<br> OVERRIDECOMMENT: " + aH[45] + "<br> SHAPE_LNG: " + aH[46] + "<br> SHAPE_LAT: " + aH[47] + "<br> IRRIGATESYSYN: " + aH[48] + "<br> ASSETGROUPID: " + aH[49] + "<br> ASSETGROUPDESC: " + aH[50] + "<br> MODDATE: " + aH[51] + "<br>MODBY: " + aH[52] + "<br> TOTAL_RANK: " + aH[53] + "<br> TOTAL_COUNT: " + aH[54] + "<br> GENUS: " + aH[55] + "<br> UFMAINTMGMTUNIT: " + aH[56] + "</div>");
       
             });
         }
@@ -330,9 +338,11 @@ var mymap = '', //globalmap variable
       L.control.layers(baseMaps).addTo(mymap);
 
       markerGroup = L.markerClusterGroup({
-        disableClusteringAtZoom: 12,
+        disableClusteringAtZoom: 13,
+        spiderfyOnMaxZoom: false,
+        singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
         }
       }).addTo(mymap);
       heatGroup = L.layerGroup().addTo(mymap);
@@ -1118,9 +1128,11 @@ var mymap = '', //globalmap variable
       $("#sbheadfont").text(len);
       mymap.removeLayer(markerGroup);
       markerGroup = L.markerClusterGroup({
-        disableClusteringAtZoom: 12,
+        disableClusteringAtZoom: 13,
+        spiderfyOnMaxZoom: false,
+        singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
         }
       }).addTo(mymap);
       console.log('dat', globaldataObj);
@@ -1140,12 +1152,12 @@ var mymap = '', //globalmap variable
               opacity: 0.5,
               fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
               fillOpacity: 1.0,
-              radius: 160
+              radius: 70
             }).addTo(markerGroup);     
           
           var aH = data["attributes"];
           // Add popup to markers
-          circle.bindPopup("OBJECTID: " + aH["OBJECTID"] + "<br> COMPKEY: " + aH["COMPKEY"] + "<br> UNITID: " + aH["UNITID"] + "<br> UNITDESC: " + aH["UNITDESC"] + "<br> CONDITION: " + aH["CONDITION"] + "<br> CONDITION_ASSESSMENT_DATE: " + aH["CONDITION_ASSESSMENT_DATE"] + "<br>CURRENT_STATUS: " + aH["CURRENT_STATUS"] + "<br> PRIMARYDISTRICTCD: " + aH["PRIMARYDISTRICTCD"] + "<br> SECONDARYDISTRICTCD: " + aH["SECONDARYDISTRICTCD"] + "<br> OVERRIDEYN: " + aH["OVERRIDEYN"] + "<br> COMPTYPE: " + aH["COMPTYPE"] + "<br> SEGKEY: " + aH["SEGKEY"] + "<br> UNITTYPE: " + aH["UNITTYPE"] + "<br> OWNERSHIP: " + aH["OWNERSHIP"] + "<br> CURRENT_STATUS_DATE: " + aH["CURRENT_STATUS_DATE"] + "<br> LAST_VERIFY_DATE: " + aH["LAST_VERIFY_DATE"] + "<br> PLANTED_DATE: " + aH["PLANTED_DATE"] + "<br> BOTANICAL_NAME: " + aH["BOTANICAL_NAME"] + "<br> SCIENTIFIC_NAME: " + aH["SCIENTIFIC_NAME"] + "<br> HERITAGE: " + aH["HERITAGE"] + "<br> EXCEPTIONAL: " + aH["EXCEPTIONAL"] + "<br> CODEREQ: " + aH["CODEREQ"] + "<br> GSI" + aH["GSI"] + "<br> GREEN_FACTOR: " + aH["GREEN_FACTOR"] + "<br> WIRES: " + aH["WIRES"] + "<br> CABLED: " + aH["CABLED"] + "<br> CLEARANCE_PROBLEM: " + aH["CLEARANCE_PROBLEM"] + "<br> SPACETYPE: " + aH["SPACETYPE"] + "<br> SITETYPE: " + aH["SITETYPE"] + "<br> GROWSPACE: " + aH["GROWSPACE"] + "<br> DIAM: " + aH["DIAM"] + "<br> CONDITION_RATING: " + aH["CONDITION_RATING"] + "<br> FUNDING_SOURCE: " + aH["FUNDING_SOURCE"] + "<br> WATER_THROUGH_YR1" + aH["WATER_THROUGH_YR1"] + "<br> WATER_THROUGH_YR2: " + aH["WATER_THROUGH_YR2"] + "<br> WATER_THROUGH_YR3: " + aH["WATER_THROUGH_YR3"] + "<br> OWNERDIAM: " + aH["OWNERDIAM"] + "<br> EXPDATE: " + aH["EXPDATE"] + "<br> COMMON_NAME: " + aH["COMMON_NAME"] + "<br> TREEHEIGHT: " + aH["TREEHEIGHT"] + "<br> ASBUILTPLANNO: " + aH["ASBUILTPLANNO"] + "<br> LANDSCAPEAREAASSOC: " + aH["LANDSCAPEAREAASSOC"] + "<br> COMMENTS: " + aH["COMMENTS"] + "<br> OVERRIDECOMMENT: " + aH["OVERRIDECOMMENT"] + "<br> SHAPE_LNG: " + aH["SHAPE_LNG"] + "<br> SHAPE_LAT: " + aH["SHAPE_LAT"] + "<br> IRRIGATESYSYN: " + aH["IRRIGATESYSYN"] + "<br> ASSETGROUPID: " + aH["ASSETGROUPID"] + "<br> ASSETGROUPDESC: " + aH["ASSETGROUPDESC"] + "<br> MODDATE: " + aH["MODDATE"] + "<br>MODBY: " + aH["MODBY"] + "<br> TOTAL_RANK: " + aH["TOTAL_RANK"] + "<br> TOTAL_COUNT: " + aH["TOTAL_COUNT"] + "<br> GENUS: " + aH["GENUS"] + "<br> UFMAINTMGMTUNIT: " + aH["UFMAINTMGMTUNIT"]);
+          circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + aH["OBJECTID"] + "<br> COMPKEY: " + aH["COMPKEY"] + "<br> UNITID: " + aH["UNITID"] + "<br> UNITDESC: " + aH["UNITDESC"] + "<br> CONDITION: " + aH["CONDITION"] + "<br> CONDITION_ASSESSMENT_DATE: " + aH["CONDITION_ASSESSMENT_DATE"] + "<br>CURRENT_STATUS: " + aH["CURRENT_STATUS"] + "<br> PRIMARYDISTRICTCD: " + aH["PRIMARYDISTRICTCD"] + "<br> SECONDARYDISTRICTCD: " + aH["SECONDARYDISTRICTCD"] + "<br> OVERRIDEYN: " + aH["OVERRIDEYN"] + "<br> COMPTYPE: " + aH["COMPTYPE"] + "<br> SEGKEY: " + aH["SEGKEY"] + "<br> UNITTYPE: " + aH["UNITTYPE"] + "<br> OWNERSHIP: " + aH["OWNERSHIP"] + "<br> CURRENT_STATUS_DATE: " + aH["CURRENT_STATUS_DATE"] + "<br> LAST_VERIFY_DATE: " + aH["LAST_VERIFY_DATE"] + "<br> PLANTED_DATE: " + aH["PLANTED_DATE"] + "<br> BOTANICAL_NAME: " + aH["BOTANICAL_NAME"] + "<br> SCIENTIFIC_NAME: " + aH["SCIENTIFIC_NAME"] + "<br> HERITAGE: " + aH["HERITAGE"] + "<br> EXCEPTIONAL: " + aH["EXCEPTIONAL"] + "<br> CODEREQ: " + aH["CODEREQ"] + "<br> GSI" + aH["GSI"] + "<br> GREEN_FACTOR: " + aH["GREEN_FACTOR"] + "<br> WIRES: " + aH["WIRES"] + "<br> CABLED: " + aH["CABLED"] + "<br> CLEARANCE_PROBLEM: " + aH["CLEARANCE_PROBLEM"] + "<br> SPACETYPE: " + aH["SPACETYPE"] + "<br> SITETYPE: " + aH["SITETYPE"] + "<br> GROWSPACE: " + aH["GROWSPACE"] + "<br> DIAM: " + aH["DIAM"] + "<br> CONDITION_RATING: " + aH["CONDITION_RATING"] + "<br> FUNDING_SOURCE: " + aH["FUNDING_SOURCE"] + "<br> WATER_THROUGH_YR1" + aH["WATER_THROUGH_YR1"] + "<br> WATER_THROUGH_YR2: " + aH["WATER_THROUGH_YR2"] + "<br> WATER_THROUGH_YR3: " + aH["WATER_THROUGH_YR3"] + "<br> OWNERDIAM: " + aH["OWNERDIAM"] + "<br> EXPDATE: " + aH["EXPDATE"] + "<br> COMMON_NAME: " + aH["COMMON_NAME"] + "<br> TREEHEIGHT: " + aH["TREEHEIGHT"] + "<br> ASBUILTPLANNO: " + aH["ASBUILTPLANNO"] + "<br> LANDSCAPEAREAASSOC: " + aH["LANDSCAPEAREAASSOC"] + "<br> COMMENTS: " + aH["COMMENTS"] + "<br> OVERRIDECOMMENT: " + aH["OVERRIDECOMMENT"] + "<br> SHAPE_LNG: " + aH["SHAPE_LNG"] + "<br> SHAPE_LAT: " + aH["SHAPE_LAT"] + "<br> IRRIGATESYSYN: " + aH["IRRIGATESYSYN"] + "<br> ASSETGROUPID: " + aH["ASSETGROUPID"] + "<br> ASSETGROUPDESC: " + aH["ASSETGROUPDESC"] + "<br> MODDATE: " + aH["MODDATE"] + "<br>MODBY: " + aH["MODBY"] + "<br> TOTAL_RANK: " + aH["TOTAL_RANK"] + "<br> TOTAL_COUNT: " + aH["TOTAL_COUNT"] + "<br> GENUS: " + aH["GENUS"] + "<br> UFMAINTMGMTUNIT: " + aH["UFMAINTMGMTUNIT"] + "</div>");
   
         } else {
           console.log('dd', data);
@@ -1171,10 +1183,9 @@ var mymap = '', //globalmap variable
           animationEnabled: true, // set to true	
           colorSet: "customColorset",	
           axisX:{
-            // labelMaxWidth: 80, //
-            // labelFontSize: 14,
-			      // labelWrap: true,   // so that the x-axis labels stay straight
-            // interval: 1, //
+            labelMaxWidth: 80, //
+            labelFontSize: 14,
+			      labelWrap: true,   // so that the x-axis labels stay straight
             labelAutoFit: true 
           },
           data: [
@@ -1205,9 +1216,11 @@ var mymap = '', //globalmap variable
         $("#sbheadfont").text(len);
         mymap.removeLayer(markerGroup);
         markerGroup = L.markerClusterGroup({
-          disableClusteringAtZoom: 12,
+          disableClusteringAtZoom: 13,
+          spiderfyOnMaxZoom: false,
+          singleMarkerMode: true,
           iconCreateFunction: function(cluster) {
-            return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
           }
         }).addTo(mymap);
         console.log('dat', globaldataObj);
@@ -1226,12 +1239,12 @@ var mymap = '', //globalmap variable
                 opacity: 0.5,
                 fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                 fillOpacity: 1.0,
-                radius: 160
+                radius: 70
               }).addTo(markerGroup);     
             
             var aH = data;
             // Add popup to markers
-            circle.bindPopup("OBJECTID: " + aH[2] + "<br> COMPKEY: " + aH[3] + "<br> UNITID: " + aH[4] + "<br> UNITDESC: " + aH[5] + "<br> CONDITION: " + aH[6] + "<br> CONDITION_ASSESSMENT_DATE: " + aH[7] + "<br>CURRENT_STATUS: " + aH[8] + "<br> PRIMARYDISTRICTCD: " + aH[9] + "<br> SECONDARYDISTRICTCD: " + aH[10] + "<br> OVERRIDEYN: " + aH[11] + "<br> COMPTYPE: " + aH[12] + "<br> SEGKEY: " + aH[13] + "<br> UNITTYPE: " + aH[14] + "<br> OWNERSHIP: " + aH[15] + "<br> CURRENT_STATUS_DATE: " + aH[16] + "<br> LAST_VERIFY_DATE: " + aH[17] + "<br> PLANTED_DATE: " + aH[18] + "<br> BOTANICAL_NAME: " + aH[19] + "<br> SCIENTIFIC_NAME: " + aH[20] + "<br> HERITAGE: " + aH[21] + "<br> EXCEPTIONAL: " + aH[22] + "<br> CODEREQ: " + aH[23] + "<br> GSI" + aH[24] + "<br> GREEN_FACTOR: " + aH[25] + "<br> WIRES: " + aH[26] + "<br> CABLED: " + aH[27] + "<br> CLEARANCE_PROBLEM: " + aH[28] + "<br> SPACETYPE: " + aH[29] + "<br> SITETYPE: " + aH[30] + "<br> GROWSPACE: " + aH[31] + "<br> DIAM: " + aH[32] + "<br> CONDITION_RATING: " + aH[33] + "<br> FUNDING_SOURCE: " + aH[34] + "<br> WATER_THROUGH_YR1" + aH[35] + "<br> WATER_THROUGH_YR2: " + aH[36] + "<br> WATER_THROUGH_YR3: " + aH[37] + "<br> OWNERDIAM: " + aH[38] + "<br> EXPDATE: " + aH[39] + "<br> COMMON_NAME: " + aH[40] + "<br> TREEHEIGHT: " + aH[41] + "<br> ASBUILTPLANNO: " + aH[42] + "<br> LANDSCAPEAREAASSOC: " + aH[43] + "<br> COMMENTS: " + aH[44] + "<br> OVERRIDECOMMENT: " + aH[45] + "<br> SHAPE_LNG: " + aH[46] + "<br> SHAPE_LAT: " + aH[47] + "<br> IRRIGATESYSYN: " + aH[48] + "<br> ASSETGROUPID: " + aH[49] + "<br> ASSETGROUPDESC: " + aH[50] + "<br> MODDATE: " + aH[51] + "<br>MODBY: " + aH[52] + "<br> TOTAL_RANK: " + aH[53] + "<br> TOTAL_COUNT: " + aH[54] + "<br> GENUS: " + aH[55] + "<br> UFMAINTMGMTUNIT: " + aH[56]);
+            circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + aH[2] + "<br> COMPKEY: " + aH[3] + "<br> UNITID: " + aH[4] + "<br> UNITDESC: " + aH[5] + "<br> CONDITION: " + aH[6] + "<br> CONDITION_ASSESSMENT_DATE: " + aH[7] + "<br>CURRENT_STATUS: " + aH[8] + "<br> PRIMARYDISTRICTCD: " + aH[9] + "<br> SECONDARYDISTRICTCD: " + aH[10] + "<br> OVERRIDEYN: " + aH[11] + "<br> COMPTYPE: " + aH[12] + "<br> SEGKEY: " + aH[13] + "<br> UNITTYPE: " + aH[14] + "<br> OWNERSHIP: " + aH[15] + "<br> CURRENT_STATUS_DATE: " + aH[16] + "<br> LAST_VERIFY_DATE: " + aH[17] + "<br> PLANTED_DATE: " + aH[18] + "<br> BOTANICAL_NAME: " + aH[19] + "<br> SCIENTIFIC_NAME: " + aH[20] + "<br> HERITAGE: " + aH[21] + "<br> EXCEPTIONAL: " + aH[22] + "<br> CODEREQ: " + aH[23] + "<br> GSI" + aH[24] + "<br> GREEN_FACTOR: " + aH[25] + "<br> WIRES: " + aH[26] + "<br> CABLED: " + aH[27] + "<br> CLEARANCE_PROBLEM: " + aH[28] + "<br> SPACETYPE: " + aH[29] + "<br> SITETYPE: " + aH[30] + "<br> GROWSPACE: " + aH[31] + "<br> DIAM: " + aH[32] + "<br> CONDITION_RATING: " + aH[33] + "<br> FUNDING_SOURCE: " + aH[34] + "<br> WATER_THROUGH_YR1" + aH[35] + "<br> WATER_THROUGH_YR2: " + aH[36] + "<br> WATER_THROUGH_YR3: " + aH[37] + "<br> OWNERDIAM: " + aH[38] + "<br> EXPDATE: " + aH[39] + "<br> COMMON_NAME: " + aH[40] + "<br> TREEHEIGHT: " + aH[41] + "<br> ASBUILTPLANNO: " + aH[42] + "<br> LANDSCAPEAREAASSOC: " + aH[43] + "<br> COMMENTS: " + aH[44] + "<br> OVERRIDECOMMENT: " + aH[45] + "<br> SHAPE_LNG: " + aH[46] + "<br> SHAPE_LAT: " + aH[47] + "<br> IRRIGATESYSYN: " + aH[48] + "<br> ASSETGROUPID: " + aH[49] + "<br> ASSETGROUPDESC: " + aH[50] + "<br> MODDATE: " + aH[51] + "<br>MODBY: " + aH[52] + "<br> TOTAL_RANK: " + aH[53] + "<br> TOTAL_COUNT: " + aH[54] + "<br> GENUS: " + aH[55] + "<br> UFMAINTMGMTUNIT: " + aH[56] + "</div>");
           
         });
   
@@ -1253,11 +1266,9 @@ var mymap = '', //globalmap variable
             animationEnabled: true, // set to true	
             colorSet: "customColorset",	
             axisX:{
-              /*labelMaxWidth: 80, //
+              labelMaxWidth: 80, //
               labelFontSize: 14,
               labelWrap: true,   // so that the x-axis labels stay straight
-              interval: 1, //
-              */
               labelAutoFit: true 
             },
             data: [
@@ -1321,9 +1332,11 @@ var mymap = '', //globalmap variable
           $("#sbheadfont").text(len);
           mymap.removeLayer(markerGroup);
           markerGroup = L.markerClusterGroup({
-            disableClusteringAtZoom: 12,
+            disableClusteringAtZoom: 13,
+            spiderfyOnMaxZoom: false,
+            singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
 
@@ -1343,12 +1356,12 @@ var mymap = '', //globalmap variable
                 opacity: 0.5,
                 fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                 fillOpacity: 1.0,
-                radius: 160
+                radius: 70
               }).addTo(markerGroup);     
             
             var aH = data;
             // Add popup to markers
-            circle.bindPopup("FID: " + data["FID"] + "<br> OBJECTID: " + data["OBJECTID"] + "<br> UT_TREE_FE: " + data["UT_TREE_FE"] + "<br> UT_CMN_NAM: " + data["UT_CMN_NAM"] + "<br> UT_COMMON_: " + data["UT_COMMON_"] + "<br> UT_SPCS_NA: " + data["UT_SPCS_NA"] + "<br> UT_SPECIES: " + data["UT_SPECIES"] + "<br> UT_SITE_KE: " + data["UT_SITE_KE"] + "<br> UT_TREE_ID: " + data["UT_TREE_ID"] + "<br> UT_TREESIT: " + data["UT_TREESIT"] + "<br> UT_LAND_US: " + data["UT_LAND_US"] + "<br> UT_LONG_CO: " + data["UT_LONG_CO"] + "<br> UT_LAT_COO: " + data["UT_LAT_COO"] + "<br> UT_OWNER_N: " + data["UT_OWNER_N"] + "<br> UT_PLANTED: " + data["UT_PLANTED"] + "<br> UT_FUNDER_: " + data["UT_FUNDER_"] + "<br> UT_NOTES_T: " + data["UT_NOTES_T"] + "<br> UT_EDITOR_: " + data["UT_EDITOR_"] + "<br> UT_EDIT_DA: " + data["UT_EDIT_DA"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"]);
+            circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>FID: " + data["FID"] + "<br> OBJECTID: " + data["OBJECTID"] + "<br> UT_TREE_FE: " + data["UT_TREE_FE"] + "<br> UT_CMN_NAM: " + data["UT_CMN_NAM"] + "<br> UT_COMMON_: " + data["UT_COMMON_"] + "<br> UT_SPCS_NA: " + data["UT_SPCS_NA"] + "<br> UT_SPECIES: " + data["UT_SPECIES"] + "<br> UT_SITE_KE: " + data["UT_SITE_KE"] + "<br> UT_TREE_ID: " + data["UT_TREE_ID"] + "<br> UT_TREESIT: " + data["UT_TREESIT"] + "<br> UT_LAND_US: " + data["UT_LAND_US"] + "<br> UT_LONG_CO: " + data["UT_LONG_CO"] + "<br> UT_LAT_COO: " + data["UT_LAT_COO"] + "<br> UT_OWNER_N: " + data["UT_OWNER_N"] + "<br> UT_PLANTED: " + data["UT_PLANTED"] + "<br> UT_FUNDER_: " + data["UT_FUNDER_"] + "<br> UT_NOTES_T: " + data["UT_NOTES_T"] + "<br> UT_EDITOR_: " + data["UT_EDITOR_"] + "<br> UT_EDIT_DA: " + data["UT_EDIT_DA"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"] + "</div>");
      
           });
     
@@ -1370,10 +1383,9 @@ var mymap = '', //globalmap variable
               animationEnabled: true, // set to true	
               colorSet: "customColorset",	
               axisX:{
-                // labelMaxWidth: 80, //
-                // labelFontSize: 14,
-                // labelWrap: true,   // so that the x-axis labels stay straight
-                // interval: 1, //
+                labelMaxWidth: 80, //
+                labelFontSize: 14,
+                labelWrap: true,   // so that the x-axis labels stay straight
                 labelAutoFit: true 
               },
               data: [
@@ -1402,9 +1414,11 @@ var mymap = '', //globalmap variable
           $("#sbheadfont").text(len);
           mymap.removeLayer(markerGroup);
           markerGroup = L.markerClusterGroup({
-            disableClusteringAtZoom: 12,
+            disableClusteringAtZoom: 13,
+            spiderfyOnMaxZoom: false,
+            singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:10px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
 
@@ -1424,12 +1438,12 @@ var mymap = '', //globalmap variable
                 opacity: 0.5,
                 fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                 fillOpacity: 1.0,
-                radius: 160
+                radius: 70
               }).addTo(markerGroup);     
             
             var aH = data;
             // Add popup to markers
-            circle.bindPopup("OBJECTID: " + data["OBJECTID"] + "<br> PARK: " + data["PARK"] + "<br> SPECIES: " + data["SPECIES"] + "<br> COMMON: " + data["COMMON"] + "<br> DBH_WL: " + data["DBH_WL:"] + "<br> HEIGHT_WL: " + data["HEIGHT_WL"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"]);
+            circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + data["OBJECTID"] + "<br> PARK: " + data["PARK"] + "<br> SPECIES: " + data["SPECIES"] + "<br> COMMON: " + data["COMMON"] + "<br> DBH_WL: " + data["DBH_WL:"] + "<br> HEIGHT_WL: " + data["HEIGHT_WL"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"] +"</div>");
      
           });
     
@@ -1451,10 +1465,9 @@ var mymap = '', //globalmap variable
               animationEnabled: true, // set to true	
               colorSet: "customColorset",	
               axisX:{
-                // labelMaxWidth: 80, //
-                // labelFontSize: 14,
-                // labelWrap: true,   // so that the x-axis labels stay straight
-                // interval: 1, //
+                labelMaxWidth: 80, //
+                labelFontSize: 14,
+                labelWrap: true,   // so that the x-axis labels stay straight
                 labelAutoFit: true 
               },
               data: [
