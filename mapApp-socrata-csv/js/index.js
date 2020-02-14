@@ -1183,8 +1183,8 @@ var mymap = '', //globalmap variable
           animationEnabled: true, // set to true	
           colorSet: "customColorset",	
           axisX:{
-            labelMaxWidth: 80, //
-            labelFontSize: 14,
+            labelMaxWidth: 60, //
+            labelFontSize: 12,
 			      labelWrap: true,   // so that the x-axis labels stay straight
             labelAutoFit: true 
           },
@@ -1266,8 +1266,8 @@ var mymap = '', //globalmap variable
             animationEnabled: true, // set to true	
             colorSet: "customColorset",	
             axisX:{
-              labelMaxWidth: 80, //
-              labelFontSize: 14,
+              labelMaxWidth: 60, //
+              labelFontSize: 12,
               labelWrap: true,   // so that the x-axis labels stay straight
               labelAutoFit: true 
             },
@@ -1383,8 +1383,8 @@ var mymap = '', //globalmap variable
               animationEnabled: true, // set to true	
               colorSet: "customColorset",	
               axisX:{
-                labelMaxWidth: 80, //
-                labelFontSize: 14,
+                labelMaxWidth: 60, //
+                labelFontSize: 12,
                 labelWrap: true,   // so that the x-axis labels stay straight
                 labelAutoFit: true 
               },
@@ -1465,8 +1465,8 @@ var mymap = '', //globalmap variable
               animationEnabled: true, // set to true	
               colorSet: "customColorset",	
               axisX:{
-                labelMaxWidth: 80, //
-                labelFontSize: 14,
+                labelMaxWidth: 60, //
+                labelFontSize: 12,
                 labelWrap: true,   // so that the x-axis labels stay straight
                 labelAutoFit: true 
               },
