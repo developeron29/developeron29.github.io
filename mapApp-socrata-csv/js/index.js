@@ -1,10 +1,21 @@
 var mymap = '', //globalmap variable
-    globalColorSet1 = ["#4F81BC", "#C0504E", "#9BBB58", "#23BFAA", "#8064A1", "#4AACC5", "#F79647", "#7F6084", "#77A033", "#33558B", "#E59566"], // Colorset1 default colors
     globalColorSetExtend = [
       "#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#648177" ,"#0d5ac1" , "#f205e6" ,"#1c0365" ,"#14a9ad" ,"#4ca2f9" ,"#a4e43f" ,"#d298e2" ,"#6119d0", "#d2737d" ,"#c0a43c" ,"#f2510e" ,"#651be6" ,"#79806e" ,"#61da5e" ,"#cd2f00" , "#9348af" ,"#01ac53" ,"#c5a4fb", "#996635","#b11573" ,"#4bb473" ,"#75d89e" , "#2f3f94" ,"#2f7b99" ,"#da967d" ,"#34891f" ,"#b0d87b" ,"#ca4751" ,"#7e50a8" , "#c4d647" ,"#e0eeb8" ,"#11dec1" ,"#289812" ,"#566ca0" ,"#ffdbe1" ,"#2f1179" ,"#935b6d" ,"#916988" ,"#513d98" ,"#aead3a", "#9e6d71", "#4b5bdc", "#0cd36d","#250662", "#cb5bea", "#228916", "#ac3e1b", "#df514a", "#539397", "#880977","#f697c1", "#ba96ce", "#679c9d", "#c6c42c", "#5d2c52", "#48b41b", "#e1cf3b","#5be4f0", "#57c4d8", "#a4d17a", "#225b8", "#be608b", "#96b00c", "#088baf","#f158bf", "#e145ba", "#ee91e3", "#05d371", "#5426e0", "#4834d0", "#802234","#6749e8", "#0971f0", "#8fb413", "#b2b4f0", "#c3c89d", "#c9a941", "#41d158",
       "#fb21a3", "#51aed9", "#5bb32d", "#807fb", "#21538e", "#89d534", "#d36647","#7fb411", "#0023b8", "#3b8c2a", "#986b53", "#f50422", "#983f7a", "#ea24a3","#79352c", "#521250", "#c79ed2", "#d6dd92", "#e33e52", "#b2be57", "#fa06ec","#1bb699", "#6b2e5f", "#64820f", "#1c271", "#21538e", "#89d534", "#d36647","#7fb411", "#0023b8", "#3b8c2a", "#986b53", "#f50422", "#983f7a", "#ea24a3","#79352c", "#521250", "#c79ed2", "#d6dd92", "#e33e52", "#b2be57", "#fa06ec","#1bb699", "#6b2e5f", "#64820f", "#1c271", "#9cb64a", "#996c48", "#9ab9b7","#06e052", "#e3a481", "#0eb621", "#fc458e", "#b2db15", "#aa226d", "#792ed8","#73872a", "#520d3a", "#cefcb8", "#a5b3d9", "#7d1d85", "#c4fd57", "#f1ae16","#8fe22a", "#ef6e3c", "#243eeb", "#1dc18", "#dd93fd", "#3f8473", "#e7dbce","#421f79", "#7a3d93", "#635f6d", "#93f2d7", "#9b5c2a", "#15b9ee", "#0f5997", "#409188", "#911e20", "#1350ce", "#10e5b1", "#fff4d7", "#cb2582", "#ce00be",
       "#32d5d6", "#17232", "#608572", "#c79bc2", "#00f87c", "#77772a", "#6995ba","#fc6b57", "#f07815", "#8fd883", "#060e27", "#96e591", "#21d52e", "#d00043","#b47162", "#1ec227", "#4f0f6f", "#1d1d58", "#947002", "#bde052", "#e08c56","#28fcfd", "#bb09b", "#36486a", "#d02e29", "#1ae6db", "#3e464c", "#a84a8f","#911e7e", "#3f16d9", "#0f525f", "#ac7c0a", "#b4c086", "#c9d730", "#30cc49",
       "#3d6751", "#fb4c03", "#640fc1", "#62c03e", "#d3493a", "#88aa0b", "#406df9","#615af0", "#4be47", "#2a3434", "#4a543f", "#79bca0", "#a8b8d4", "#00efd4","#7ad236", "#7260d8", "#1deaa7", "#06f43a", "#823c59", "#e3d94c", "#dc1c06","#f53b2a", "#b46238", "#2dfff6", "#a82b89", "#1a8011", "#436a9f", "#1a806a","#4cf09d", "#c188a2", "#67eb4b", "#b308d3", "#fc7e41", "#af3101", "#ff065","#71b1f4", "#a2f8a5", "#e23dd0", "#d3486d", "#00f7f9", "#474893", "#3cec35","#1c65cb", "#5d1d0c", "#2d7d2a", "#ff3420", "#5cdd87", "#a259a4", "#e4ac44","#1bede6", "#8798a4", "#d7790f", "#b2c24f", "#de73c2", "#d70a9c", "#25b67","#88e9b8", "#c2b0e2", "#86e98f", "#ae90e2", "#1a806b", "#436a9e", "#0ec0ff","#f812b3", "#b17fc9", "#8d6c2f", "#d3277a", "#2ca1ae", "#9685eb", "#8a96c6", "#dba2e6", "#76fc1b", "#608fa4", "#20f6ba", "#07d7f6", "#dce77a", "#77ecca"],
+    bbbColorSet = ["#ff0000", "#ff6347", "#ffa500"], // [red, orange, yellow]
+    bbColorSetObj = {
+      "BETULA JACQUEMONTII": "#FF0000", // red
+      "BETULA PENDULA": "#F80000", // red
+      "BETULA ALLEGHANIENSIS": "#d2691e", //orange
+      "BETUAL LENTA": "#ffa500", //orange
+      "BETULA PAPYRIFERA": "#ff8c00", //orange
+      "BETULA PLATYPHYLLA": "#ff7f50", //orange
+      "BETULA POPULIFOLA": "#f4a460", //orange
+      "BETULA NIGRA": "#FFFF00", // yellow,
+      "OTHER": "#00FFFF" //blue
+    },
     markerGroup = '',
     heatGroup = '',
     selected = false,
@@ -45,21 +56,73 @@ var mymap = '', //globalmap variable
     function showAllMarkers() {
       var cs = $("input[type=radio][name=invasiveSelector]:checked").val();
       if(cs.localeCompare("sdoteab") == 0 || cs.localeCompare("sdotgm") == 0 || cs.localeCompare("sdotsww") == 0 || cs.localeCompare("sdotbbb") == 0 ) {
-        console.log(1);
         mapPlot(1); //show all
       } else if ( cs.localeCompare("sdotalb") == 0 ) {
         mapPlotCSV(1);
       }
       else if(cs.localeCompare("spueab") == 0 || cs.localeCompare("spugm") == 0 || cs.localeCompare("spualb") == 0 || cs.localeCompare("spusww") == 0 || cs.localeCompare("spubbb") == 0 ) {
-        console.log(2);
         mapPlotSPU(1); //show all
       }
       else if(cs.localeCompare("spreab") == 0 || cs.localeCompare("sprgm") == 0 || cs.localeCompare("spralb") == 0 || cs.localeCompare("sprsww") == 0 || cs.localeCompare("sprbbb") == 0 ) {
-        console.log(3);
         mapPlotSPR(1); //show all
       } else {
         console.log('noden? ');
       }
+    }
+
+    function findbbbColor(name) {
+      var trimmedName = name.toUpperCase().split("BETULA ")[1].trim();
+      if(trimmedName.includes("PENDULA")) {
+        return bbColorSetObj["BETULA PENDULA"];
+      } else if (trimmedName.includes("JACQUEMONTI")) {
+        return bbColorSetObj["BETULA JACQUEMONTII"];
+      } else if (trimmedName.includes("PAPYRIFERA")) {
+        return bbColorSetObj["BETULA PAPYRIFERA"];
+      } else if (trimmedName.includes("NIGRA")) {
+        return bbColorSetObj["BETULA NIGRA"];
+      } else if (trimmedName.includes("ALLEGHANIENSIS")) {
+        return bbColorSetObj["BETULA ALLEGHANIENSIS"];
+      } else if (trimmedName.includes("LENTA")) {
+        return bbColorSetObj["BETUAL LENTA"];
+      } else if (trimmedName.includes("POPULIFOLIA")) {
+        return bbColorSetObj["BETULA POPULIFOLA"];
+      } else if (trimmedName.includes("PLATYPHYLLA")) {
+        return bbColorSetObj["BETULA PLATYPHYLLA"];
+      } else {
+        return bbColorSetObj["OTHER"];
+      }
+    }
+
+    // get special color set case for Bronze birch borer
+    function colorSetGenerator(scObj) {
+      var colorSet = [];
+      
+      scObj.forEach(function(sc) {
+        colorSet.push(findbbbColor(sc));
+      });
+      
+      CanvasJS.addColorSet("customColorsetBBB", colorSet);
+
+      return "customColorsetBBB";
+    }
+
+    // Evaluate color of cluster
+    function getClusterColor(cluster) {
+      var tempClusterColor = {};
+      cluster.forEach(function(clus) {
+        tempClusterColor[clus["options"]["fillColor"]] = tempClusterColor[clus["options"]["fillColor"]] ? tempClusterColor[clus["options"]["fillColor"]] + 1 : 1;
+      });
+      var sortedObj = {};
+      if(tempClusterColor && Object.keys(tempClusterColor).length > 0) {
+        sortedObj = Object.keys(tempClusterColor).sort(function(a,b) {
+          return tempClusterColor[b] - tempClusterColor[a]; 
+        }).reduce(function(prev, curr, i){
+          prev[i] = tempClusterColor[curr];
+          return prev;
+        });
+      }
+      
+      return sortedObj ? sortedObj : 'black';
     }
 
     // plot markers to map
@@ -71,7 +134,6 @@ var mymap = '', //globalmap variable
         filteredListFlag = false;
       } else {
         filteredList = globaldataObj.filter(function(obj) {
-          console.log(obj["attributes"]["SCIENTIFIC_NAME"], label);
           return obj["attributes"]["SCIENTIFIC_NAME"].toUpperCase().trim().localeCompare(label.toUpperCase().trim()) == 0;
         });
         $("#sbheadfont1").text(1);
@@ -86,13 +148,13 @@ var mymap = '', //globalmap variable
         spiderfyOnMaxZoom: false,
         singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          var getColor = getClusterColor(cluster.getAllChildMarkers());
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
         }
       }).addTo(mymap);
 
       var len = filteredList.length;
       $("#sbheadfont").text(len);
-      console.log('f ', filteredList, label);
       filteredList.forEach(function(data) {
         var sc = data["attributes"]["SCIENTIFIC_NAME"];
         scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
@@ -106,9 +168,9 @@ var mymap = '', //globalmap variable
             var circle = L.circle([lat, long], {
               color: "yellow",
               weight: 1,
-              opacity: 0.5,
-              fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-              fillOpacity: 1.0,
+              opacity: 0.3,
+              fillColor: data["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+              fillOpacity: 0.7,
               radius: 70
             }).addTo(markerGroup);     
           
@@ -146,7 +208,8 @@ var mymap = '', //globalmap variable
             spiderfyOnMaxZoom: false,
             singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              var getColor = getClusterColor(cluster.getAllChildMarkers());
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
     
@@ -167,13 +230,12 @@ var mymap = '', //globalmap variable
                 var circle = L.circle([lat, long], {
                   color: "yellow",
                   weight: 1,
-                  opacity: 0.5,
-                  fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-                  fillOpacity: 1.0,
+                  opacity: 0.3,
+                  fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                  fillOpacity: 0.7,
                   radius: 70
                 }).addTo(markerGroup);     
               
-              var aH = data["attributes"];
               // Add popup to markers
               circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>FID: " + data["FID"] + "<br> OBJECTID: " + data["OBJECTID"] + "<br> UT_TREE_FE: " + data["UT_TREE_FE"] + "<br> UT_CMN_NAM: " + data["UT_CMN_NAM"] + "<br> UT_COMMON_: " + data["UT_COMMON_"] + "<br> UT_SPCS_NA: " + data["UT_SPCS_NA"] + "<br> UT_SPECIES: " + data["UT_SPECIES"] + "<br> UT_SITE_KE: " + data["UT_SITE_KE"] + "<br> UT_TREE_ID: " + data["UT_TREE_ID"] + "<br> UT_TREESIT: " + data["UT_TREESIT"] + "<br> UT_LAND_US: " + data["UT_LAND_US"] + "<br> UT_LONG_CO: " + data["UT_LONG_CO"] + "<br> UT_LAT_COO: " + data["UT_LAT_COO"] + "<br> UT_OWNER_N: " + data["UT_OWNER_N"] + "<br> UT_PLANTED: " + data["UT_PLANTED"] + "<br> UT_FUNDER_: " + data["UT_FUNDER_"] + "<br> UT_NOTES_T: " + data["UT_NOTES_T"] + "<br> UT_EDITOR_: " + data["UT_EDITOR_"] + "<br> UT_EDIT_DA: " + data["UT_EDIT_DA"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"]+"</div>");
       
@@ -203,7 +265,8 @@ var mymap = '', //globalmap variable
             spiderfyOnMaxZoom: false,
             singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              var getColor = getClusterColor(cluster.getAllChildMarkers());
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
     
@@ -224,13 +287,13 @@ var mymap = '', //globalmap variable
                 var circle = L.circle([lat, long], {
                   color: "yellow",
                   weight: 1,
-                  opacity: 0.5,
-                  fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-                  fillOpacity: 1.0,
+                  opacity: 0.3,
+                  fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                  fillOpacity: 0.7,
                   radius: 70
                 }).addTo(markerGroup);     
               
-              var aH = data["attributes"];
+              var aH = data;
               // Add popup to markers
               circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + data["OBJECTID"] + "<br> PARK: " + data["PARK"] + "<br> SPECIES: " + data["SPECIES"] + "<br> COMMON: " + data["COMMON"] + "<br> DBH_WL: " + data["DBH_WL:"] + "<br> HEIGHT_WL: " + data["HEIGHT_WL"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"] + "</div>");
       
@@ -260,7 +323,8 @@ var mymap = '', //globalmap variable
             spiderfyOnMaxZoom: false,
             singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              var getColor = getClusterColor(cluster.getAllChildMarkers());
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
     
@@ -280,9 +344,9 @@ var mymap = '', //globalmap variable
                 var circle = L.circle([lat, long], {
                   color: "yellow",
                   weight: 1,
-                  opacity: 0.5,
-                  fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-                  fillOpacity: 1.0,
+                  opacity: 0.3,
+                  fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                  fillOpacity: 0.7,
                   radius: 70
                 }).addTo(markerGroup);     
               
@@ -342,7 +406,8 @@ var mymap = '', //globalmap variable
         spiderfyOnMaxZoom: false,
         singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          var getColor = getClusterColor(cluster.getAllChildMarkers());
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
         }
       }).addTo(mymap);
       heatGroup = L.layerGroup().addTo(mymap);
@@ -362,7 +427,6 @@ var mymap = '', //globalmap variable
       // add the event handler
       function handleCommand() {
           var cs = $("input[type=radio][name=invasiveSelector]:checked").val();
-          console.log('cs', cs);
           if(this.checked) {
           var tempdata = [];
           if (filteredListFlag) {
@@ -373,11 +437,8 @@ var mymap = '', //globalmap variable
           var tempHeatData = [];
           tempdata.forEach(function(data) {
             
-            console.log('cs ', cs);
-
             if(cs.localeCompare("sdoteab") == 0 || cs.localeCompare("sdotgm") == 0 || cs.localeCompare("sdotsww") == 0 || cs.localeCompare("sdotbbb") == 0 ) {
              if(data["geometry"] && data["geometry"]["y"] && data["geometry"]["x"]) {
-              console.log(1.1, data, data["geometry"]["y"],data["geometry"]["x"]);
               tempHeatData.push([data["geometry"]["y"],data["geometry"]["x"],5]);
              } else {
                console.log('no geom');
@@ -387,7 +448,6 @@ var mymap = '', //globalmap variable
               tempHeatData.push([data[1], data[0],5]);
             } 
             else {
-              console.log(1.2, data, data["Lat"], data["Long"]);
               tempHeatData.push([data["Lat"], data["Long"],5]);
             }
           });
@@ -399,19 +459,16 @@ var mymap = '', //globalmap variable
         } else {
           if (filteredListFlag) { 
             if(cs.localeCompare("sdoteab") == 0 || cs.localeCompare("sdotgm") == 0 || cs.localeCompare("sdotsww") == 0 || cs.localeCompare("sdotbbb") == 0 ) {
-              console.log(1);
               var fs = filteredList[0]["attributes"]["SCIENTIFIC_NAME"];
               mapPlot(fs);
             } else if (cs.localeCompare("sdotalb") == 0) {
               mapPlotCSV(filteredList[0][20]);
             }
             else if(cs.localeCompare("spueab") == 0 || cs.localeCompare("spugm") == 0 || cs.localeCompare("spualb") == 0 || cs.localeCompare("spusww") == 0 || cs.localeCompare("spubbb") == 0 ) {
-              console.log(2);
               var fs = filteredList[0]["UT_SPECIES"];
               mapPlotSPU(fs);
             }
             else if(cs.localeCompare("spreab") == 0 || cs.localeCompare("sprgm") == 0 || cs.localeCompare("spralb") == 0 || cs.localeCompare("sprsww") == 0 || cs.localeCompare("sprbbb") == 0 ) {
-              console.log(3);
               var fs = filteredList[0]["SPECIES"];
               mapPlotSPR(fs);
             } else {
@@ -421,17 +478,14 @@ var mymap = '', //globalmap variable
           }
           else {
             if(cs.localeCompare("sdoteab") == 0 || cs.localeCompare("sdotgm") == 0 || cs.localeCompare("sdotsww") == 0 || cs.localeCompare("sdotbbb") == 0 ) {
-              console.log(1);
               mapPlot(1); //show all
             } else if (cs.localeCompare("sdotalb") == 0) {
               mapPlotCSV(1);
             }
             else if(cs.localeCompare("spueab") == 0 || cs.localeCompare("spugm") == 0 || cs.localeCompare("spualb") == 0 || cs.localeCompare("spusww") == 0 || cs.localeCompare("spubbb") == 0 ) {
-              console.log(2);
               mapPlotSPU(1); //show all
             }
             else if(cs.localeCompare("spreab") == 0 || cs.localeCompare("sprgm") == 0 || cs.localeCompare("spralb") == 0 || cs.localeCompare("sprsww") == 0 || cs.localeCompare("sprbbb") == 0 ) {
-              console.log(3);
               mapPlotSPR(1); //show all
             } else {
               console.log('noden? ');
@@ -443,13 +497,15 @@ var mymap = '', //globalmap variable
 
       document.getElementById ("heatmap-toggle").addEventListener ("click", handleCommand, false);
 
-      // create the control
+      // create the control for invasive data choices
       var commandlist = L.control({position: 'topleft'});
 
       commandlist.onAdd = function (map) {
           var div = L.DomUtil.create('div', 'commandlist');
 
-          div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;"><b>Select Pest Source</b><div  id="cover1"><b>Loading...</b><img src="http://ayushnarula.com/mapApp-socrata/images/load.gif" height="52" width="52"/></div><br>'+
+          div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;">'+
+          '<b>Select Pest Source</b><div  id="cover1"><b>Loading...</b><div class=" spinner-border spinner-border-sm" role="status">'+
+          '<span class="sr-only">Loading...</span></div></div><br>'+
           '<form>'+
           '    <div><b><input type="radio" name="invasiveName" value="eab" /> Emerald Ash Borer</b></div>'+
           '    <div id="eabDiv">'+
@@ -487,11 +543,32 @@ var mymap = '', //globalmap variable
           
           return div;
       };
+
       setTimeout(function() {
         $("div#cover1").hide();
         $("input[type=radio]").attr('disabled', false);
       }, 100);
       commandlist.addTo(mymap);
+
+      // Create the controls for Bronze Birch Borer - color choices
+      var bbbcolorlist = L.control({position: 'topright'});
+
+      bbbcolorlist.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'bbbcolorlist');
+        div.innerHTML = '<div style="padding:5px;background-color:white;border-radius:5px;">' +
+        '<span id="bbbdot" style="background-color:#FF0000;"></span> &nbsp; <span id="betulaListText">Betula Jacquemontii</span><br>'+
+        '<span id="bbbdot" style="background-color:#F80000;"></span> &nbsp; <span id="betulaListText">Betula Pendula</span><br>'+
+        '<span id="bbbdot" style="background-color:#d2691e;"></span> &nbsp; <span id="betulaListText">Betula Alleghaniensis</span><br>'+
+        '<span id="bbbdot" style="background-color:#ffa500;"></span> &nbsp; <span id="betulaListText">Betual Lenta</span><br>'+
+        '<span id="bbbdot" style="background-color:#ff8c00;"></span> &nbsp; <span id="betulaListText">Betula Papyrifera</span><br>'+
+        '<span id="bbbdot" style="background-color:#ff7f50;"></span> &nbsp; <span id="betulaListText">Betula Platyphylla</span><br>'+
+        '<span id="bbbdot" style="background-color:#f4a460;"></span> &nbsp; <span id="betulaListText">Betula Populifola</span><br>'+
+        '<span id="bbbdot" style="background-color:#FFFF00;"></span> &nbsp; <span id="betulaListText">Betula Nigra</span><br>'+
+        '<span id="bbbdot" style="background-color:#00FFFF;"></span> &nbsp; <span id="betulaListText">Others</span><br>'+
+        '</div>';
+        
+        return div;
+      };
 
       $("#eabDiv").show();
       $("#gmDiv").hide();
@@ -545,17 +622,16 @@ var mymap = '', //globalmap variable
       // Pest selection handler
       $('input[type=radio][name=invasiveSelector]').change(function(){
         var selected = this.value;
-        console.log('se', selected);
         $("input[type=radio]").attr('disabled', true);
         // Hide Loading screen
           $("div#cover1").show();
 
           if(selected.localeCompare("sdoteab") == 0) {
+          bbbcolorlist.remove();
           globaldataObj = [];
           scientNameObj = [];
           setTimeout(function() {
             trampoline(buildData.bind(this, 0, 'FRAXINUS')); // Emerald Ash Borer
-            console.log('called');
           },999);
           setTimeout(function() {
             $("div#cover1").hide();
@@ -565,6 +641,7 @@ var mymap = '', //globalmap variable
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
+            bbbcolorlist.remove();
             globaldataObj = [];
             scientNameObj = [];
             if(spuDataObj && spuDataObj.length > 0) {
@@ -595,6 +672,7 @@ var mymap = '', //globalmap variable
            // Emerald Ash borer SPR data load
           // data
           setTimeout(function() {
+            bbbcolorlist.remove();
             globaldataObj = [];
             scientNameObj = [];
 
@@ -625,6 +703,7 @@ var mymap = '', //globalmap variable
         } else if(selected.localeCompare("sdotgm") == 0) {
           setTimeout(function() {
 
+          bbbcolorlist.remove();
           globaldataObj = [];
           scientNameObj = [];
           trampoline(buildData.bind(this, 0, 'ACER')); // Gypsy Moth
@@ -639,6 +718,7 @@ var mymap = '', //globalmap variable
           // data
           setTimeout(function() {
 
+            bbbcolorlist.remove();
             globaldataObj = [];
             scientNameObj = [];
             if(spuDataObj && spuDataObj.length > 0) {
@@ -669,6 +749,7 @@ var mymap = '', //globalmap variable
          // data
          setTimeout(function() {
 
+            bbbcolorlist.remove();
             globaldataObj = [];
             scientNameObj = [];
             if(sprDataObj && sprDataObj.length > 0) {
@@ -697,7 +778,7 @@ var mymap = '', //globalmap variable
 
           } else if(selected.localeCompare("sdotbbb") == 0) {
           setTimeout(function() {
-
+          bbbcolorlist.addTo(mymap);
           globaldataObj = [];
           scientNameObj = [];
           trampoline(buildData.bind(this, 0, 'BETULA')); // Bronze Birch Borer
@@ -710,6 +791,7 @@ var mymap = '', //globalmap variable
           // Emerald Ash borer SPU data load
           // data
           setTimeout(function() {
+          bbbcolorlist.addTo(mymap);
 
           globaldataObj = [];
           scientNameObj = [];
@@ -741,6 +823,7 @@ var mymap = '', //globalmap variable
           // Emerald Ash borer SPR data load
         // data
         setTimeout(function() {
+          bbbcolorlist.addTo(mymap);
 
           globaldataObj = [];
           scientNameObj = [];
@@ -771,6 +854,7 @@ var mymap = '', //globalmap variable
         } else if(selected.localeCompare("sdotsww") == 0) {
           setTimeout(function() {
 
+          bbbcolorlist.remove();
           globaldataObj = [];
           scientNameObj = [];
           trampoline(thunkedBuildDataSWW.bind(this, 0)); // Sirex wood wasp
@@ -784,6 +868,7 @@ var mymap = '', //globalmap variable
           // data
           setTimeout(function() {
 
+          bbbcolorlist.remove();
           globaldataObj = [];
           scientNameObj = [];
           if(spuDataObj && spuDataObj.length > 0) {
@@ -815,6 +900,7 @@ var mymap = '', //globalmap variable
           // data
           setTimeout(function() {
 
+            bbbcolorlist.remove();
             globaldataObj = [];
             scientNameObj = [];
             if(sprDataObj && sprDataObj.length > 0) {
@@ -854,7 +940,7 @@ var mymap = '', //globalmap variable
           },2000);
           console.log('called');
           */
-         console.log("loading csvs");
+         bbbcolorlist.remove();
          globaldataObj = [];
          scientNameObj = [];
          var getFileBlob = function (url, cb) {
@@ -889,7 +975,6 @@ var mymap = '', //globalmap variable
         
               Papa.parsePromise(file) .
               then(function(results) { 
-                console.log(results["data"]); 
                 globaldataObj = results["data"];
                 dataMapperCSV();
                 setTimeout(function() {
@@ -906,6 +991,7 @@ var mymap = '', //globalmap variable
           // data
           setTimeout(function() {
 
+          bbbcolorlist.remove();
           globaldataObj = [];
           scientNameObj = [];
           if(spuDataObj && spuDataObj.length > 0) {
@@ -937,6 +1023,7 @@ var mymap = '', //globalmap variable
         // data
         setTimeout(function() {
 
+        bbbcolorlist.remove();
         globaldataObj = [];
         scientNameObj = [];
         if(sprDataObj && sprDataObj.length > 0) {
@@ -978,18 +1065,14 @@ var mymap = '', //globalmap variable
       function buildData(n, genus) {
         // Asian Longhorned beetles - //Build multiple - 1
         function buildDatainternal(offset, genus) {
-          console.log('inside build data internal', offset, genus);
           jQuery.ajax({
             url: "https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Assets/MapServer/6/query?where=UPPER(GENUS)%20like%20%27" + genus + "%27&outFields=*&outSR=4326&f=json&resultOffset="+offset,
             success: function(result) {
                 if(result["features"] && result["features"].length > 0) {
-                  console.log('of', offset, result["features"].length);
                   globaldataObj = globaldataObj.concat(result["features"]);
                   if(result["features"].length == 1000) {
-                    console.log('next', offset, parseInt(offset)+1000);
                     trampoline(buildDatainternal.bind(this, parseInt(offset)+1000, genus));
                   } else {
-                    console.log('total', globaldataObj.length);
                     dataMapper();
                     // Hide Loading Screen
                     setTimeout(function() {
@@ -998,7 +1081,6 @@ var mymap = '', //globalmap variable
                     return null;
                   }
                 } else {
-                  console.log('total', globaldataObj.length);
                   dataMapper();
                   // Hide Loading Screen
                   setTimeout(function() {
@@ -1008,7 +1090,6 @@ var mymap = '', //globalmap variable
                 }
             },
             error: function(err) {
-              console.log("There is an error: ", err);
               dataMapper();
                   // Hide Loading Screen
                   setTimeout(function() {
@@ -1032,13 +1113,10 @@ var mymap = '', //globalmap variable
             url: "https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Assets/MapServer/6/query?where=UPPER(GENUS)%20like%20%27FRAXINUS%27%20OR%20UPPER(GENUS)%20like%20%27ACER%27%20OR%20UPPER(GENUS)%20like%20%27BETULA%27%20OR%20UPPER(GENUS)%20like%20%27PLATANUS%27%20OR%20UPPER(GENUS)%20like%20%27ULMUS%27%20OR%20UPPER(GENUS)%20like%20%27SORBUS%27%20OR%20UPPER(GENUS)%20like%20%27CERCIDPHYLLUM%27%20OR%20UPPER(GENUS)%20like%20%27AESCULUS%27%20OR%20UPPER(GENUS)%20like%20%27KOELREUTERIA%27%20OR%20UPPER(GENUS)%20like%20%27POPLUS%27%20OR%20UPPER(GENUS)%20like%20%27SALIX%27%20OR%20UPPER(GENUS)%20like%20%27ALBIZIA%27&outFields=*&outSR=4326&f=json&resultOffset="+offset,
             success: function(result) {
                 if(result["features"] && result["features"].length > 0) {
-                  console.log('of', offset, result["features"].length);
                   globaldataObj = globaldataObj.concat(result["features"]);
                   if(result["features"].length == 1000) {
-                    console.log('next', offset, parseInt(offset)+1000);
                     trampoline(buildDataALB.bind(this, parseInt(offset)+1000));
                   } else {
-                    console.log('total', globaldataObj.length);
                     dataMapper();
                     // Hide Loading Screen
                     setTimeout(function() {
@@ -1047,7 +1125,6 @@ var mymap = '', //globalmap variable
                     return null;
                   }
                 } else {
-                  console.log('total', globaldataObj.length);
                   dataMapper();
                   // Hide Loading Screen
                   setTimeout(function() {
@@ -1057,7 +1134,6 @@ var mymap = '', //globalmap variable
                 }
             },
             error: function(err) {
-              console.log("There is an error: ", err);
               dataMapper();
                   // Hide Loading Screen
                   setTimeout(function() {
@@ -1081,13 +1157,10 @@ var mymap = '', //globalmap variable
             url: "https://gisdata.seattle.gov/server/rest/services/SDOT/SDOT_Assets/MapServer/6/query?where=UPPER(GENUS)%20like%20%27PINUS%27%20OR%20UPPER(GENUS)%20like%20%27PICEA%27%20OR%20UPPER(GENUS)%20like%20%27ABIES%27&outFields=*&outSR=4326&f=json&resultOffset="+offset,
             success: function(result) {
                 if(result["features"] && result["features"].length > 0) {
-                  console.log('of', offset, result["features"].length);
                   globaldataObj = globaldataObj.concat(result["features"]);
                   if(result["features"].length == 1000) {
-                    console.log('next', offset, parseInt(offset)+1000);
                     trampoline(buildDataSWW.bind(this, parseInt(offset)+1000));
                   } else {
-                    console.log('total', globaldataObj.length);
                     dataMapper();
                     // Hide Loading Screen
                     setTimeout(function() {
@@ -1096,7 +1169,6 @@ var mymap = '', //globalmap variable
                     return null;
                   }
                 } else {
-                  console.log('total', globaldataObj.length);
                   dataMapper();
                   // Hide Loading Screen
                   setTimeout(function() {
@@ -1106,7 +1178,6 @@ var mymap = '', //globalmap variable
                 }
             },
             error: function(err) {
-              console.log("There is an error: ", err);
               dataMapper();
                   // Hide Loading Screen
                   setTimeout(function() {
@@ -1122,20 +1193,24 @@ var mymap = '', //globalmap variable
         return buildDataSWW.bind(this, n);
       }
 
+
       function dataMapper() {
 
       var len = globaldataObj.length;
       $("#sbheadfont").text(len);
       mymap.removeLayer(markerGroup);
+
       markerGroup = L.markerClusterGroup({
         disableClusteringAtZoom: 13,
         spiderfyOnMaxZoom: false,
         singleMarkerMode: true,
         iconCreateFunction: function(cluster) {
-          return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+          var getColor = getClusterColor(cluster.getAllChildMarkers());
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
         }
       }).addTo(mymap);
-      console.log('dat', globaldataObj);
+
+
       globaldataObj.forEach(function(data) {
       var sc = data["attributes"]["SCIENTIFIC_NAME"];
       scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
@@ -1149,9 +1224,9 @@ var mymap = '', //globalmap variable
             var circle = L.circle([lat, long], {
               color: "yellow",
               weight: 1,
-              opacity: 0.5,
-              fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-              fillOpacity: 1.0,
+              opacity: 0.3,
+              fillColor: data["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+              fillOpacity: 0.7,
               radius: 70
             }).addTo(markerGroup);     
           
@@ -1181,7 +1256,7 @@ var mymap = '', //globalmap variable
         var chart = new CanvasJS.Chart("chartContainer", {
           theme: "light1", // "light2", "dark1", "dark2"
           animationEnabled: true, // set to true	
-          colorSet: "customColorset",	
+          colorSet: globaldataObj[0]["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
           axisX:{
             labelMaxWidth: 60, //
             labelFontSize: 12,
@@ -1193,7 +1268,6 @@ var mymap = '', //globalmap variable
               // Column for column type graphs
               type: "column",
               click: function(e){ 
-                console.log(e);
                 mapPlot(e["dataPoint"]["label"]);
               },
               mousemove: function(e) {
@@ -1208,7 +1282,7 @@ var mymap = '', //globalmap variable
         }, 1000);
 
       } // end of data mapper
-
+ 
 
       function dataMapperCSV() {
 
@@ -1220,10 +1294,10 @@ var mymap = '', //globalmap variable
           spiderfyOnMaxZoom: false,
           singleMarkerMode: true,
           iconCreateFunction: function(cluster) {
-            return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+            var getColor = getClusterColor(cluster.getAllChildMarkers());
+          return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
           }
         }).addTo(mymap);
-        console.log('dat', globaldataObj);
         globaldataObj.forEach(function(data) {
         var sc = data[20];
         scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
@@ -1236,9 +1310,9 @@ var mymap = '', //globalmap variable
               var circle = L.circle([lat, long], {
                 color: "yellow",
                 weight: 1,
-                opacity: 0.5,
-                fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-                fillOpacity: 1.0,
+                opacity: 0.3,
+                fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                fillOpacity: 0.7,
                 radius: 70
               }).addTo(markerGroup);     
             
@@ -1264,7 +1338,7 @@ var mymap = '', //globalmap variable
           var chart = new CanvasJS.Chart("chartContainer", {
             theme: "light1", // "light2", "dark1", "dark2"
             animationEnabled: true, // set to true	
-            colorSet: "customColorset",	
+            colorSet: globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
             axisX:{
               labelMaxWidth: 60, //
               labelFontSize: 12,
@@ -1276,7 +1350,6 @@ var mymap = '', //globalmap variable
                 // Column for column type graphs
                 type: "column",
                 click: function(e){ 
-                  console.log(e);
                //   mapPlot(e["dataPoint"]["label"]);
                   mapPlotCSV(e["dataPoint"]["label"]);
                 },
@@ -1296,7 +1369,6 @@ var mymap = '', //globalmap variable
         // Load SPU
         Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/1xogwFe4s6NNhrvL8lar_41amhbnGR_dgGw_mbRMvM7U/pubhtml',
         callback: function(data, tabletop) { 
-          console.log('spu', data);
           spuDataObj = data;
           spuLoaded = true;
           if(callback) {
@@ -1313,7 +1385,6 @@ var mymap = '', //globalmap variable
           // Load SPR
           Tabletop.init( { key: 'https://docs.google.com/spreadsheets/d/1IsQh8FWVOAf_p1mmYV83dxh0ghdBAHLB_lynnxb6Aa0/pubhtml',
           callback: function(data, tabletop) { 
-            console.log('spr', data);
             sprDataObj = data;
             sprLoaded = true;
             if(callback) {
@@ -1336,7 +1407,8 @@ var mymap = '', //globalmap variable
             spiderfyOnMaxZoom: false,
             singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              var getColor = getClusterColor(cluster.getAllChildMarkers());
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
 
@@ -1353,9 +1425,9 @@ var mymap = '', //globalmap variable
               var circle = L.circle([lat, long], {
                 color: "yellow",
                 weight: 1,
-                opacity: 0.5,
-                fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-                fillOpacity: 1.0,
+                opacity: 0.3,
+                fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                fillOpacity: 0.7,
                 radius: 70
               }).addTo(markerGroup);     
             
@@ -1381,7 +1453,7 @@ var mymap = '', //globalmap variable
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet: "customColorset",	
+              colorSet: globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
               axisX:{
                 labelMaxWidth: 60, //
                 labelFontSize: 12,
@@ -1418,7 +1490,8 @@ var mymap = '', //globalmap variable
             spiderfyOnMaxZoom: false,
             singleMarkerMode: true,
             iconCreateFunction: function(cluster) {
-              return L.divIcon({ html: '<span style="padding:7px;border-radius:15px;background-color:white;color:black;"><b>' + cluster.getChildCount() + '</b></span>' });
+              var getColor = getClusterColor(cluster.getAllChildMarkers());
+              return L.divIcon({ html: '<span style="padding:7px;border-radius:20px;background-color:' + getColor + ';color:white;"><b>' + cluster.getChildCount() + '</b></span>' });
             }
           }).addTo(mymap);
 
@@ -1435,13 +1508,12 @@ var mymap = '', //globalmap variable
               var circle = L.circle([lat, long], {
                 color: "yellow",
                 weight: 1,
-                opacity: 0.5,
-                fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
-                fillOpacity: 1.0,
+                opacity: 0.3,
+                fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                fillOpacity: 0.7,
                 radius: 70
               }).addTo(markerGroup);     
             
-            var aH = data;
             // Add popup to markers
             circle.bindPopup("<div style='height:130px;overflow-y:scroll;'>OBJECTID: " + data["OBJECTID"] + "<br> PARK: " + data["PARK"] + "<br> SPECIES: " + data["SPECIES"] + "<br> COMMON: " + data["COMMON"] + "<br> DBH_WL: " + data["DBH_WL:"] + "<br> HEIGHT_WL: " + data["HEIGHT_WL"] + "<br> GENUS: " + data["GENUS"] + "<br> Lat: " + data["Lat"] + "<br> Long: " + data["Long"] +"</div>");
      
@@ -1463,7 +1535,7 @@ var mymap = '', //globalmap variable
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet: "customColorset",	
+              colorSet: globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
               axisX:{
                 labelMaxWidth: 60, //
                 labelFontSize: 12,
