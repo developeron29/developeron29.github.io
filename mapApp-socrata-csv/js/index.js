@@ -49,7 +49,6 @@ var mymap = '', //globalmap variable
     //  document.getElementById("chartContainer").style.width = (document.getElementById("paddlow").offsetWidth + 650) + "px";
 
       }, 10);
-      CanvasJS.addColorSet("customColorset", globalColorSetExtend);
      
     }
 
@@ -359,6 +358,8 @@ var mymap = '', //globalmap variable
         
     // Handle Socrata data
     function ttinitsocrata() {
+      CanvasJS.addColorSet("customColorset", globalColorSetExtend);
+
     // set map height
       var win = window,
       doc = document,
@@ -1560,8 +1561,11 @@ var mymap = '', //globalmap variable
     
           } // end of data mapper SPR
 
-
-        trampoline(buildData.bind(this, 0, 'FRAXINUS')); // Emerald Ash Borer
+          globaldataObj = [];
+          scientNameObj = [];
+          setTimeout(function() {
+            trampoline(buildData.bind(this, 0, 'FRAXINUS')); // Emerald Ash Borer
+          },500);
 
     }
 
