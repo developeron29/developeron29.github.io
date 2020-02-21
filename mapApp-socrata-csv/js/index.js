@@ -168,7 +168,7 @@ var mymap = '', //globalmap variable
               color: "yellow",
               weight: 1,
               opacity: 0.3,
-              fillColor: data["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+              fillColor: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("sdotbbb") == 0 && data["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
               fillOpacity: 0.7,
               radius: 70
             }).addTo(markerGroup);     
@@ -230,7 +230,7 @@ var mymap = '', //globalmap variable
                   color: "yellow",
                   weight: 1,
                   opacity: 0.3,
-                  fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                  fillColor: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("spubbb") == 0 && data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                   fillOpacity: 0.7,
                   radius: 70
                 }).addTo(markerGroup);     
@@ -287,7 +287,7 @@ var mymap = '', //globalmap variable
                   color: "yellow",
                   weight: 1,
                   opacity: 0.3,
-                  fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                  fillColor: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("sprbbb") == 0 &&data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                   fillOpacity: 0.7,
                   radius: 70
                 }).addTo(markerGroup);     
@@ -344,7 +344,7 @@ var mymap = '', //globalmap variable
                   color: "yellow",
                   weight: 1,
                   opacity: 0.3,
-                  fillColor: data[55].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                  fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                   fillOpacity: 0.7,
                   radius: 70
                 }).addTo(markerGroup);     
@@ -1226,7 +1226,7 @@ var mymap = '', //globalmap variable
               color: "yellow",
               weight: 1,
               opacity: 0.3,
-              fillColor: data["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+              fillColor: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("sdotbbb") == 0 && data["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
               fillOpacity: 0.7,
               radius: 70
             }).addTo(markerGroup);     
@@ -1257,7 +1257,7 @@ var mymap = '', //globalmap variable
         var chart = new CanvasJS.Chart("chartContainer", {
           theme: "light1", // "light2", "dark1", "dark2"
           animationEnabled: true, // set to true	
-          colorSet: globaldataObj[0]["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
+          colorSet: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("sdotbbb") == 0 && globaldataObj[0]["attributes"]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
           axisX:{
             labelMaxWidth: 60, //
             labelFontSize: 12,
@@ -1312,7 +1312,7 @@ var mymap = '', //globalmap variable
                 color: "yellow",
                 weight: 1,
                 opacity: 0.3,
-                fillColor: data[55].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                fillColor: globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                 fillOpacity: 0.7,
                 radius: 70
               }).addTo(markerGroup);     
@@ -1339,7 +1339,7 @@ var mymap = '', //globalmap variable
           var chart = new CanvasJS.Chart("chartContainer", {
             theme: "light1", // "light2", "dark1", "dark2"
             animationEnabled: true, // set to true	
-            colorSet: globaldataObj[0][55].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
+            colorSet: "customColorset",	
             axisX:{
               labelMaxWidth: 60, //
               labelFontSize: 12,
@@ -1427,7 +1427,7 @@ var mymap = '', //globalmap variable
                 color: "yellow",
                 weight: 1,
                 opacity: 0.3,
-                fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                fillColor: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("spubbb") == 0 && data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                 fillOpacity: 0.7,
                 radius: 70
               }).addTo(markerGroup);     
@@ -1454,7 +1454,7 @@ var mymap = '', //globalmap variable
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet: globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
+              colorSet: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("spubbb") == 0 && globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
               axisX:{
                 labelMaxWidth: 60, //
                 labelFontSize: 12,
@@ -1510,7 +1510,7 @@ var mymap = '', //globalmap variable
                 color: "yellow",
                 weight: 1,
                 opacity: 0.3,
-                fillColor: data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
+                fillColor: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("sprbbb") == 0 &&data["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? findbbbColor(sc) : globalColorSetExtend[Object.keys(scientNameObj).indexOf(sc)],
                 fillOpacity: 0.7,
                 radius: 70
               }).addTo(markerGroup);     
@@ -1536,7 +1536,7 @@ var mymap = '', //globalmap variable
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet: globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0 ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
+              colorSet: ($("input[type=radio][name=invasiveSelector]:checked").val().localeCompare("sprbbb") == 0 && globaldataObj[0]["GENUS"].toUpperCase().trim().localeCompare("BETULA") == 0) ? colorSetGenerator(Object.keys(scientNameObj)) : "customColorset",	
               axisX:{
                 labelMaxWidth: 60, //
                 labelFontSize: 12,
