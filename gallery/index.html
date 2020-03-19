@@ -1,0 +1,88 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <img src="" alt="" width="130" height="120px" onclick="clickGroup1()" style="cursor: pointer;" id="header1">
+        <img src="" alt="" width="130" height="120px" onclick="clickGroup2()" style="cursor: pointer;" id="header2">
+        <img src="" alt="" width="130" height="120px" onclick="clickGroup3()" style="cursor: pointer;" id="header3">
+        <div style="height: 600px; width:410px;overflow-y: scroll;" onscroll="updateGallery();"  id="scrolledDiv">
+            <div style="height: 1000px;"  id="galleryImgContainer">
+                <img src="" id="myImg" style="width:400px;height:600px;z-index: -1; position : fixed; margin: 0 auto;">
+            </div>
+        </div>
+        <script>
+            var imgGroup1 = [
+                "https://picsum.photos/id/1/200/300",
+                "https://picsum.photos/id/2/200/300",
+                "https://picsum.photos/id/3/200/300",
+                "https://picsum.photos/id/4/200/300",
+                "https://picsum.photos/id/5/200/300",
+                "https://picsum.photos/id/6/200/300",
+                "https://picsum.photos/id/7/200/300",
+                "https://picsum.photos/id/8/200/300",
+                "https://picsum.photos/id/9/200/300",
+                "https://picsum.photos/id/10/200/300"
+            ];
+            var imgGroup2 = [
+                "https://picsum.photos/id/11/200/300",
+                "https://picsum.photos/id/12/200/300"
+            ]; 
+            var imgGroup3 = [
+                "https://picsum.photos/id/13/200/300",
+                "https://picsum.photos/id/14/200/300",
+                "https://picsum.photos/id/15/200/300",
+                "https://picsum.photos/id/16/200/300"
+            ]; 
+            document.getElementById("header1").src = imgGroup1[0];
+            document.getElementById("header2").src = imgGroup2[0];
+            document.getElementById("header3").src = imgGroup3[0];
+            var imgGroup = imgGroup1;
+            function clickGroup1() {
+                imgGroup = imgGroup1;
+                document.getElementById("myImg").src = imgGroup[0];
+                updateSections();
+            }
+            function clickGroup2() {
+                imgGroup = imgGroup2;
+                document.getElementById("myImg").src = imgGroup[0];
+                updateSections();
+            }
+            function clickGroup3() {
+                imgGroup = imgGroup3;
+                document.getElementById("myImg").src = imgGroup[0];
+                updateSections();
+            }
+            var j = 0,
+                intervals = [];
+
+            document.getElementById("myImg").src = imgGroup[0];
+            function updateSections() {
+                document.getElementById("galleryImgContainer").style.height = (imgGroup.length)*600 + "px";
+
+                intervals = [];
+                var specialNum = (imgGroup.length)*600 - 500,
+                    temp = specialNum;
+                while(temp > 0) {
+                    intervals.push(temp);
+                    temp = temp - (specialNum/imgGroup.length);
+                }
+                intervals.push(0);
+                intervals = intervals.reverse();
+            }
+            updateSections();
+            function updateGallery(e) {
+                var y = document.getElementById("scrolledDiv").scrollTop,
+                    j = 0;
+
+                while(j < imgGroup.length) {
+                    if(y >  intervals[j] && y < intervals[j+1]) {
+                        document.getElementById("myImg").src = imgGroup[j];
+                        break;
+                    }
+                    j++;
+                }
+            }
+        </script>
+    </body>
+</html>
