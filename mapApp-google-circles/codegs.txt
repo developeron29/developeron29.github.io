@@ -1,0 +1,68 @@
+/**
+ * Maps Overview
+ * https://developers.google.com/apps-script/reference/maps/
+ *
+ * Geocoder Class
+ * https://developers.google.com/apps-script/reference/maps/geocoder
+ */
+function getLatLong(city) {
+  var response = Maps.newGeocoder().geocode(city);
+  var result = response.results[0];
+  
+  Logger.log('%s: %s, %s', 
+             result.formatted_address, 
+             result.geometry.location.lat, 
+             result.geometry.location.lng);
+  if(result.geometry.location_type.toString().indexOf('APPROXIMATE') !== -1) {
+    return ['Error!','Error!','Error!'];  
+  }
+  return [result.formatted_address, 
+          result.geometry.location.lat, 
+          result.geometry.location.lng];
+}
+ 
+function doGet(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheets()[0];
+    //var sheet = ss.getSheetByName('Sheet 2');
+    var range = sheet.getDataRange();
+    var values = range.getValues();
+    
+    for(i=2; i <= values.length; i++) {
+      var addr = sheet.getRange('H'+i).getValue();
+      
+      addr = addr.toString();
+      if(addr.indexOf(' / ') !== -1) {
+        addr = addr.split(' / ')[0];
+      }
+      if(addr.indexOf(' to ') !== -1) {
+        addr = addr.split(' to ')[0];
+      }
+      if(addr.indexOf(' and ') !== -1) {
+        addr = addr.split(' and ')[0];
+      }
+      
+      addr = addr + ' seattle'; // restrict to Seattle
+      
+      var latlong = getLatLong(addr);
+      
+      var address = latlong[0];
+      var lat = latlong[1];
+      var long = latlong[2];
+      
+      sheet.getRange('U'+i).setValue(lat); // U = Latitude column
+      sheet.getRange('V'+i).setValue(long); // V = Longitude column
+    }
+    
+    return ContentService
+          .createTextOutput(JSON.stringify({"result":"success"}))
+          .setMimeType(ContentService.MimeType.JSON);
+  } catch(e){
+      // if error return this
+      return ContentService
+          .createTextOutput(JSON.stringify({"result":"error", "error": e}))
+          .setMimeType(ContentService.MimeType.JSON);
+  }
+
+}
