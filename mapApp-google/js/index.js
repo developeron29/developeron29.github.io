@@ -1,5 +1,5 @@
 var mymap = '', //globalmap variable
-    globalColorSet1 = ["#4F81BC", "#C0504E", "#D8D8D8", "#FFFF00" ], // Colorset1 default colors
+    globalColorSet1 = ["#4F81BC", "#C0504E", "#FFFF00", "#D8D8D8"], // Colorset1 default colors
     markerGroup = '',
     selected = false,
     globaldataObj = [],
@@ -7,6 +7,7 @@ var mymap = '', //globalmap variable
     funderBioKeys = [], //empty x graph data initialize
     funderRainKeys = []; //empty x graph data initialize
     funderFuture = [];
+    funderConv = [];
 
 window.onload = function () {
     
@@ -162,7 +163,7 @@ window.onload = function () {
               var rectangle = L.rectangle(bounds, {color: "#ff0000", weight: 4}).addTo(markerGroup);
             
             // Add popup to markers
-            rectangle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
+            rectangle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Top_Swale:  " + elem["Top_Swale"] + "<br>Bottom_Swale:  " + elem["Bottom_Swale"] + "<br>Discharge Area:  " + elem["Discharge Area"]  + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
     
           } else {
             // Initialize map circle markers
@@ -176,7 +177,7 @@ window.onload = function () {
             }).addTo(markerGroup);
             
             // Add popup to markers
-            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
+            circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Top_Swale:  " + elem["Top_Swale"] + "<br>Bottom_Swale:  " + elem["Bottom_Swale"] + "<br>Discharge Area:  " + elem["Discharge Area"]  + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
           }
           
 
@@ -209,11 +210,16 @@ window.onload = function () {
             if(isNaN(funderFuture[element["Funder"]])) {
               funderFuture[element["Funder"]] = 0;
             }
+            if(isNaN(funderConv[element["Funder"]])) {
+              funderConv[element["Funder"]] = 0;
+            }
             if(element["Type of Facility"].localeCompare("Bioretention") == 0) { // Bioretention facility
               funderBio[element["Funder"]] = funderBio[element["Funder"]] = funderBio[element["Funder"]] + 1;
             } else if(element["Type of Facility"].localeCompare("Raingarden") == 0) { // Raingarden facility
               funderRain[element["Funder"]] = funderRain[element["Funder"]] = funderRain[element["Funder"]] + 1;
-            } else if(element["Funder"].localeCompare("Future Projects") == 0) {
+            } else if(element["Type of Facility"].localeCompare("Conveyance") == 0) { // Conveyance facility
+              funderConv[element["Funder"]] = funderConv[element["Funder"]] = funderConv[element["Funder"]] + 1;
+            } else if(element["Funder"].localeCompare("Future Projects") == 0) { // Future projects funder
               funderFuture[element["Funder"]] = funderFuture[element["Funder"]] = funderFuture[element["Funder"]] + 1;
             } else {
               console.log('vary ', element["Type of Facility"]);
@@ -225,6 +231,7 @@ window.onload = function () {
         var dataPointsBioArr = [];
         var dataPointsRainArr = [];
         var dataPointsFuture = [];
+        var dataPointsConv = [];
 
         // Bioretention array
         Object.keys(funderBio).forEach(function(elem) {
@@ -247,6 +254,14 @@ window.onload = function () {
           dataPointsFuture.push({
             label: elem,
             y: funderFuture[elem]
+          });
+        });
+
+        // Conveyance points array
+        Object.keys(funderConv).forEach(function(elem) {
+          dataPointsConv.push({
+            label: elem,
+            y: funderConv[elem]
           });
         });
 
@@ -295,6 +310,20 @@ window.onload = function () {
               // Column for column type graphs
               type: "column",
               bevelEnabled: true,
+              name: "Conveyance",
+              click: function(e){ 
+                 mapPlot(e["dataPoint"]["label"]);
+              },
+              mousemove: function(e) {
+                document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer"; // change cursor to pointer on mousemove
+              },
+              dataPoints: dataPointsConv
+            // }
+            },
+            {
+              // Column for column type graphs
+              type: "column",
+              bevelEnabled: true,
               name: "Future Projects",
               click: function(e){ 
                    mapPlot(e["dataPoint"]["label"]);
@@ -333,7 +362,7 @@ window.onload = function () {
                 var rectangle = L.rectangle(bounds, {color: "#ff0000", weight: 4}).addTo(markerGroup);
               
               // Add popup to markers
-              rectangle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
+              rectangle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Top_Swale:  " + elem["Top_Swale"] + "<br>Bottom_Swale:  " + elem["Bottom_Swale"] + "<br>Discharge Area:  " + elem["Discharge Area"]  + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
       
             } else {
               // Initialize map circle markers
@@ -347,7 +376,7 @@ window.onload = function () {
               }).addTo(markerGroup);
               
               // Add popup to markers
-              circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
+              circle.bindPopup("Project Name: "+ elem["Project Name"] + "<br>Project ID: " + elem["Project_ID"] + " <br>Type of Facility:  " + elem["Type of Facility"] + "<br>Vegetated Area Managed:  " + elem["Vegetated Area Managed"] + "<br>Address:  " + elem["Address (for pop up)"] + "<br>Total Gallons Managed (Annually):  " + elem["Total Gallons Managed"] + "<br>Swales per project: " + elem["Swales per project"] + "<br>Drain:  " + elem["Drain"] + "<br>Weir:  " + elem["Weir"] + "<br>Liner:  " + elem["Liner"] + "<br>Top_Swale:  " + elem["Top_Swale"] + "<br>Bottom_Swale:  " + elem["Bottom_Swale"] + "<br>Discharge Area:  " + elem["Discharge Area"]  + "<br>Funder:  " + elem["Funder"] + "<br>Comments:  " + elem["Comments"] + " <br> <a href='http://maps.google.com/maps?q=&layer=c&cbll=" + lat + "," + long +"' target='_blank'> <img src='" + "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long +"&fov=80&heading=70&pitch=0&key=AIzaSyDeaBVGly94ol9D4z7AINwYLyAq6uJed8s" + "' width='300' height='200' /> </a> ");
             }
             
 
@@ -371,7 +400,7 @@ window.onload = function () {
         // Update lat long in the spreadsheet // ToDO SET UP MACRO ON NEW DATASHEET
         setTimeout(function() {
           jQuery.ajax({
-            url: "https://script.google.com/macros/s/AKfycbxWb2gzhgK7wtzj_ciQrt9yMISsrQiV8onjDFAdN0k6q5J17kI/exec",
+            url: "https://script.google.com/macros/s/AKfycbxewGQ1GhBegzZSLj7qkJpk8S0ovM9Ddi077M9j48QimMBriDd-/exec",
             success: function(result) {
               console.log(result);
               return result;
