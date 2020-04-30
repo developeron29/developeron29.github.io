@@ -119,7 +119,7 @@ var mymap = '', //globalmap variable
 
           var confierIcon = L.icon({
             iconUrl: data["treeType"] == "conifer" ? 'icons/conifer.png' : 'icons/deciduous.png',
-            iconSize: [120, 160], // size of the icon
+            iconSize: [35, 45], // size of the icon
           }); 
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
@@ -130,7 +130,7 @@ var mymap = '', //globalmap variable
           utcDate.setHours(utcDate.getHours()-8);
           var usDate = new Date(utcDate);
           // Add popup to markers
-          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + usDate + "<br>Username: " + globalUserObj[aH["userId"]]["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + usDate + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
 
          } // end of if check
          else {
@@ -193,7 +193,7 @@ var mymap = '', //globalmap variable
         "Normal": CartoDB_Voyager,
         "Aerial": Esri_WorldImagery,
         "Dark": CartoDB_DarkMatter,
-        "water": watercolor
+        "Watercolor": watercolor
       };
 
       L.control.layers(baseMaps).addTo(mymap);
@@ -208,17 +208,10 @@ var mymap = '', //globalmap variable
 
     var customLayer = L.geoJSON(null, {
       onEachFeature: function (feature, layer) {
-        // console.log(feature, layer);
         layer.bindPopup('<h3>'+feature.properties["UCWS_ALT_NAME"] + '</h3>');
       }
     });
-  //   var customLayer = L.geoJson(null, {
-  //     // http://leafletjs.com/reference.html#geojson-style
-  //     style: function(feature) {
-  //         return { color: '#f00' };
-  //     }
-  // });
-  // console.log('hello');
+
     var runLayer = omnivore.kml('u1.kml', null, customLayer)
     .on('ready', function() {
         mymap.fitBounds(runLayer.getBounds());
@@ -316,22 +309,22 @@ var mymap = '', //globalmap variable
                             doc.data()["isValidated"] ? tempDataArr.push(doc.data()) : "";
                         });
                         globaldataObj = tempDataArr;
-
-                      // search users
-                      db.collection("users")
-                      .get()
-                      .then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
-                          globalUserObj[doc.id] = doc.data();;
-                        });
                         dataMapper();
                         // Hide Loading Screen
                         setTimeout(function() {
                           document.getElementById("cover").style.display = "none";
                         });
-                      }).catch(function(err) {
-                        console.log("Error getting documents: ", error);
-                      });
+                      // search users
+                      // db.collection("users")
+                      // .get()
+                      // .then(function(querySnapshot) {
+                      //   querySnapshot.forEach(function(doc) {
+                      //     globalUserObj[doc.id] = doc.data();;
+                      //   });
+
+                      // }).catch(function(err) {
+                      //   console.log("Error getting documents: ", error);
+                      // });
                     return null;
                 })
                 .catch(function(error) {
@@ -404,7 +397,7 @@ var mymap = '', //globalmap variable
 
             var confierIcon = L.icon({
               iconUrl: data["treeType"] == "conifer" ? 'icons/conifer.png' : 'icons/deciduous.png',
-              iconSize: [120, 160], // size of the icon
+              iconSize: [35, 45], // size of the iconm
           }); 
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
@@ -415,7 +408,7 @@ var mymap = '', //globalmap variable
           utcDate.setHours(utcDate.getHours()-8);
           var usDate = new Date(utcDate);
           // Add popup to markers
-          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + usDate + "<br>Username: " + globalUserObj[aH["userId"]]["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + usDate + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
   
 
         } else {
