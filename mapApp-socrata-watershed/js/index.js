@@ -124,13 +124,14 @@ var mymap = '', //globalmap variable
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
-          var aH = data, d = new Date();
-          d.setTime(aH["created_at"]["seconds"]*1000);
-          var utcDate = new Date(d.toUTCString());
-          utcDate.setHours(utcDate.getHours()-8);
-          var usDate = new Date(utcDate);
+          var aH = data;
+          // , d = new Date();
+          // d.setTime(aH["created_at"]["seconds"]*1000);
+          // var utcDate = new Date(d.toUTCString());
+          // utcDate.setHours(utcDate.getHours()-8);
+          // var usDate = new Date(utcDate);
           // Add popup to markers
-          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + usDate + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + "" + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
 
          } // end of if check
          else {
@@ -283,18 +284,17 @@ var mymap = '', //globalmap variable
           var tempDataArr = [];
                
           // Initialize Firebase
-            // Web app's Firebase configuration
+            // Web app's Firebase configuration - iSeaTree-prod
             var firebaseConfig = {
-              apiKey: "AIzaSyC3MulDsRNhj0iCGoSFEn2kIhvFgoGE8wY",
-              authDomain: "iseatree.firebaseapp.com",
-              databaseURL: "https://iseatree.firebaseio.com",
-              projectId: "iseatree",
-              storageBucket: "iseatree.appspot.com",
-              messagingSenderId: "851760547478",
-              appId: "1:851760547478:web:328c43f71a9bb877bb64b7",
-              measurementId: "G-RBG6WEH2VL"
-          };
-          
+              apiKey: "AIzaSyB-txtWPzPYmBylItEc9vcZRMh5oKWB-qc",
+              authDomain: "iseatree-dev.firebaseapp.com",
+              databaseURL: "https://iseatree-dev.firebaseio.com",
+              projectId: "iseatree-dev",
+              storageBucket: "iseatree-dev.appspot.com",
+              messagingSenderId: "135495017909",
+              appId: "1:135495017909:web:7ce3c041e73788b51ba5fc"
+            };
+
           firebase.initializeApp(firebaseConfig);
           firebase.auth().onAuthStateChanged(function(user) {
             // Auth user for secure DB access
@@ -342,8 +342,8 @@ var mymap = '', //globalmap variable
          });
 
          // Auth - Hardcoding for now
-         var email = "testuser@gmail.com";
-         var password = "testuser";
+         var email = "test@email.com";
+         var password = "test123";
          firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -402,13 +402,14 @@ var mymap = '', //globalmap variable
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
-          var aH = data, d = new Date();
-          d.setTime(aH["created_at"]["seconds"]*1000);
-          var utcDate = new Date(d.toUTCString());
-          utcDate.setHours(utcDate.getHours()-8);
-          var usDate = new Date(utcDate);
+          var aH = data;
+          // , d = new Date();
+          // d.setTime(aH["created_at"]["seconds"]*1000);
+          // var utcDate = new Date(d.toUTCString());
+          // utcDate.setHours(utcDate.getHours()-8);
+          // var usDate = new Date(utcDate);
           // Add popup to markers
-          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + usDate + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + "" + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
   
 
         } else {
