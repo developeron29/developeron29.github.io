@@ -8,7 +8,7 @@ var mymap = '', //globalmap variable
     heatGroup = '',
     selected = false,
     globaldataObj = [],
-    globalUserObj = {},
+    globalUserData = [],
     spuDataObj = [],
     sprDataObj = [],
     spuLoaded = false,
@@ -19,6 +19,19 @@ var mymap = '', //globalmap variable
     scientNameObj = [],
     tofKeys = []; //empty x graph data initialize
 
+    function validationCheck(id, count) {
+      const db = firebase.firestore();
+      db.collection("trees").doc(id).update({
+          isValidated: "VALIDATED",
+          validatedCount: parseInt(count) + 1
+      }).then(function( ) {
+        console.log("done");
+        location.reload();
+      })
+      .catch(function(error) {
+        console.log("error updating validation", error);
+      })
+    }
     
     window.onload = function() {
       this.setTimeout(function() {
@@ -42,8 +55,8 @@ var mymap = '', //globalmap variable
     }
 
     function showAllMarkers() {
-        mapPlot(1); //show all
-
+      mapPlot(1); //show all
+      document.getElementById("validationSelect").value = "showallvalidation";
     }
 
     // Evaluate color of cluster
@@ -65,6 +78,7 @@ var mymap = '', //globalmap variable
       return sortedObj ? sortedObj : 'black';
     }
 
+
     // plot markers to map
     function mapPlot(label) {
       document.getElementById('heatmap-toggle').checked = false;
@@ -72,13 +86,22 @@ var mymap = '', //globalmap variable
         filteredList = globaldataObj;
        // $("#sbheadfont1").text(Object.keys(scientNameObj).length);
         filteredListFlag = false;
+        // subdivide mapper to be used with other filters as well --
+      mapPlotSub(filteredList, true);
       } else {
         filteredList = globaldataObj.filter(function(obj) {
           return obj["speciesNameCommon"].toUpperCase().trim().localeCompare(label.toUpperCase().trim()) == 0;
         });
       //  $("#sbheadfont1").text(1);
         filteredListFlag = true;
+        // subdivide mapper to be used with other filters as well --
+      mapPlotSub(filteredList, false);
       }
+
+      
+    }
+
+    function mapPlotSub(filteredList, filterFlag) {
 
       //reinstantiate marker group
       mymap.removeLayer(markerGroup);
@@ -96,6 +119,11 @@ var mymap = '', //globalmap variable
       var len = filteredList.length;
       $("#sbheadfont").text(len);
       var tempConifers = 0, tempDeciduous = 0;
+
+      if(filterFlag) {
+        scientNameObj = [];
+      }
+      console.log('filtered ', filteredList );
 
       filteredList.forEach(function(data) {
         var sc = data["speciesNameCommon"];
@@ -131,8 +159,9 @@ var mymap = '', //globalmap variable
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
           // Add popup to markers
-          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + "" + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
-
+          var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> <b>is Valid ?</b>" : "";
+          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + ValidCheck + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+  
          } // end of if check
          else {
            console.log('no geom', data);
@@ -141,8 +170,11 @@ var mymap = '', //globalmap variable
         });
         $("#sbheadfont1").text(tempConifers);
         $("#sbheadfont2").text(tempDeciduous);
+        console.log('her', scientNameObj);
+        if(filterFlag) {
+          chartPlotter(scientNameObj);
+        }
     }
-
         
     // Handle Socrata data
     function ttinitsocrata() {
@@ -219,7 +251,7 @@ var mymap = '', //globalmap variable
     })
     .addTo(mymap);
 
-      // create the control
+      // create the heatmap control
       var command = L.control({position: 'topright'});
 
       command.onAdd = function (map) {
@@ -231,9 +263,48 @@ var mymap = '', //globalmap variable
 
       command.addTo(mymap);
 
+      // Validation options on map
+      var showValidOptions = L.control({position: 'topleft'});
+
+      showValidOptions.onAdd = function(map) {
+        var div = L.DomUtil.create('div', 'command');
+        div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="validationSelect"><b>Filter by Validation</b></label><br><select id="validationSelect"><option value="showallvalidation">Show all Trees</option><option value="valid">Validated</option><option value="needsvalid">Needs Validation</option></select></form>';
+        return div;
+      }
+
+      showValidOptions.addTo(mymap);
+
+      function filterUsernameSelect(globalUserData1){
+        console.log('g1',globalUserData1);
+        // Filter by username
+        var filterUsername = L.control({position: 'topleft'});
+
+        filterUsername.onAdd = function(map) {
+          var div = L.DomUtil.create('div', command);
+
+          var tempOptions = '<option value="showallusers">Show all Users</option>';
+          console.log('g2',globalUserData1);
+          globalUserData1.forEach(function(user) {
+            tempOptions = tempOptions + '<option value="' + user +'">' + user + '</option>';
+          });
+          console.log(tempOptions);
+          div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="usernames"><b>Filter by Username</b></label><br><select id="usernamesSelect">' + tempOptions + '</select></form>';
+          return div;
+        }
+
+        filterUsername.addTo(mymap);
+
+        // handle change
+        document.getElementById("usernamesSelect").addEventListener("change",function() {
+          console.log('change', window.location.href, this.value, this);
+          // redirect with that username
+            window.location.href = window.location.protocol + '//' + window.location.host + window.location.pathname + "?user=" + this.value;
+        }, false);
+      }
+
       // add the event handler
       function handleCommand() {
-          var cs = $("input[type=radio][name=invasiveSelector]:checked").val();
+          // var cs = $("input[type=radio][name=invasiveSelector]:checked").val();
           if(this.checked) {
           var tempdata = [];
           if (filteredListFlag) {
@@ -268,7 +339,33 @@ var mymap = '', //globalmap variable
         
       }
 
+      function handleValidChange() {
+        var e = document.getElementById("validationSelect");
+        var validity = e.options[e.selectedIndex].value;
+
+        if(validity.localeCompare("showallvalidation") == 0) {
+          // valid
+          filteredList = globaldataObj;
+          filteredListFlag = false;
+        } else if (validity.localeCompare("needsvalid") == 0) {
+          // needs validation
+          filteredList = globaldataObj.filter(function (obj) {
+            return obj["isValidated"].localeCompare("NEEDS VALIDATION") == 0;
+          });
+          filteredListFlag = true;
+        } else if (validity.localeCompare("valid") == 0) {
+          // Show all
+          // needs validation
+          filteredList = globaldataObj.filter(function (obj) {
+            return obj["isValidated"].localeCompare("VALIDATED") == 0;
+          });
+          filteredListFlag = true;
+        }
+
+        mapPlotSub(filteredList, true);
+      }
       document.getElementById ("heatmap-toggle").addEventListener ("click", handleCommand, false);
+      document.getElementById("validationSelect").addEventListener("change",handleValidChange, false);
 
       // Trampoline - using trampoline prevents stack overflow issues- invloves Thunks!
       function trampoline(fn) {
@@ -285,14 +382,26 @@ var mymap = '', //globalmap variable
                
           // Initialize Firebase
             // Web app's Firebase configuration - iSeaTree-prod
+            /* Prod */
+            // var firebaseConfig = {
+            //   apiKey: "AIzaSyB-txtWPzPYmBylItEc9vcZRMh5oKWB-qc",
+            //   authDomain: "iseatree-dev.firebaseapp.com",
+            //   databaseURL: "https://iseatree-dev.firebaseio.com",
+            //   projectId: "iseatree-dev",
+            //   storageBucket: "iseatree-dev.appspot.com",
+            //   messagingSenderId: "135495017909",
+            //   appId: "1:135495017909:web:7ce3c041e73788b51ba5fc"
+            // };
+            /* Dev */
             var firebaseConfig = {
-              apiKey: "AIzaSyB-txtWPzPYmBylItEc9vcZRMh5oKWB-qc",
-              authDomain: "iseatree-dev.firebaseapp.com",
-              databaseURL: "https://iseatree-dev.firebaseio.com",
-              projectId: "iseatree-dev",
-              storageBucket: "iseatree-dev.appspot.com",
-              messagingSenderId: "135495017909",
-              appId: "1:135495017909:web:7ce3c041e73788b51ba5fc"
+              apiKey: "AIzaSyC3MulDsRNhj0iCGoSFEn2kIhvFgoGE8wY",
+              authDomain: "iseatree.firebaseapp.com",
+              databaseURL: "https://iseatree.firebaseio.com",
+              projectId: "iseatree",
+              storageBucket: "iseatree.appspot.com",
+              messagingSenderId: "851760547478",
+              appId: "1:851760547478:web:328c43f71a9bb877bb64b7",
+              measurementId: "G-RBG6WEH2VL"
             };
 
           firebase.initializeApp(firebaseConfig);
@@ -306,25 +415,37 @@ var mymap = '', //globalmap variable
                     .then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
                             // doc.data() is never undefined for query doc snapshots
-                            doc.data()["isValidated"] ? tempDataArr.push(doc.data()) : "";
-                        });
+                            var tempObj = doc.data();
+                            tempObj["id"] = doc.id;
+                            (doc.data()["isValidated"]).toUpperCase().localeCompare("SPAM") !== 0 ? tempDataArr.push(tempObj) : 0;
+                             globalUserData.indexOf(doc.data()["username"]) === - 1 ? globalUserData.push(doc.data()["username"]) : 0;
+                         // tempDataArr.push(doc.data());
+                          });
+                        console.log(tempDataArr, 'g', globalUserData);
+                        // Add username filter to map
+                        filterUsernameSelect(globalUserData);
                         globaldataObj = tempDataArr;
+                        var queryString = window.location.search;
+                        var urlParams = new URLSearchParams(queryString);
+                        console.log('us ', urlParams.get('user'));
+                        
+                        if(urlParams.get('user') && urlParams.get('user') !== null && urlParams.get('user') !== undefined && urlParams.get('user').localeCompare("showallusers") !== 0) {
+                          // set option 
+                          document.getElementById("usernamesSelect").value = urlParams.get('user');
+
+                          globaldataObj = globaldataObj.filter(function(user) {
+                            return user["username"].localeCompare(urlParams.get('user')) == 0;
+                          });
+                        }
+                        // set link to social
+                        document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
+                        document.getElementById("tweetlink").href = "https://twitter.com/share?url=" + window.location.href;
                         dataMapper();
                         // Hide Loading Screen
                         setTimeout(function() {
                           document.getElementById("cover").style.display = "none";
                         });
-                      // search users
-                      // db.collection("users")
-                      // .get()
-                      // .then(function(querySnapshot) {
-                      //   querySnapshot.forEach(function(doc) {
-                      //     globalUserObj[doc.id] = doc.data();;
-                      //   });
 
-                      // }).catch(function(err) {
-                      //   console.log("Error getting documents: ", error);
-                      // });
                     return null;
                 })
                 .catch(function(error) {
@@ -356,6 +477,8 @@ var mymap = '', //globalmap variable
         return buildDatainternal.bind(this, n, genus);
       }
 
+
+
       function dataMapper() {
 
       var len = globaldataObj.length;
@@ -376,12 +499,15 @@ var mymap = '', //globalmap variable
 
       markerGroup = L.layerGroup().addTo(mymap);
       var tempConifers = 0, tempDeciduous = 0;
+      scientNameObj = [];
+
       globaldataObj.forEach(function(data) {
       var sc = data["speciesNameCommon"];
       scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
       data["treeType"] == "conifer" ? tempConifers++ : tempDeciduous++;
       // Markers
 
+      
         if(data["coords"]) {
           var lat = data["coords"]["Pc"],
           long = data["coords"]["Vc"];
@@ -409,55 +535,20 @@ var mymap = '', //globalmap variable
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
           // Add popup to markers
-          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Created At (PST): " + "" + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> <b>is Valid ?</b>" : "";
+          circle.bindPopup("<div style=''>Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + ValidCheck + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
   
-
         } else {
           console.log('dd', data);
         }
         
-      });
-
-        var dataPointsArr = [];
-        Object.keys(scientNameObj).forEach(elem => {
-          dataPointsArr.push({
-            label: elem,
-            y: scientNameObj[elem]
-          });
         });
+
         $("#sbheadfont1").text(tempConifers);
         $("#sbheadfont2").text(tempDeciduous);
-        // Render Chart
-        if(chart) {
-          chart.destroy();
-        }
-        var chart = new CanvasJS.Chart("chartContainer", {
-          theme: "light1", // "light2", "dark1", "dark2"
-          animationEnabled: true, // set to true	
-          colorSet:  "customColorset",	
-          axisX:{
-            labelMaxWidth: 60, //
-            labelFontSize: 12,
-			      labelWrap: true,   // so that the x-axis labels stay straight
-            labelAutoFit: true 
-          },
-          data: [
-            {
-              // Column for column type graphs
-              type: "column",
-              click: function(e){ 
-                mapPlot(e["dataPoint"]["label"]);
-              },
-              mousemove: function(e) {
-                document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer"; // change cursor to pointer on mousemove
-              },
-              dataPoints: dataPointsArr
-            }
-          ]
-        });
-        setTimeout(function() {
-          chart.render();
-        }, 1000);
+
+        chartPlotter(scientNameObj);
+
 
       } // end of data mapper
            globaldataObj = [];
@@ -466,6 +557,50 @@ var mymap = '', //globalmap variable
             trampoline(buildData.bind(this, 0, 'FRAXINUS')); // Emerald Ash Borer
           },500);
 
-    }
+        }
+
+          // Chart plotter
+          function chartPlotter(scientNameObj1) {
+
+            var dataPointsArr = [];
+            Object.keys(scientNameObj1).forEach(elem => {
+              dataPointsArr.push({
+                label: elem,
+                y: scientNameObj1[elem]
+              });
+            });
+
+            // Render Chart
+            if(chart) {
+              chart.destroy();
+            }
+            var chart = new CanvasJS.Chart("chartContainer", {
+              theme: "light1", // "light2", "dark1", "dark2"
+              animationEnabled: true, // set to true	
+              colorSet:  "customColorset",	
+              axisX:{
+                labelMaxWidth: 60, //
+                labelFontSize: 12,
+                labelWrap: true,   // so that the x-axis labels stay straight
+                labelAutoFit: true 
+              },
+              data: [
+                {
+                  // Column for column type graphs
+                  type: "column",
+                  click: function(e){ 
+                    mapPlot(e["dataPoint"]["label"]);
+                  },
+                  mousemove: function(e) {
+                    document.getElementsByClassName("canvasjs-chart-canvas")[1].style.cursor = "pointer"; // change cursor to pointer on mousemove
+                  },
+                  dataPoints: dataPointsArr
+                }
+              ]
+            });
+            setTimeout(function() {
+              chart.render();
+            }, 10);
+          }
 
       window.addEventListener('DOMContentLoaded', ttinitsocrata);

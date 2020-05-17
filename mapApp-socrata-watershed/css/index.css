@@ -6,6 +6,9 @@
     background-color:#004445;
 }
 
+a#fblink:hover { color: inherit; } 
+a#tweetlink:hover { color: inherit; } 
+
 #padrightblock {
     padding-right: 2px;
     -webkit-box-flex: 1;
