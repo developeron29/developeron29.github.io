@@ -442,10 +442,24 @@ var mymap = '', //globalmap variable
                         document.getElementById("tweetlink").href = "https://twitter.com/share?url=" + window.location.href;
                         // Set meta image properties
                         var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
-                        $('meta[property=sog:image]').remove();
-                        $('head').append( '<meta property="og:image" content="' +  tempUrlHandler + '">' );
-                        $('meta[name=twitter:image]').remove();
-                        $('head').append( '<meta name="twitter:image" content="' +  tempUrlHandler + '">' );
+                        // $('meta[property=og:image]').remove();
+                        // $('head').append( '<meta property="og:image" content="' +  tempUrlHandler + '">' );
+                        // $('meta[name=twitter:image]').remove();
+                        // $('head').append( '<meta name="twitter:image" content="' +  tempUrlHandler + '">' );
+                        var allMetaElements = document.getElementsByTagName('meta');
+                        //loop through and find the element you want
+                        for (var i=0; i<allMetaElements.length; i++) { 
+                          if (allMetaElements[i].getAttribute("property") == "og:image") { 
+                            allMetaElements[i].setAttribute('content', tempUrlHandler); 
+                          } 
+                          if (allMetaElements[i].getAttribute("name") == "twitter:image") { 
+                            allMetaElements[i].setAttribute('content', tempUrlHandler); 
+                          } 
+                          if (allMetaElements[i].getAttribute("property") == "og:description") { 
+                            allMetaElements[i].setAttribute('content', "My new Treemama Dashboard!"); 
+                          } 
+                          
+                        } 
                         dataMapper();
                         // Hide Loading Screen
                         setTimeout(function() {
