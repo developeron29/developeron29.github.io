@@ -439,7 +439,7 @@ var mymap = '', //globalmap variable
 
                         // set link to social
                         document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
-                        document.getElementById("tweetlink").href = "https://twitter.com/share?url=" + window.location.href;
+                        document.getElementById("tweetlink").href = "https://twitter.com/intent/tweet?url=" + window.location.href;
                         // Set meta image properties
                         // $('meta[property=og:image]').remove();
                         // $('head').append( '<meta property="og:image" content="' +  tempUrlHandler + '">' );
