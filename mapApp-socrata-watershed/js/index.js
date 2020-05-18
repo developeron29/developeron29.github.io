@@ -436,9 +436,16 @@ var mymap = '', //globalmap variable
                             return user["username"].localeCompare(urlParams.get('user')) == 0;
                           });
                         }
+
                         // set link to social
                         document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
                         document.getElementById("tweetlink").href = "https://twitter.com/share?url=" + window.location.href;
+                        // Set meta image properties
+                        var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
+                        $('meta[property=sog:image]').remove();
+                        $('head').append( '<meta property="og:image" content="' +  tempUrlHandler + '">' );
+                        $('meta[name=twitter:image]').remove();
+                        $('head').append( '<meta name="twitter:image" content="' +  tempUrlHandler + '">' );
                         dataMapper();
                         // Hide Loading Screen
                         setTimeout(function() {
