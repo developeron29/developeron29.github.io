@@ -34,22 +34,28 @@ var mymap = '', //globalmap variable
     }
 
     var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
+    
+    var meta = document.createElement('meta');
+    meta.property = "og:image";
+    meta.content = tempUrlHandler;
+    meta.property = "og:description";
+    meta.content = "My new Treemama Dashboard!";
+    document.getElementsByTagName('head')[0].appendChild(meta);
 
     //Set meta tags
     var allMetaElements = document.getElementsByTagName('meta');
     //loop through and find the element you want
     for (var i=0; i<allMetaElements.length; i++) { 
       console.log('all', allMetaElements[i]);
-      if (allMetaElements[i].getAttribute("property") == "og:image") { 
-        allMetaElements[i].setAttribute('content', tempUrlHandler); 
-      } 
-      if (allMetaElements[i].getAttribute("name") == "twitter:image") { 
-        allMetaElements[i].setAttribute('content', tempUrlHandler); 
-      } 
-      if (allMetaElements[i].getAttribute("property") == "og:description") { 
-        allMetaElements[i].setAttribute('content', "My new Treemama Dashboard!"); 
-      } 
-      
+      // if (allMetaElements[i].getAttribute("property") == "og:image") { 
+      //   allMetaElements[i].setAttribute('content', tempUrlHandler); 
+      // } 
+      // if (allMetaElements[i].getAttribute("name") == "twitter:image") { 
+      //   allMetaElements[i].setAttribute('content', tempUrlHandler); 
+      // } 
+      // if (allMetaElements[i].getAttribute("property") == "og:description") { 
+      //   allMetaElements[i].setAttribute('content', "My new Treemama Dashboard!"); 
+      // } 
     } 
 
     window.onload = function() {
