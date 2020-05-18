@@ -449,6 +449,7 @@ var mymap = '', //globalmap variable
                         var allMetaElements = document.getElementsByTagName('meta');
                         //loop through and find the element you want
                         for (var i=0; i<allMetaElements.length; i++) { 
+                          console.log('all', allMetaElements[i]);
                           if (allMetaElements[i].getAttribute("property") == "og:image") { 
                             allMetaElements[i].setAttribute('content', tempUrlHandler); 
                           } 
