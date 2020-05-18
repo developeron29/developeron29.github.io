@@ -32,6 +32,9 @@ var mymap = '', //globalmap variable
         console.log("error updating validation", error);
       })
     }
+
+    var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
+
     //Set meta tags
     var allMetaElements = document.getElementsByTagName('meta');
     //loop through and find the element you want
@@ -457,7 +460,6 @@ var mymap = '', //globalmap variable
                         document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
                         document.getElementById("tweetlink").href = "https://twitter.com/share?url=" + window.location.href;
                         // Set meta image properties
-                        var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
                         // $('meta[property=og:image]').remove();
                         // $('head').append( '<meta property="og:image" content="' +  tempUrlHandler + '">' );
                         // $('meta[name=twitter:image]').remove();
