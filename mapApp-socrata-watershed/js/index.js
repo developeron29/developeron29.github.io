@@ -36,9 +36,12 @@ var mymap = '', //globalmap variable
     var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
     
     var meta = document.createElement('meta');
-    meta.property = "og:image";
+    meta.setAttribute("property", "og:image");
     meta.content = tempUrlHandler;
-    meta.property = "og:description";
+    document.getElementsByTagName('head')[0].appendChild(meta);
+
+    var meta = document.createElement('meta');
+    meta.setAttribute("property", "og:description");
     meta.content = "My new Treemama Dashboard!";
     document.getElementsByTagName('head')[0].appendChild(meta);
 
