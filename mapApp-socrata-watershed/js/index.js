@@ -355,7 +355,6 @@ var mymap = '', //globalmap variable
           filteredListFlag = true;
         } else if (validity.localeCompare("valid") == 0) {
           // Show all
-          // needs validation
           filteredList = globaldataObj.filter(function (obj) {
             return obj["isValidated"].localeCompare("VALIDATED") == 0;
           });
