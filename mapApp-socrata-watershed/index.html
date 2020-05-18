@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script>
+                var tempUrlHandler = "http://image.thum.io/get/ogImage/" + window.location.href;
+    
+                var meta = document.createElement('meta');
+                meta.setAttribute("property", "og:image");
+                meta.content = tempUrlHandler;
+                document.getElementsByTagName('head')[0].appendChild(meta);
 
+                var meta = document.createElement('meta');
+                meta.setAttribute("property", "og:description");
+                meta.content = "My new Treemama Dashboard!";
+                document.getElementsByTagName('head')[0].appendChild(meta);
+
+        </script>
         <!--Bootstrap CSS-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <!--Leaflet CSS-->
