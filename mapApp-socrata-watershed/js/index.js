@@ -151,15 +151,15 @@ var mymap = '', //globalmap variable
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
-          var aH = data;
-          // , d = new Date();
-          // d.setTime(aH["created_at"]["seconds"]*1000);
-          // var utcDate = new Date(d.toUTCString());
-          // utcDate.setHours(utcDate.getHours()-8);
-          // var usDate = new Date(utcDate);
+          var aH = data
+          , d = new Date();
+          d.setTime(aH["created_at"]["seconds"]*1000);
+          var utcDate = new Date(d.toUTCString());
+          utcDate.setHours(utcDate.getHours()-8);
+          var usDate = new Date(utcDate);
           // Add popup to markers
           var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          circle.bindPopup("<div style=''>" + ValidCheck + "Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;'>" + ValidCheck + "Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br> Created at: " + usDate +  "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
   
          } // end of if check
          else {
@@ -541,15 +541,15 @@ var mymap = '', //globalmap variable
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
-          var aH = data;
-          // , d = new Date();
-          // d.setTime(aH["created_at"]["seconds"]*1000);
-          // var utcDate = new Date(d.toUTCString());
-          // utcDate.setHours(utcDate.getHours()-8);
-          // var usDate = new Date(utcDate);
+          var aH = data
+          , d = new Date();
+          d.setTime(aH["created_at"]["seconds"]*1000);
+          var utcDate = new Date(d.toUTCString());
+          utcDate.setHours(utcDate.getHours()-8);
+          var usDate = new Date(utcDate);
           // Add popup to markers
           var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          circle.bindPopup("<div style=''>" + ValidCheck + "Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;'>" + ValidCheck + "Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br> Created at: " + usDate +  "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
   
         } else {
           console.log('dd', data);
