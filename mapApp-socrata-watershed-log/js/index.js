@@ -123,7 +123,6 @@ var mymap = '', //globalmap variable
       if(filterFlag) {
         scientNameObj = [];
       }
-      console.log('filtered ', filteredList );
 
       filteredList.forEach(function(data) {
         var sc = data["speciesNameCommon"];
@@ -170,7 +169,6 @@ var mymap = '', //globalmap variable
         });
         $("#sbheadfont1").text(tempConifers);
         $("#sbheadfont2").text(tempDeciduous);
-        console.log('her', scientNameObj);
         if(filterFlag) {
           chartPlotter(scientNameObj);
         }
@@ -275,7 +273,6 @@ var mymap = '', //globalmap variable
       showValidOptions.addTo(mymap);
 
       function filterUsernameSelect(globalUserData1){
-        console.log('g1',globalUserData1);
         // Filter by username
         var filterUsername = L.control({position: 'topleft'});
 
@@ -283,11 +280,9 @@ var mymap = '', //globalmap variable
           var div = L.DomUtil.create('div', command);
 
           var tempOptions = '<option value="showallusers">Show all Users</option>';
-          console.log('g2',globalUserData1);
           globalUserData1.forEach(function(user) {
             tempOptions = tempOptions + '<option value="' + user +'">' + user + '</option>';
           });
-          console.log(tempOptions);
           div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="usernames"><b>Filter by Username</b></label><br><select id="usernamesSelect">' + tempOptions + '</select></form>';
           return div;
         }
@@ -296,7 +291,6 @@ var mymap = '', //globalmap variable
 
         // handle change
         document.getElementById("usernamesSelect").addEventListener("change",function() {
-          console.log('change', window.location.href, this.value, this);
           // redirect with that username
             window.location.href = window.location.protocol + '//' + window.location.host + window.location.pathname + "?user=" + this.value;
         }, false);
@@ -382,26 +376,26 @@ var mymap = '', //globalmap variable
           // Initialize Firebase
             // Web app's Firebase configuration - iSeaTree-prod
             /* Prod */
-            // var firebaseConfig = {
-            //   apiKey: "AIzaSyB-txtWPzPYmBylItEc9vcZRMh5oKWB-qc",
-            //   authDomain: "iseatree-dev.firebaseapp.com",
-            //   databaseURL: "https://iseatree-dev.firebaseio.com",
-            //   projectId: "iseatree-dev",
-            //   storageBucket: "iseatree-dev.appspot.com",
-            //   messagingSenderId: "135495017909",
-            //   appId: "1:135495017909:web:7ce3c041e73788b51ba5fc"
-            // };
-            /* Dev */
             var firebaseConfig = {
-              apiKey: "AIzaSyC3MulDsRNhj0iCGoSFEn2kIhvFgoGE8wY",
-              authDomain: "iseatree.firebaseapp.com",
-              databaseURL: "https://iseatree.firebaseio.com",
-              projectId: "iseatree",
-              storageBucket: "iseatree.appspot.com",
-              messagingSenderId: "851760547478",
-              appId: "1:851760547478:web:328c43f71a9bb877bb64b7",
-              measurementId: "G-RBG6WEH2VL"
+              apiKey: "AIzaSyB-txtWPzPYmBylItEc9vcZRMh5oKWB-qc",
+              authDomain: "iseatree-dev.firebaseapp.com",
+              databaseURL: "https://iseatree-dev.firebaseio.com",
+              projectId: "iseatree-dev",
+              storageBucket: "iseatree-dev.appspot.com",
+              messagingSenderId: "135495017909",
+              appId: "1:135495017909:web:7ce3c041e73788b51ba5fc"
             };
+            /* Dev */
+            // var firebaseConfig = {
+            //   apiKey: "AIzaSyC3MulDsRNhj0iCGoSFEn2kIhvFgoGE8wY",
+            //   authDomain: "iseatree.firebaseapp.com",
+            //   databaseURL: "https://iseatree.firebaseio.com",
+            //   projectId: "iseatree",
+            //   storageBucket: "iseatree.appspot.com",
+            //   messagingSenderId: "851760547478",
+            //   appId: "1:851760547478:web:328c43f71a9bb877bb64b7",
+            //   measurementId: "G-RBG6WEH2VL"
+            // };
 
           firebase.initializeApp(firebaseConfig);
           firebase.auth().onAuthStateChanged(function(user) {
@@ -420,13 +414,11 @@ var mymap = '', //globalmap variable
                              globalUserData.indexOf(doc.data()["username"]) === - 1 ? globalUserData.push(doc.data()["username"]) : 0;
                          // tempDataArr.push(doc.data());
                           });
-                        console.log(tempDataArr, 'g', globalUserData);
                         // Add username filter to map
                         filterUsernameSelect(globalUserData);
                         globaldataObj = tempDataArr;
                         var queryString = window.location.search;
                         var urlParams = new URLSearchParams(queryString);
-                        console.log('us ', urlParams.get('user'));
                         
                         if(urlParams.get('user') && urlParams.get('user') !== null && urlParams.get('user') !== undefined && urlParams.get('user').localeCompare("showallusers") !== 0) {
                           // set option 
@@ -437,9 +429,24 @@ var mymap = '', //globalmap variable
                           });
                         }
 
+                        // Hide show linkage
+                        if(urlParams.get('share') == 1) {
+                          console.log('share')
+                          $("#shareLink").show();
+                        } else {
+                          $("#shareLink").hide();
+                        }
                         // set link to social
-                        document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
-                        document.getElementById("tweetlink").href = "https://twitter.com/intent/tweet?url=" + window.location.href;
+                        var tempLoca = window.location.href.split("?");
+                        console.log('loca', tempLoca);
+                        if(tempLoca[1] == undefined) {
+                          var tempShareLinkage = window.location.href + "%3Fshare=1";
+                        } else {
+                          var tempShareLinkage = window.location.href + "%26share=1";
+                        }
+                          console.log('linkage', tempShareLinkage);
+                        document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + tempShareLinkage;
+                        document.getElementById("tweetlink").href = "https://twitter.com/intent/tweet?url=" + tempShareLinkage;
                         // Set meta image properties
                         // $('meta[property=og:image]').remove();
                         // $('head').append( '<meta property="og:image" content="' +  tempUrlHandler + '">' );
