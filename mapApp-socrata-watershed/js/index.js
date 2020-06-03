@@ -151,15 +151,15 @@ var mymap = '', //globalmap variable
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
-          var aH = data
-          , d = new Date();
-          d.setTime(aH["created_at"]["seconds"]*1000);
-          var utcDate = new Date(d.toUTCString());
-          utcDate.setHours(utcDate.getHours()-8);
-          var usDate = new Date(utcDate);
+          var aH = data;
+          // , d = new Date();
+          // d.setTime(aH["created_at"]["seconds"]*1000);
+          // var utcDate = new Date(d.toUTCString());
+          // utcDate.setHours(utcDate.getHours()-8);
+          // var usDate = new Date(utcDate);
           // Add popup to markers
           var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;'>" + ValidCheck + "Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br> Created at: " + usDate +  "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>");
   
          } // end of if check
          else {
@@ -411,7 +411,7 @@ var mymap = '', //globalmap variable
                             var tempObj = doc.data();
                             tempObj["id"] = doc.id;
                             (doc.data()["isValidated"]).toUpperCase().localeCompare("SPAM") !== 0 ? tempDataArr.push(tempObj) : 0;
-                             globalUserData.indexOf(doc.data()["username"]) === - 1 ? globalUserData.push(doc.data()["username"]) : 0;
+                             globalUserData.indexOf(doc.data()["username"].trim()) === - 1 ? globalUserData.push(doc.data()["username"].trim()) : 0;
                          // tempDataArr.push(doc.data());
                           });
                         // Add username filter to map
@@ -419,14 +419,18 @@ var mymap = '', //globalmap variable
                         globaldataObj = tempDataArr;
                         var queryString = window.location.search;
                         var urlParams = new URLSearchParams(queryString);
-                        
+                        console.log('h1', urlParams);
+
                         if(urlParams.get('user') && urlParams.get('user') !== null && urlParams.get('user') !== undefined && urlParams.get('user').localeCompare("showallusers") !== 0) {
                           // set option 
+                          console.log('h2',urlParams.get('user'), urlParams );
                           document.getElementById("usernamesSelect").value = urlParams.get('user');
 
                           globaldataObj = globaldataObj.filter(function(user) {
+                            console.log('username', user["username"], user["username"].localeCompare(urlParams.get('user')) == 0);
                             return user["username"].localeCompare(urlParams.get('user')) == 0;
                           });
+                          console.log('global', globaldataObj);
                         }
 
                         // Hide show linkage
@@ -541,15 +545,16 @@ var mymap = '', //globalmap variable
 
           var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
-          var aH = data
-          , d = new Date();
-          d.setTime(aH["created_at"]["seconds"]*1000);
-          var utcDate = new Date(d.toUTCString());
-          utcDate.setHours(utcDate.getHours()-8);
-          var usDate = new Date(utcDate);
+          var aH = data;
+          // , d = new Date();
+          // d.setTime(aH["created_at"]["seconds"]*1000);
+          // var utcDate = new Date(d.toUTCString());
+          // utcDate.setHours(utcDate.getHours()-8);
+          // var usDate = new Date(utcDate);
+          // console.log('capt', aH["created_at"], 'c1',);
           // Add popup to markers
           var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;'>" + ValidCheck + "Species Name (Common): " + aH["speciesNameCommon"] + "<br>Species Name (Scientific): " + aH["speciesNameScientific"] + "<br>Tree Type: " + aH["treeType"] + "<br>Username: " + aH["username"] + "<br>Is Validated: " + aH["isValidated"] + "<br>Land Use Category: " + aH["landUseCategory"] + "<br>Location Type: " + aH["locationType"] + "<br> Created at: " + usDate +  "<br>Notes: " + aH["notes"] + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>" + "</div>");
+          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>");
   
         } else {
           console.log('dd', data);
