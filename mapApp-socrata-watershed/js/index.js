@@ -159,7 +159,9 @@ var mymap = '', //globalmap variable
           // var usDate = new Date(utcDate);
           // Add popup to markers
           var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>");
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+            maxWidth : 450
+        });
   
          } // end of if check
          else {
@@ -554,7 +556,9 @@ var mymap = '', //globalmap variable
           // console.log('capt', aH["created_at"], 'c1',);
           // Add popup to markers
           var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          circle.bindPopup("<div style='max-height:200px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>");
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+            maxWidth : 450
+        });
   
         } else {
           console.log('dd', data);
