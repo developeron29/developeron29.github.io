@@ -82,12 +82,13 @@ a#tweetlink:hover { color: inherit; }
     white-space: nowrap;
     width: auto;
     height: 87%;
+
 }
 
 #chartContainer {
     position: relative;
+    width: 80vw;
     height: 87%;
-    width: 50vw;
 }
 
 #sbheadfont11 {

@@ -173,7 +173,7 @@ var mymap = '', //globalmap variable
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
           // Add popup to markers
-          var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "",
+          // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "",
           ValidationDropdown = "<select id='dropdownSelectValidId' onchange='validDropdownSelect(" + '"' + aH["id"]  + '"' + ")'>";
           ["validated", "needs validation", "spam"].forEach(function(i) {
             if (aH["isValidated"].trim().toLowerCase().localeCompare(i) == 0) {
@@ -183,7 +183,7 @@ var mymap = '', //globalmap variable
             }
           }) ;
           ValidationDropdown += "</select>";
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
   
@@ -447,7 +447,6 @@ var mymap = '', //globalmap variable
                             globalUserData.indexOf(doc.data()["username"].trim()) === - 1 ? globalUserData.push(doc.data()["username"].trim()) : 0;
                          // tempDataArr.push(doc.data());
                           });
-                          console.log('te', tempDataArr);
                         // Add username filter to map
                         filterUsernameSelect(globalUserData);
                         globaldataObj = tempDataArr;
@@ -458,9 +457,11 @@ var mymap = '', //globalmap variable
                           // set option 
                           document.getElementById("usernamesSelect").value = urlParams.get('user');
 
+                          console.log('before', globaldataObj);
                           globaldataObj = globaldataObj.filter(function(user) {
-                            return user["username"].localeCompare(urlParams.get('user')) == 0;
+                            return user["username"].trim().localeCompare(urlParams.get('user').trim()) == 0;
                           });
+                          console.log('after', globaldataObj);
                         }
 
                         // Hide show linkage
@@ -582,7 +583,7 @@ var mymap = '', //globalmap variable
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
           // Add popup to markers
-          var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
+          // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
           ValidationDropdown = "<select id='dropdownSelectValidId' onchange='validDropdownSelect(" + '"' + aH["id"]  + '"' + ")'>";
           ["validated", "needs validation", "spam"].forEach(function(i) {
             if (aH["isValidated"].trim().toLowerCase().localeCompare(i) == 0) {
@@ -592,7 +593,7 @@ var mymap = '', //globalmap variable
             }
           }) ;
           ValidationDropdown += "</select>";
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"]  + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
   
@@ -632,15 +633,21 @@ var mymap = '', //globalmap variable
             if(chart) {
               chart.destroy();
             }
+            // Set chart container height dynamically
+            document.getElementById("chartContainer").style.height = (parseInt(document.getElementById("paddlow").offsetHeight) - 75) + "px";
+            //initialize chart
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet:  "customColorset",	
+              colorSet:  "customColorset",
               axisX:{
                 labelMaxWidth: 60, //
                 labelFontSize: 12,
                 labelWrap: true,   // so that the x-axis labels stay straight
                 labelAutoFit: true 
+              },
+              axisY: {
+                interval: 5
               },
               data: [
                 {
@@ -656,6 +663,7 @@ var mymap = '', //globalmap variable
                 }
               ]
             });
+
             setTimeout(function() {
               chart.render();
             }, 10);
