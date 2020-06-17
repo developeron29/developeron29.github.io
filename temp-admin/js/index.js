@@ -626,6 +626,10 @@ var mymap = '', //globalmap variable
               dataPointsArr.push({
                 label: elem,
                 y: scientNameObj1[elem]
+                , indexLabel: elem, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside",indexLabelWrap: true,indexLabelFontSize: 12,
+                indexLabelFormatter: function(e){			
+                  return " - " + e.dataPoint.label ;				
+                }
               });
             });
 
@@ -640,11 +644,16 @@ var mymap = '', //globalmap variable
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
               colorSet:  "customColorset",
-              axisX:{
-                labelMaxWidth: 60, //
-                labelFontSize: 12,
-                labelWrap: true,   // so that the x-axis labels stay straight
-                labelAutoFit: true 
+              // axisX:{
+              //   labelMaxWidth: 90, //
+              //   labelFontSize: 9,
+              //   labelWrap: true,   // so that the x-axis labels stay straight
+              //   labelAutoFit: true 
+              // },
+              axisX: {
+                labelFormatter: function(e){
+                  return  "";
+                }
               },
               axisY: {
                 interval: 5
