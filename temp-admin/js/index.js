@@ -183,7 +183,13 @@ var mymap = '', //globalmap variable
             }
           }) ;
           ValidationDropdown += "</select>";
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
+            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
+          } else {
+            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
+          }
+
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
   
@@ -265,7 +271,7 @@ var mymap = '', //globalmap variable
 
     var customLayer = L.geoJSON(null, {
       onEachFeature: function (feature, layer) {
-        layer.bindPopup('<h3>'+feature.properties["UCWS_ALT_NAME"] + '</h3>');
+        layer.bindPopup('<h3>'+ (feature.properties["UCWS_REC_WTRBDY_NAME"] || feature.properties["UCWS_ALT_NAME"])+ '</h3>');
       }
     });
 
@@ -592,8 +598,16 @@ var mymap = '', //globalmap variable
               ValidationDropdown += "<option value ='" + i + "'>" + i + "</option>"
             }
           }) ;
+          var tempImgTag;
           ValidationDropdown += "</select>";
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"]  + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+
+          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
+            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
+          } else {
+            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
+          }
+
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"]  + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
   
@@ -626,10 +640,6 @@ var mymap = '', //globalmap variable
               dataPointsArr.push({
                 label: elem,
                 y: scientNameObj1[elem]
-                , indexLabel: elem, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside",indexLabelWrap: true,indexLabelFontSize: 12,
-                indexLabelFormatter: function(e){			
-                  return " - " + e.dataPoint.label ;				
-                }
               });
             });
 
