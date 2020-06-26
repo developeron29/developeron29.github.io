@@ -289,7 +289,12 @@ oms = '',
 
     var customLayer = L.geoJSON(null, {
       onEachFeature: function (feature, layer) {
-        layer.bindPopup('<h3>'+ (feature.properties["UCWS_REC_WTRBDY_NAME"] || feature.properties["UCWS_ALT_NAME"])+ '</h3>');
+        layer.bindPopup('<h3>'+ feature.properties["UCWS_ALT_NAME"] + '</h3>');
+      },
+      filter: function(feature, layer) {
+        if(feature.properties["UCWS_ALT_NAME"] && feature.properties["UCWS_ALT_NAME"] !== undefined) {
+          return true
+        }
       }
     });
 
@@ -481,7 +486,6 @@ oms = '',
                           // set option 
                           document.getElementById("usernamesSelect").value = urlParams.get('user');
 
-                          console.log('before', globaldataObj);
                           globaldataObj = globaldataObj.filter(function(user) {
                             return user["username"].trim().localeCompare(urlParams.get('user').trim()) == 0;
                           });
@@ -490,7 +494,6 @@ oms = '',
 
                         // Hide show linkage
                         if(urlParams.get('share') == 1) {
-                          console.log('share')
                           $("#shareLink").show();
                         } else {
                           $("#shareLink").hide();
@@ -503,7 +506,7 @@ oms = '',
                         } else {
                           var tempShareLinkage = window.location.href + "%26share=1";
                         }
-                          console.log('linkage', tempShareLinkage);
+
                         document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + tempShareLinkage;
                         document.getElementById("tweetlink").href = "https://twitter.com/intent/tweet?url=" + tempShareLinkage;
                         // Set meta image properties
