@@ -1,5 +1,4 @@
 var mymap = '', //globalmap variable
-oms = '',
     globalColorSetExtend = [
       "#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#648177" ,"#0d5ac1" , "#f205e6" ,"#1c0365" ,"#14a9ad" ,"#4ca2f9" ,"#a4e43f" ,"#d298e2" ,"#6119d0", "#d2737d" ,"#c0a43c" ,"#f2510e" ,"#651be6" ,"#79806e" ,"#61da5e" ,"#cd2f00" , "#9348af" ,"#01ac53" ,"#c5a4fb", "#996635","#b11573" ,"#4bb473" ,"#75d89e" , "#2f3f94" ,"#2f7b99" ,"#da967d" ,"#34891f" ,"#b0d87b" ,"#ca4751" ,"#7e50a8" , "#c4d647" ,"#e0eeb8" ,"#11dec1" ,"#289812" ,"#566ca0" ,"#ffdbe1" ,"#2f1179" ,"#935b6d" ,"#916988" ,"#513d98" ,"#aead3a", "#9e6d71", "#4b5bdc", "#0cd36d","#250662", "#cb5bea", "#228916", "#ac3e1b", "#df514a", "#539397", "#880977","#f697c1", "#ba96ce", "#679c9d", "#c6c42c", "#5d2c52", "#48b41b", "#e1cf3b","#5be4f0", "#57c4d8", "#a4d17a", "#225b8", "#be608b", "#96b00c", "#088baf","#f158bf", "#e145ba", "#ee91e3", "#05d371", "#5426e0", "#4834d0", "#802234","#6749e8", "#0971f0", "#8fb413", "#b2b4f0", "#c3c89d", "#c9a941", "#41d158",
       "#fb21a3", "#51aed9", "#5bb32d", "#807fb", "#21538e", "#89d534", "#d36647","#7fb411", "#0023b8", "#3b8c2a", "#986b53", "#f50422", "#983f7a", "#ea24a3","#79352c", "#521250", "#c79ed2", "#d6dd92", "#e33e52", "#b2be57", "#fa06ec","#1bb699", "#6b2e5f", "#64820f", "#1c271", "#21538e", "#89d534", "#d36647","#7fb411", "#0023b8", "#3b8c2a", "#986b53", "#f50422", "#983f7a", "#ea24a3","#79352c", "#521250", "#c79ed2", "#d6dd92", "#e33e52", "#b2be57", "#fa06ec","#1bb699", "#6b2e5f", "#64820f", "#1c271", "#9cb64a", "#996c48", "#9ab9b7","#06e052", "#e3a481", "#0eb621", "#fc458e", "#b2db15", "#aa226d", "#792ed8","#73872a", "#520d3a", "#cefcb8", "#a5b3d9", "#7d1d85", "#c4fd57", "#f1ae16","#8fe22a", "#ef6e3c", "#243eeb", "#1dc18", "#dd93fd", "#3f8473", "#e7dbce","#421f79", "#7a3d93", "#635f6d", "#93f2d7", "#9b5c2a", "#15b9ee", "#0f5997", "#409188", "#911e20", "#1350ce", "#10e5b1", "#fff4d7", "#cb2582", "#ce00be",
@@ -18,35 +17,20 @@ oms = '',
     filteredList = [],
     filteredListFlag = false,
     scientNameObj = [],
-    tofKeys = [], //empty x graph data initialize
-    iconsPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/icons/"; // path to icons on treemama.org
+    tofKeys = []; //empty x graph data initialize
 
     function validationCheck(id, count) {
       const db = firebase.firestore();
       db.collection("trees").doc(id).update({
           isValidated: "VALIDATED",
           validatedCount: parseInt(count) + 1
-      }).then(function() {
+      }).then(function( ) {
         console.log("done");
         location.reload();
       })
       .catch(function(error) {
         console.log("error updating validation", error);
       })
-    }
-
-    function validDropdownSelect(id) {
-      var x = document.getElementById("dropdownSelectValidId").value;
-      console.log( 'foundX: ', x, id );
-      const db = firebase.firestore();
-      db.collection("trees").doc(id).update({
-        isValidated: x.trim().toUpperCase()
-      }).then(function() {
-        console.log("done");
-        location.reload();
-      }).catch(function(error) {
-        console.log("error updating validation", error);
-      });
     }
 
     window.onload = function() {
@@ -161,7 +145,7 @@ oms = '',
           //   }).addTo(markerGroup);     
 
           var confierIcon = L.icon({
-            iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'deciduous.png',
+            iconUrl: data["treeType"] == "conifer" ? 'icons/conifer.png' : 'icons/deciduous.png',
             iconSize: [35, 45], // size of the icon
           }); 
 
@@ -174,27 +158,10 @@ oms = '',
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
           // Add popup to markers
-          // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "",
-          ValidationDropdown = "<select id='dropdownSelectValidId' onchange='validDropdownSelect(" + '"' + aH["id"]  + '"' + ")'>";
-          ["validated", "needs validation", "spam"].forEach(function(i) {
-            if (aH["isValidated"].trim().toLowerCase().localeCompare(i) == 0) {
-              ValidationDropdown += "<option value ='" + i + "' selected='selected'>" + i + "</option>"
-            } else {
-              ValidationDropdown += "<option value ='" + i + "'>" + i + "</option>"
-            }
-          }) ;
-          ValidationDropdown += "</select>";
-          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
-            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
-          } else {
-            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
-          }
-
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
-
-        oms.addMarker(circle);
   
          } // end of if check
          else {
@@ -254,21 +221,6 @@ oms = '',
         zoom: 11,
         layers: [CartoDB_Voyager, Esri_WorldImagery, CartoDB_DarkMatter, watercolor]
       });
-      oms = new OverlappingMarkerSpiderfier(mymap, {
-        nearbyDistance: 10,
-        keepSpiderfied: true
-      });
-
-      // var popup = new L.Popup();
-      // oms.addListener('click', function(marker) {
-      //   popup.setContent(marker.desc);
-      //   popup.setLatLng(marker.getLatLng());
-      //   mymap.openPopup(popup);
-      // });
-
-      oms.addListener('spiderfy', function(markers) {
-        mymap.closePopup();
-      });
 
       var baseMaps = {
         "Normal": CartoDB_Voyager,
@@ -289,12 +241,7 @@ oms = '',
 
     var customLayer = L.geoJSON(null, {
       onEachFeature: function (feature, layer) {
-        layer.bindPopup('<h3>'+ feature.properties["UCWS_ALT_NAME"] + '</h3>');
-      },
-      filter: function(feature, layer) {
-        if(feature.properties["UCWS_ALT_NAME"] && feature.properties["UCWS_ALT_NAME"] !== undefined) {
-          return true
-        }
+        layer.bindPopup('<h3>'+feature.properties["UCWS_ALT_NAME"] + '</h3>');
       }
     });
 
@@ -321,7 +268,7 @@ oms = '',
 
       showValidOptions.onAdd = function(map) {
         var div = L.DomUtil.create('div', 'command');
-        div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="validationSelect"><b>Filter by Validation</b></label><br><select id="validationSelect"><option value="showallvalidation">Show all Trees</option><option value="valid">Validated</option><option value="needsvalid">Needs Validation</option><option value="spam">SPAM</option></select></form>';
+        div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="validationSelect"><b>Filter by Validation</b></label><br><select id="validationSelect"><option value="showallvalidation">Show all Trees</option><option value="valid">Validated</option><option value="needsvalid">Needs Validation</option></select></form>';
         return div;
       }
 
@@ -408,12 +355,6 @@ oms = '',
             return obj["isValidated"].localeCompare("VALIDATED") == 0;
           });
           filteredListFlag = true;
-        } else if (validity.localeCompare("spam") == 0) {
-          // Show all
-          filteredList = globaldataObj.filter(function (obj) {
-            return obj["isValidated"].toUpperCase().localeCompare("SPAM") == 0;
-          });
-          filteredListFlag = true;
         }
 
         mapPlotSub(filteredList, true);
@@ -471,9 +412,8 @@ oms = '',
                             // doc.data() is never undefined for query doc snapshots
                             var tempObj = doc.data();
                             tempObj["id"] = doc.id;
-                            // Push all including spam
-                            tempDataArr.push(tempObj);
-                            globalUserData.indexOf(doc.data()["username"].trim()) === - 1 ? globalUserData.push(doc.data()["username"].trim()) : 0;
+                            (doc.data()["isValidated"]).toUpperCase().localeCompare("SPAM") !== 0 ? tempDataArr.push(tempObj) : 0;
+                             globalUserData.indexOf(doc.data()["username"].trim()) === - 1 ? globalUserData.push(doc.data()["username"].trim()) : 0;
                          // tempDataArr.push(doc.data());
                           });
                         // Add username filter to map
@@ -481,19 +421,23 @@ oms = '',
                         globaldataObj = tempDataArr;
                         var queryString = window.location.search;
                         var urlParams = new URLSearchParams(queryString);
-                        
+                        console.log('h1', urlParams);
+
                         if(urlParams.get('user') && urlParams.get('user') !== null && urlParams.get('user') !== undefined && urlParams.get('user').localeCompare("showallusers") !== 0) {
                           // set option 
+                          console.log('h2',urlParams.get('user'), urlParams );
                           document.getElementById("usernamesSelect").value = urlParams.get('user');
 
                           globaldataObj = globaldataObj.filter(function(user) {
-                            return user["username"].trim().localeCompare(urlParams.get('user').trim()) == 0;
+                            console.log('username', user["username"], user["username"].localeCompare(urlParams.get('user')) == 0);
+                            return user["username"].localeCompare(urlParams.get('user')) == 0;
                           });
-                          console.log('after', globaldataObj);
+                          console.log('global', globaldataObj);
                         }
 
                         // Hide show linkage
                         if(urlParams.get('share') == 1) {
+                          console.log('share')
                           $("#shareLink").show();
                         } else {
                           $("#shareLink").hide();
@@ -506,7 +450,7 @@ oms = '',
                         } else {
                           var tempShareLinkage = window.location.href + "%26share=1";
                         }
-
+                          console.log('linkage', tempShareLinkage);
                         document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + tempShareLinkage;
                         document.getElementById("tweetlink").href = "https://twitter.com/intent/tweet?url=" + tempShareLinkage;
                         // Set meta image properties
@@ -597,7 +541,7 @@ oms = '',
             // }).addTo(markerGroup);  
 
             var confierIcon = L.icon({
-              iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'deciduous.png',
+              iconUrl: data["treeType"] == "conifer" ? 'icons/conifer.png' : 'icons/deciduous.png',
               iconSize: [35, 45], // size of the iconm
           }); 
 
@@ -609,31 +553,13 @@ oms = '',
           // var utcDate = new Date(d.toUTCString());
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
+          // console.log('capt', aH["created_at"], 'c1',);
           // Add popup to markers
-          // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          ValidationDropdown = "<select id='dropdownSelectValidId' onchange='validDropdownSelect(" + '"' + aH["id"]  + '"' + ")'>";
-          ["validated", "needs validation", "spam"].forEach(function(i) {
-            if (aH["isValidated"].trim().toLowerCase().localeCompare(i) == 0) {
-              ValidationDropdown += "<option value ='" + i + "' selected='selected'>" + i + "</option>"
-            } else {
-              ValidationDropdown += "<option value ='" + i + "'>" + i + "</option>"
-            }
-          }) ;
-          var tempImgTag;
-          ValidationDropdown += "</select>";
-
-          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
-            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
-          } else {
-            tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
-          }
-
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"]  + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/></div><div class='col-6'>" + ValidCheck + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
   
-        oms.addMarker(circle);
-
         } else {
           console.log('dd', data);
         }
@@ -670,26 +596,15 @@ oms = '',
             if(chart) {
               chart.destroy();
             }
-            // Set chart container height dynamically
-            document.getElementById("chartContainer").style.height = (parseInt(document.getElementById("paddlow").offsetHeight) - 75) + "px";
-            //initialize chart
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet:  "customColorset",
-              // axisX:{
-              //   labelMaxWidth: 90, //
-              //   labelFontSize: 9,
-              //   labelWrap: true,   // so that the x-axis labels stay straight
-              //   labelAutoFit: true 
-              // },
-              axisX: {
-                labelFormatter: function(e){
-                  return  "";
-                }
-              },
-              axisY: {
-                interval: 5
+              colorSet:  "customColorset",	
+              axisX:{
+                labelMaxWidth: 60, //
+                labelFontSize: 12,
+                labelWrap: true,   // so that the x-axis labels stay straight
+                labelAutoFit: true 
               },
               data: [
                 {
@@ -705,7 +620,6 @@ oms = '',
                 }
               ]
             });
-
             setTimeout(function() {
               chart.render();
             }, 10);

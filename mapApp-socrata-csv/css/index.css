@@ -6,9 +6,6 @@
     background-color:#004445;
 }
 
-a#fblink:hover { color: inherit; } 
-a#tweetlink:hover { color: inherit; } 
-
 #padrightblock {
     padding-right: 2px;
     -webkit-box-flex: 1;
@@ -58,15 +55,6 @@ a#tweetlink:hover { color: inherit; }
     display: inline-block;
 }
 
-#sbheadfont2 {
-    font-size: 4em;
-    color: #4c4c4c;
-    margin-top: -15px;
-    margin-bottom: -10px;
-    display: inline-block;
-}
-
-
 #acresBound {
     overflow: auto;
     white-space: nowrap;
@@ -82,13 +70,12 @@ a#tweetlink:hover { color: inherit; }
     white-space: nowrap;
     width: auto;
     height: 87%;
-
 }
 
 #chartContainer {
     position: relative;
-    width: 80vw;
     height: 87%;
+    width: 100vw;
 }
 
 #sbheadfont11 {
@@ -111,7 +98,7 @@ a#tweetlink:hover { color: inherit; }
 }
 
 #pad011 {
-    padding: 10px;
+    padding: 4px;
 }
 
 #pad02 {
