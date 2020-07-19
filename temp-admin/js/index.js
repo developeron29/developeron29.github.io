@@ -19,8 +19,10 @@ oms = '',
     filteredListFlag = false,
     scientNameObj = [],
     tofKeys = [], //empty x graph data initialize
-    iconsPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/icons/", // path to icons on treemama.org
-    kmlPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/u1.kml";
+    // iconsPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/icons/", // path to icons on treemama.org
+    iconsPath = "./icons/"
+    // kmlPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/u1.kml";
+    kmlPath="u1.kml";
 
     function validationCheck(id, count) {
       const db = firebase.firestore();
@@ -135,7 +137,7 @@ oms = '',
       markerGroup = L.layerGroup().addTo(mymap);
       var len = filteredList.length;
       $("#sbheadfont").text(len);
-      var tempConifers = 0, tempDeciduous = 0;
+      var tempConifers = 0, tempBroadleaf = 0;
 
       if(filterFlag) {
         scientNameObj = [];
@@ -144,7 +146,7 @@ oms = '',
       filteredList.forEach(function(data) {
         var sc = data["speciesNameCommon"];
         scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
-        data["treeType"] == "conifer" ? tempConifers++ : tempDeciduous++;
+        data["treeType"] == "conifer" ? tempConifers++ : tempBroadleaf++;
 
         // Markers
         if(data["coords"]) {
@@ -162,7 +164,7 @@ oms = '',
           //   }).addTo(markerGroup);     
 
           var confierIcon = L.icon({
-            iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'deciduous.png',
+            iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'broadleaf.png',
             iconSize: [35, 45], // size of the icon
           }); 
 
@@ -185,11 +187,13 @@ oms = '',
             }
           }) ;
           ValidationDropdown += "</select>";
-          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
+          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0 || aH["id"].trim().localeCompare("D10flDviEYSepYAsVFyr") == 0  || aH["id"].trim().localeCompare("fO939ARPOjjgjK6eIeza") == 0 || aH["id"].trim().localeCompare("6ArZIWQeEzzbZAMHvZAJ") == 0 || aH["id"].trim().localeCompare("xetPSC070nDZcpGRLCdO") == 0  || aH["id"].trim().localeCompare("3wBWs3A15VIakPWz1j5k") == 0  || aH["id"].trim().localeCompare("nlVuigzQqSiWSoykOEbm") == 0 ) {
+            // console.log('change', aH['id'], aH);
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
           } else {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
           }
+
 
           circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
@@ -204,7 +208,7 @@ oms = '',
   
         });
         $("#sbheadfont1").text(tempConifers);
-        $("#sbheadfont2").text(tempDeciduous);
+        $("#sbheadfont2").text(tempBroadleaf);
         if(filterFlag) {
           chartPlotter(scientNameObj);
         }
@@ -337,12 +341,22 @@ oms = '',
 
         filterUsername.onAdd = function(map) {
           var div = L.DomUtil.create('div', command);
-
-          var tempOptions = '<option value="showallusers">Show all Users</option>';
-          globalUserData1.toLowerCase().sort().forEach(function(user) {
+          L.DomEvent.on(div, 'mousewheel', L.DomEvent.stopPropagation);
+          L.DomEvent
+        .disableClickPropagation(div)
+        .disableScrollPropagation(div);
+          L.DomEvent.on(div, 'click', L.DomEvent.stopPropagation);
+          var tempOptions = '<option value="showallusers" >Show all Users</option>';
+          globalUserData1.sort(function (a, b) {
+            return (a).localeCompare(b);
+          });
+          console.log(globalUserData1);
+          globalUserData1.forEach(function(user) {
             tempOptions = tempOptions + '<option value="' + user +'">' + user + '</option>';
           });
-          div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="usernames"><b>Filter by Username</b></label><br><select id="usernamesSelect">' + tempOptions + '</select></form>';
+          tempOptions = tempOptions + '<option value="z-test1">z-test1</option>';
+          tempOptions = tempOptions + '<option value="z-test2">z-test2</option>';
+          div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="usernames"><b>Filter by Username</b></label><br><select id="usernamesSelect" onfocus="this.size=12;" onblur="this.size=1;" onchange="this.size=1; this.blur();"> >' + tempOptions + '</select></form>';
           return div;
         }
 
@@ -577,13 +591,13 @@ oms = '',
       // }).addTo(mymap);
 
       markerGroup = L.layerGroup().addTo(mymap);
-      var tempConifers = 0, tempDeciduous = 0;
+      var tempConifers = 0, tempBroadleaf = 0;
       scientNameObj = [];
 
       globaldataObj.forEach(function(data) {
       var sc = data["speciesNameCommon"];
       scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
-      data["treeType"] == "conifer" ? tempConifers++ : tempDeciduous++;
+      data["treeType"] == "conifer" ? tempConifers++ : tempBroadleaf++;
       // Markers
 
       
@@ -626,7 +640,7 @@ oms = '',
           var tempImgTag;
           ValidationDropdown += "</select>";
 
-          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
+          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0 || aH["id"].trim().localeCompare("D10flDviEYSepYAsVFyr") == 0  || aH["id"].trim().localeCompare("fO939ARPOjjgjK6eIeza") == 0 || aH["id"].trim().localeCompare("6ArZIWQeEzzbZAMHvZAJ") == 0 || aH["id"].trim().localeCompare("xetPSC070nDZcpGRLCdO") == 0  || aH["id"].trim().localeCompare("3wBWs3A15VIakPWz1j5k") == 0  || aH["id"].trim().localeCompare("nlVuigzQqSiWSoykOEbm") == 0 ) {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
           } else {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
@@ -645,7 +659,7 @@ oms = '',
         });
 
         $("#sbheadfont1").text(tempConifers);
-        $("#sbheadfont2").text(tempDeciduous);
+        $("#sbheadfont2").text(tempBroadleaf);
 
         chartPlotter(scientNameObj);
 
