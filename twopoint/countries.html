@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='icon' href='./img/shooting-star.png' type='image/x-icon'/ >
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="./Fondamento/Fondamento-Italic.ttf" rel="stylesheet">
+    <!-- <link href="./Fondamento/Fondamento-Regular.ttf" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./index.css">
+    <title>ayushnarula.com</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark text-white bg-primary fixed-top mb-4" style="z-index:999">
+        <a class="navbar-brand" href="#">ayushnarula.com</a>
+    </nav>
+    <div class="container-fluid mainCotainer" style="margin-top: 70px;">
+        <div class="row">
+            <div class="col-10">
+                <h1>Countries i've worked with</h1>
+                <div>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+                    <div class="container">
+                        <div id="container" style="position: relative; width: 70vw; height: 80vh;"></div>		
+                    </div>
+                
+                    <script type="text/javascript" src="https://datamaps.github.io/scripts/datamaps.world.min.js"></script>
+                    <script type="text/javascript">
+                
+                    var basic_choropleth = new Datamap({
+                      element: document.getElementById("container"),
+                      projection: 'mercator',
+                      fills: {
+                        defaultFill: "#ABDDA4",
+                        authorHasTraveledTo: "#fa0fa0"
+                      },
+                      data: {
+                        USA: { fillKey: "authorHasTraveledTo" },
+                        NZL: { fillKey: "authorHasTraveledTo" },
+                        NOR: { fillKey: "authorHasTraveledTo" },
+                        AUS: { fillKey: "authorHasTraveledTo" },
+                        MYS: { fillKey: "authorHasTraveledTo" },
+                        IND: { fillKey: "authorHasTraveledTo" },
+                        GBR: { fillKey: "authorHasTraveledTo" },
+                        ARE: { fillKey: "authorHasTraveledTo" },
+                        JPN: { fillKey: "authorHasTraveledTo" },
+                        BIH: { fillKey: "authorHasTraveledTo" },
+                        CHN: { fillKey: "authorHasTraveledTo" },
+                        PHL: { fillKey: "authorHasTraveledTo" },
+                        VNM: { fillKey: "authorHasTraveledTo" },
+                        CAN: { fillKey: "authorHasTraveledTo" },
+                        CHE: { fillKey: "authorHasTraveledTo" }
+                      }
+                    });
+                
+                    var colors = d3.scale.category10();
+                
+                    window.setInterval(function() {
+                      basic_choropleth.updateChoropleth({
+                        USA: colors(Math.random() * 10),
+                        NZL: colors(Math.random() * 100),
+                        NOR: colors(Math.random() * 50),
+                        AUS: colors(Math.random() * 50),
+                        MYS: colors(Math.random() * 50),
+                        IND: colors(Math.random() * 50),
+                        ARE: colors(Math.random() * 50),
+                        JPN: colors(Math.random() * 50),
+                        BIH: colors(Math.random() * 50),
+                        CHN: colors(Math.random() * 50),
+                        PHL: colors(Math.random() * 50),
+                        VNM: colors(Math.random() * 50),
+                        CHE: colors(Math.random() * 50),
+                        CAN: colors(Math.random() * 50),
+                        GBR: colors(Math.random() * 50)
+                      });
+                    }, 2000);
+                              
+                    d3.select(window).on('resize', function() {
+                        basic_choropleth.resize();
+                    });
+                
+                    </script>
+                </div>
+            </div>
+            <div class="col-2 text-center">
+                <p class="lead text-center" style="text-align: center;">
+                    <img src="./img/photo1.png" alt="ayush narula" class="img-thumbnail rounded-circle img-fluid" height="180" width="180"> <br/>
+                    <!--button group-->
+                    <div class=" text-center " >
+                        <a href="./" class="mt-4 mb-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Home</button> 
+                        </a>
+                        <a href="./about.html" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">About</button> 
+                        </a>
+                        <a href="./projects.html" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Projects</button> 
+                        </a>
+                        <a href="" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Presentations</button> 
+                        </a>
+                        <a href="" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Photography</button> 
+                        </a>
+                        <a href="" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Blog</button> 
+                        </a>
+                        <a href="" class="mt-4">
+                            <button class="btn btn-sm btn-light btn-block border">Countries</button> 
+                        </a>
+                        <a href="" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Contact me</button> 
+                        </a>
+                        <a href="./quotes.html" class="mt-4">
+                            <button class="btn btn-sm btn-dark text-white btn-block">Quotes</button> 
+                        </a>
+                    </div>
+                </p>
+            </div>
+        </div>
+       
+    </div>
+    <nav class="navbar navbar-light bg-light" style="position: absolute; margin-top: 90px; width: 100%;" >
+        <a class="navbar-brand" href="#">ayushnarula.com</a>
+        <div class="navbar-nav">
+            <a href="" class="nav-item nav-link">
+                &copy; 2013-2020
+            </a>
+        </div>
+    </nav>
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  </body>
+</html>
