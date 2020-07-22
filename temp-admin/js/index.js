@@ -168,7 +168,10 @@ oms = '',
             iconSize: [35, 45], // size of the icon
           }); 
 
-          var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
+          var tempcoordinates = fuzzyLatLng(lat, long, 2);
+          console.log('or ', lat, long, 'new ', tempcoordinates);
+
+          var circle = L.marker([tempcoordinates.latitude, tempcoordinates.longitude], {icon: confierIcon}).addTo(markerGroup);
           
           var aH = data;
           // , d = new Date();
@@ -214,6 +217,30 @@ oms = '',
         }
     }
         
+    
+    function fuzzyLatLng(lat, lng, miles) {
+      var milesPerDegreeLatitude = 69.09,
+      milesPerDegreeLongitude = (milesPerDegreeLatitude * Math.cos( lat * Math.PI / 180 )),
+      degreesOfLatitudeRandomness = (miles / milesPerDegreeLatitude),
+      degreesOfLongitudeRandomness = (miles / milesPerDegreeLongitude) ,
+      coordinates = {
+        latitude : (
+          (lat - degreesOfLatitudeRandomness) +
+          (
+            degreesOfLatitudeRandomness *
+            (2 * Math.random())
+          )
+        ),
+        longitude : (
+          (lng - degreesOfLongitudeRandomness) +
+          (
+           degreesOfLongitudeRandomness *
+            (2 * Math.random())
+          )
+        )
+        } 
+        return coordinates;
+    }
     // Handle Socrata data
     function ttinitsocrata() {
       CanvasJS.addColorSet("customColorset", globalColorSetExtend);
@@ -619,7 +646,10 @@ oms = '',
               iconSize: [35, 45], // size of the iconm
           }); 
 
-          var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
+          var tempcoordinates = fuzzyLatLng(lat, long, 2); 
+          console.log('or ', lat, long, 'new ', tempcoordinates);
+
+          var circle = L.marker([tempcoordinates.latitude, tempcoordinates.longitude], {icon: confierIcon}).addTo(markerGroup);
           
           var aH = data;
           // , d = new Date();
