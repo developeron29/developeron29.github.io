@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- FB link
+        <!-- FB link -->
+        <meta property="og:url" content="https://treemama.org/365-days-of-trees/dashboard" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Treemama 365 days of trees" />
         <meta property="og:description" content="Have a look at my Treemama dashboard!" />
-        <meta property="og:image"  content="http://image.thum.io/get/ogImagehttps://ayushnarula.com/mapApp-socrata-watershed/?user=treemama" /> -->
+        <meta property="og:image"  content="http://image.thum.io/get/ogImagehttps://ayushnarula.com/mapApp-socrata-watershed" />
 
         <!-- Need Twitter card to be a summary with large image, or else image will be smaller -->
         <meta name="twitter:card" content="summary_large_image">
@@ -40,24 +43,20 @@
                 <div class="col-md-5" id="padrightblock">
                     <div class="card" style="margin-bottom: 5px;text-align: center;">
                         <div class="" id="">
-                            <div class="row">
-
-                                <div class="col-6 mt-1">
-                                    SHARE YOUR DASHBOARD
-                                    <a href="" id="fblink" target="_blank">
-                                        <img src="./icons/fb.png" alt="facebook"> &nbsp;
-                                    </a>
-                                    <a href="" id="tweetlink" target="_blank">
-                                        <img src="./icons/twitter.png" alt="twitter"> &nbsp;
-                                    </a>
-                                    <a href="https://treemama.org/365-days-of-trees/dashboard/" id="shareLink">
-                                        <img src="./icons/link.png" alt="link">
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <small style="font-size: 0.7em;">Warning: the exact GPS location of trees are recorded, but not displayed, on this dashboard for privacy reasons.</small>
-                                </div>
+                            <div style="position: absolute; top:10px;left:10px;">
+                                SHARE YOUR DASHBOARD
+                                <a href="" id="fblink" target="_blank">
+                                    <img src="./icons/fb.png" alt="facebook"> &nbsp;
+                                </a>
+                                <a href="" id="tweetlink" target="_blank">
+                                    <img src="./icons/twitter.png" alt="twitter"> &nbsp;
+                                </a>
+                                <a href="https://treemama.org/365-days-of-trees/dashboard/" id="shareLink">
+                                    <img src="./icons/link.png" alt="link">
+                                </a>
                             </div>
+                            <br>
+                            <br>
                             <span id="projecthead">Total count of trees</span> <br>
                             <b id="sbheadfont">0</b>
                         </div>
@@ -76,7 +75,7 @@
                         <div class="col-md-6" style="padding-left:2px;">
                             <div class="card" id="" style="margin-bottom: 5px;text-align: center;">
                                 <div class="card-body" id="pad011">
-                                        <span id="projecthead1">Number of Broadleaf</span> <br>
+                                        <span id="projecthead1">Number of Deciduous</span> <br>
                                         <div id="acresBound">
                                             <b id="sbheadfont2">0</b>
                                     </div>
@@ -128,7 +127,6 @@
         <!--Moment js for timezone | date -->
         <script src="https://momentjs.com/downloads/moment.min.js"></script>
         <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
-        <!--index-->
         <script src="js/index.js"></script>
     </body>
 </html>

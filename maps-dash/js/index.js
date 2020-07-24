@@ -18,41 +18,13 @@ oms = '',
     filteredList = [],
     filteredListFlag = false,
     scientNameObj = [],
-    tofKeys = [], //empty x graph data initialize
-    // iconsPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/icons/", // path to icons on treemama.org
-    iconsPath = "./icons/"
-    // kmlPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/admin/u1.kml";
-    kmlPath="u1.kml";
-
-    function validationCheck(id, count) {
-      const db = firebase.firestore();
-      db.collection("trees").doc(id).update({
-          isValidated: "VALIDATED",
-          validatedCount: parseInt(count) + 1
-      }).then(function() {
-        console.log("done");
-        location.reload();
-      })
-      .catch(function(error) {
-        console.log("error updating validation", error);
-      })
-    }
-
-    function validDropdownSelect(id) {
-      var x = document.getElementById("dropdownSelectValidId").value;
-      console.log( 'foundX: ', x, id );
-      const db = firebase.firestore();
-      db.collection("trees").doc(id).update({
-        isValidated: x.trim().toUpperCase()
-      }).then(function() {
-        console.log("done");
-        location.reload();
-      }).catch(function(error) {
-        console.log("error updating validation", error);
-      });
-    }
+    tofKeys = [] //empty x graph data initialize,
+    iconsPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/public/icons/", // path to icons on treemama.org
+    // kmlPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/public/u1.kml";
+    kmlPath = "u1.kml";
 
     window.onload = function() {
+      console.log('reuploaded');
       this.setTimeout(function() {
       // set dimensions of divs after load
 
@@ -75,7 +47,7 @@ oms = '',
 
     function showAllMarkers() {
       mapPlot(1); //show all
-      document.getElementById("validationSelect").value = "showallvalidation";
+  //    document.getElementById("validationSelect").value = "showallvalidation";
     }
 
     // Evaluate color of cluster
@@ -137,7 +109,7 @@ oms = '',
       markerGroup = L.layerGroup().addTo(mymap);
       var len = filteredList.length;
       $("#sbheadfont").text(len);
-      var tempConifers = 0, tempBroadleaf = 0;
+      var tempConifers = 0, tempDeciduous = 0;
 
       if(filterFlag) {
         scientNameObj = [];
@@ -146,7 +118,7 @@ oms = '',
       filteredList.forEach(function(data) {
         var sc = data["speciesNameCommon"];
         scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
-        data["treeType"] == "conifer" ? tempConifers++ : tempBroadleaf++;
+        data["treeType"] == "conifer" ? tempConifers++ : tempDeciduous++;
 
         // Markers
         if(data["coords"]) {
@@ -164,14 +136,11 @@ oms = '',
           //   }).addTo(markerGroup);     
 
           var confierIcon = L.icon({
-            iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'broadleaf.png',
+            iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' :  iconsPath + 'deciduous.png',
             iconSize: [35, 45], // size of the icon
           }); 
 
-          var tempcoordinates = fuzzyLatLng(lat, long, 2);
-          console.log('or ', lat, long, 'new ', tempcoordinates);
-
-          var circle = L.marker([tempcoordinates.latitude, tempcoordinates.longitude], {icon: confierIcon}).addTo(markerGroup);
+          var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
           var aH = data;
           // , d = new Date();
@@ -179,31 +148,20 @@ oms = '',
           // var utcDate = new Date(d.toUTCString());
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
+          // console.log('capt', aH["created_at"], 'c1',);
           // Add popup to markers
-          // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "",
-          ValidationDropdown = "<select id='dropdownSelectValidId' onchange='validDropdownSelect(" + '"' + aH["id"]  + '"' + ")'>";
-          ["validated", "needs validation", "spam"].forEach(function(i) {
-            if (aH["isValidated"].trim().toLowerCase().localeCompare(i) == 0) {
-              ValidationDropdown += "<option value ='" + i + "' selected='selected'>" + i + "</option>"
-            } else {
-              ValidationDropdown += "<option value ='" + i + "'>" + i + "</option>"
-            }
-          }) ;
-          ValidationDropdown += "</select>";
-          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0 || aH["id"].trim().localeCompare("D10flDviEYSepYAsVFyr") == 0  || aH["id"].trim().localeCompare("fO939ARPOjjgjK6eIeza") == 0 || aH["id"].trim().localeCompare("6ArZIWQeEzzbZAMHvZAJ") == 0 || aH["id"].trim().localeCompare("xetPSC070nDZcpGRLCdO") == 0  || aH["id"].trim().localeCompare("3wBWs3A15VIakPWz1j5k") == 0  || aH["id"].trim().localeCompare("nlVuigzQqSiWSoykOEbm") == 0 ) {
-            // console.log('change', aH['id'], aH);
+          // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
+          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
           } else {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
           }
 
-
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"] + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
 
         oms.addMarker(circle);
-  
          } // end of if check
          else {
            console.log('no geom', data);
@@ -211,36 +169,12 @@ oms = '',
   
         });
         $("#sbheadfont1").text(tempConifers);
-        $("#sbheadfont2").text(tempBroadleaf);
+        $("#sbheadfont2").text(tempDeciduous);
         if(filterFlag) {
           chartPlotter(scientNameObj);
         }
     }
         
-    
-    function fuzzyLatLng(lat, lng, miles) {
-      var milesPerDegreeLatitude = 69.09,
-      milesPerDegreeLongitude = (milesPerDegreeLatitude * Math.cos( lat * Math.PI / 180 )),
-      degreesOfLatitudeRandomness = (miles / milesPerDegreeLatitude),
-      degreesOfLongitudeRandomness = (miles / milesPerDegreeLongitude) ,
-      coordinates = {
-        latitude : (
-          (lat - degreesOfLatitudeRandomness) +
-          (
-            degreesOfLatitudeRandomness *
-            (2 * Math.random())
-          )
-        ),
-        longitude : (
-          (lng - degreesOfLongitudeRandomness) +
-          (
-           degreesOfLongitudeRandomness *
-            (2 * Math.random())
-          )
-        )
-        } 
-        return coordinates;
-    }
     // Handle Socrata data
     function ttinitsocrata() {
       CanvasJS.addColorSet("customColorset", globalColorSetExtend);
@@ -291,13 +225,6 @@ oms = '',
         keepSpiderfied: true
       });
 
-      // var popup = new L.Popup();
-      // oms.addListener('click', function(marker) {
-      //   popup.setContent(marker.desc);
-      //   popup.setLatLng(marker.getLatLng());
-      //   mymap.openPopup(popup);
-      // });
-
       oms.addListener('spiderfy', function(markers) {
         mymap.closePopup();
       });
@@ -319,20 +246,20 @@ oms = '',
       markerGroup = L.layerGroup().addTo(mymap);
       heatGroup = L.layerGroup().addTo(mymap);
 
-    var watershedList = ["thornton creek", "piper's creek", "taylor creek", "mapes creek", "longfellow creek", "seloa beach creek", "fauntleroy creek", "puget creek", "ravenna (lower) creek", "inverness creek"];
-    var customLayer = L.geoJSON(null, {
-      onEachFeature: function (feature, layer) {
-        layer.bindPopup('<h3>'+ feature.properties["UCWS_ALT_NAME"] + '</h3>');
-      },
-      filter: function(feature, layer) {
-        if(feature.properties["UCWS_ALT_NAME"] && feature.properties["UCWS_ALT_NAME"] !== undefined) {
-          if(watershedList.includes(feature.properties["UCWS_ALT_NAME"].trim().toLowerCase())) {
-            return true;
-          }
+      var watershedList = ["thornton creek", "piper's creek", "taylor creek", "mapes creek", "longfellow creek", "seloa beach creek", "fauntleroy creek", "puget creek", "ravenna (lower) creek", "inverness creek"];
+      var customLayer = L.geoJSON(null, {
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup('<h3>'+ feature.properties["UCWS_ALT_NAME"] + '</h3>');
+        },
+        filter: function(feature, layer) {
+          if(feature.properties["UCWS_ALT_NAME"] && feature.properties["UCWS_ALT_NAME"] !== undefined) {
+            if(watershedList.includes(feature.properties["UCWS_ALT_NAME"].trim().toLowerCase())) {
+              return true;
+            }
+        }
       }
-    }
-    });
-
+      });
+  
     var runLayer = omnivore.kml(kmlPath, null, customLayer)
     .on('ready', function() {
         mymap.fitBounds(runLayer.getBounds());
@@ -352,15 +279,15 @@ oms = '',
       command.addTo(mymap);
 
       // Validation options on map
-      var showValidOptions = L.control({position: 'topleft'});
+      // var showValidOptions = L.control({position: 'topleft'});
 
-      showValidOptions.onAdd = function(map) {
-        var div = L.DomUtil.create('div', 'command');
-        div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="validationSelect"><b>Filter by Validation</b></label><br><select id="validationSelect"><option value="showallvalidation">Show all Trees</option><option value="valid">Validated</option><option value="needsvalid">Needs Validation</option><option value="spam">SPAM</option></select></form>';
-        return div;
-      }
+      // showValidOptions.onAdd = function(map) {
+      //   var div = L.DomUtil.create('div', 'command');
+      //   div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="validationSelect"><b>Filter by Validation</b></label><br><select id="validationSelect"><option value="showallvalidation">Show all Trees</option><option value="valid">Validated</option><option value="needsvalid">Needs Validation</option></select></form>';
+      //   return div;
+      // }
 
-      showValidOptions.addTo(mymap);
+      // showValidOptions.addTo(mymap);
 
       function filterUsernameSelect(globalUserData1){
         // Filter by username
@@ -368,22 +295,12 @@ oms = '',
 
         filterUsername.onAdd = function(map) {
           var div = L.DomUtil.create('div', command);
-          L.DomEvent.on(div, 'mousewheel', L.DomEvent.stopPropagation);
-          L.DomEvent
-        .disableClickPropagation(div)
-        .disableScrollPropagation(div);
-          L.DomEvent.on(div, 'click', L.DomEvent.stopPropagation);
-          var tempOptions = '<option value="showallusers" >Show all Users</option>';
-          globalUserData1.sort(function (a, b) {
-            return (a).localeCompare(b);
-          });
-          console.log(globalUserData1);
+
+          var tempOptions = '<option value="showallusers">Show all Users</option>';
           globalUserData1.forEach(function(user) {
             tempOptions = tempOptions + '<option value="' + user +'">' + user + '</option>';
           });
-          tempOptions = tempOptions + '<option value="z-test1">z-test1</option>';
-          tempOptions = tempOptions + '<option value="z-test2">z-test2</option>';
-          div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="usernames"><b>Filter by Username</b></label><br><select id="usernamesSelect" onfocus="this.size=12;" onblur="this.size=1;" onchange="this.size=1; this.blur();"> >' + tempOptions + '</select></form>';
+          div.innerHTML = '<form style="background-color:white; padding:12px;border-radius:5px;"><label for="usernames"><b>Filter by Username</b></label><br><select id="usernamesSelect">' + tempOptions + '</select></form>';
           return div;
         }
 
@@ -433,38 +350,32 @@ oms = '',
         
       }
 
-      function handleValidChange() {
-        var e = document.getElementById("validationSelect");
-        var validity = e.options[e.selectedIndex].value;
+      // function handleValidChange() {
+      //   var e = document.getElementById("validationSelect");
+      //   var validity = e.options[e.selectedIndex].value;
 
-        if(validity.localeCompare("showallvalidation") == 0) {
-          // valid
-          filteredList = globaldataObj;
-          filteredListFlag = false;
-        } else if (validity.localeCompare("needsvalid") == 0) {
-          // needs validation
-          filteredList = globaldataObj.filter(function (obj) {
-            return obj["isValidated"].localeCompare("NEEDS VALIDATION") == 0;
-          });
-          filteredListFlag = true;
-        } else if (validity.localeCompare("valid") == 0) {
-          // Show all
-          filteredList = globaldataObj.filter(function (obj) {
-            return obj["isValidated"].localeCompare("VALIDATED") == 0;
-          });
-          filteredListFlag = true;
-        } else if (validity.localeCompare("spam") == 0) {
-          // Show all
-          filteredList = globaldataObj.filter(function (obj) {
-            return obj["isValidated"].toUpperCase().localeCompare("SPAM") == 0;
-          });
-          filteredListFlag = true;
-        }
+      //   if(validity.localeCompare("showallvalidation") == 0) {
+      //     // valid
+      //     filteredList = globaldataObj;
+      //     filteredListFlag = false;
+      //   } else if (validity.localeCompare("needsvalid") == 0) {
+      //     // needs validation
+      //     filteredList = globaldataObj.filter(function (obj) {
+      //       return obj["isValidated"].localeCompare("NEEDS VALIDATION") == 0;
+      //     });
+      //     filteredListFlag = true;
+      //   } else if (validity.localeCompare("valid") == 0) {
+      //     // Show all
+      //     filteredList = globaldataObj.filter(function (obj) {
+      //       return obj["isValidated"].localeCompare("VALIDATED") == 0;
+      //     });
+      //     filteredListFlag = true;
+      //   }
 
-        mapPlotSub(filteredList, true);
-      }
+      //   mapPlotSub(filteredList, true);
+      // }
       document.getElementById ("heatmap-toggle").addEventListener ("click", handleCommand, false);
-      document.getElementById("validationSelect").addEventListener("change",handleValidChange, false);
+    //  document.getElementById("validationSelect").addEventListener("change",handleValidChange, false);
 
       // Trampoline - using trampoline prevents stack overflow issues- invloves Thunks!
       function trampoline(fn) {
@@ -516,9 +427,8 @@ oms = '',
                             // doc.data() is never undefined for query doc snapshots
                             var tempObj = doc.data();
                             tempObj["id"] = doc.id;
-                            // Push all including spam
-                            tempDataArr.push(tempObj);
-                            globalUserData.indexOf(doc.data()["username"].trim()) === - 1 ? globalUserData.push(doc.data()["username"].trim()) : 0;
+                            (doc.data()["isValidated"]).toUpperCase().localeCompare("SPAM") !== 0 ? tempDataArr.push(tempObj) : 0;
+                             globalUserData.indexOf(doc.data()["username"].trim()) === - 1 ? globalUserData.push(doc.data()["username"].trim()) : 0;
                          // tempDataArr.push(doc.data());
                           });
                         // Add username filter to map
@@ -534,11 +444,12 @@ oms = '',
                           globaldataObj = globaldataObj.filter(function(user) {
                             return user["username"].trim().localeCompare(urlParams.get('user').trim()) == 0;
                           });
-                          console.log('after', globaldataObj);
+
                         }
 
                         // Hide show linkage
                         if(urlParams.get('share') == 1) {
+                          console.log('share')
                           $("#shareLink").show();
                         } else {
                           $("#shareLink").hide();
@@ -551,7 +462,7 @@ oms = '',
                         } else {
                           var tempShareLinkage = window.location.href + "%26share=1";
                         }
-
+                          console.log('linkage', tempShareLinkage);
                         document.getElementById("fblink").href = "https://www.facebook.com/sharer/sharer.php?u=" + tempShareLinkage;
                         document.getElementById("tweetlink").href = "https://twitter.com/intent/tweet?url=" + tempShareLinkage;
                         // Set meta image properties
@@ -618,13 +529,13 @@ oms = '',
       // }).addTo(mymap);
 
       markerGroup = L.layerGroup().addTo(mymap);
-      var tempConifers = 0, tempBroadleaf = 0;
+      var tempConifers = 0, tempDeciduous = 0;
       scientNameObj = [];
 
       globaldataObj.forEach(function(data) {
       var sc = data["speciesNameCommon"];
       scientNameObj[sc] = scientNameObj[sc] ? scientNameObj[sc] + 1 : 1;
-      data["treeType"] == "conifer" ? tempConifers++ : tempBroadleaf++;
+      data["treeType"] == "conifer" ? tempConifers++ : tempDeciduous++;
       // Markers
 
       
@@ -642,14 +553,11 @@ oms = '',
             // }).addTo(markerGroup);  
 
             var confierIcon = L.icon({
-              iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'broadleaf.png',
+              iconUrl: data["treeType"] == "conifer" ? iconsPath + 'conifer.png' : iconsPath + 'deciduous.png',
               iconSize: [35, 45], // size of the iconm
           }); 
 
-          var tempcoordinates = fuzzyLatLng(lat, long, 2); 
-          console.log('or ', lat, long, 'new ', tempcoordinates);
-
-          var circle = L.marker([tempcoordinates.latitude, tempcoordinates.longitude], {icon: confierIcon}).addTo(markerGroup);
+          var circle = L.marker([lat, long], {icon: confierIcon}).addTo(markerGroup);
           
           var aH = data;
           // , d = new Date();
@@ -657,31 +565,21 @@ oms = '',
           // var utcDate = new Date(d.toUTCString());
           // utcDate.setHours(utcDate.getHours()-8);
           // var usDate = new Date(utcDate);
+          // console.log('capt', aH["created_at"], 'c1',);
           // Add popup to markers
           // var ValidCheck = aH["isValidated"].toUpperCase().localeCompare("NEEDS VALIDATION") == 0 ? "<br><h5><input type='checkbox' id='needsValidation' onclick='validationCheck(" + '"' + aH["id"] + '","' + aH["validatedCount"] + '"' + ")'> is Valid ?</h5><hr>" : "";
-          ValidationDropdown = "<select id='dropdownSelectValidId' onchange='validDropdownSelect(" + '"' + aH["id"]  + '"' + ")'>";
-          ["validated", "needs validation", "spam"].forEach(function(i) {
-            if (aH["isValidated"].trim().toLowerCase().localeCompare(i) == 0) {
-              ValidationDropdown += "<option value ='" + i + "' selected='selected'>" + i + "</option>"
-            } else {
-              ValidationDropdown += "<option value ='" + i + "'>" + i + "</option>"
-            }
-          }) ;
-          var tempImgTag;
-          ValidationDropdown += "</select>";
 
-          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0 || aH["id"].trim().localeCompare("D10flDviEYSepYAsVFyr") == 0  || aH["id"].trim().localeCompare("fO939ARPOjjgjK6eIeza") == 0 || aH["id"].trim().localeCompare("6ArZIWQeEzzbZAMHvZAJ") == 0 || aH["id"].trim().localeCompare("xetPSC070nDZcpGRLCdO") == 0  || aH["id"].trim().localeCompare("3wBWs3A15VIakPWz1j5k") == 0  || aH["id"].trim().localeCompare("nlVuigzQqSiWSoykOEbm") == 0 ) {
+          if(aH["id"].trim().localeCompare("y6OPJ9NnzZO36uv4xWzZ") == 0) {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;transform:rotate(-90deg);'/>";
           } else {
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
           }
 
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Record no:</b> " + aH["id"]  + "<br><b>Is Validated:</b> " + ValidationDropdown + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
-  
-        oms.addMarker(circle);
 
+        oms.addMarker(circle);
         } else {
           console.log('dd', data);
         }
@@ -689,7 +587,7 @@ oms = '',
         });
 
         $("#sbheadfont1").text(tempConifers);
-        $("#sbheadfont2").text(tempBroadleaf);
+        $("#sbheadfont2").text(tempDeciduous);
 
         chartPlotter(scientNameObj);
 
@@ -718,19 +616,12 @@ oms = '',
             if(chart) {
               chart.destroy();
             }
-            // Set chart container height dynamically
-            document.getElementById("chartContainer").style.height = (parseInt(document.getElementById("paddlow").offsetHeight) - 75) + "px";
-            //initialize chart
+            document.getElementById("chartContainer").style.height = (parseInt(document.getElementById("paddlow").offsetHeight) - 110) + "px";
+
             var chart = new CanvasJS.Chart("chartContainer", {
               theme: "light1", // "light2", "dark1", "dark2"
               animationEnabled: true, // set to true	
-              colorSet:  "customColorset",
-              // axisX:{
-              //   labelMaxWidth: 90, //
-              //   labelFontSize: 9,
-              //   labelWrap: true,   // so that the x-axis labels stay straight
-              //   labelAutoFit: true 
-              // },
+              colorSet:  "customColorset",	
               axisX: {
                 labelFormatter: function(e){
                   return  "";
@@ -753,7 +644,6 @@ oms = '',
                 }
               ]
             });
-
             setTimeout(function() {
               chart.render();
             }, 10);
