@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- FB link -->
+        <meta property="og:url" content="https://treemama.org/365-days-of-trees/dashboard" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Treemama 365 days of trees" />
+        <meta property="og:description" content="Have a look at my Treemama dashboard!" />
+        <meta property="og:image"  content="http://image.thum.io/get/ogImagehttps://ayushnarula.com/mapApp-socrata-watershed" />
+
+        <!-- Need Twitter card to be a summary with large image, or else image will be smaller -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@developeron29">
+        <meta name="twitter:title" content="My Treemama dashboard!">
+        <meta name="twitter:description" content="Treemama dashboard">
+        <meta name="twitter:creator" content="@developeron29">
+        <meta name="twitter:image" content="http://image.thum.io/get/ogImagehttps://ayushnarula.com/mapApp-socrata-watershed/?user=treemama">
+        <meta name="twitter:domain" content="treemama.org">
+
+        <!--Bootstrap CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <!--Leaflet CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+        <!--Markercluster CSS-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+        <!--Custom CSS-->
+        <link rel="stylesheet" href="css/index.css">
+    </head>
+    <body id="backgroundclip">
+        <div id="cover">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status" style="position: fixed;top: 50%;left: 50%;margin-top: -15px;margin-left: -10px;">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div id="baseError">Warning: there is a problem with generating location information. Please check data sources</div>
+        <div class="container-fluid" id="pad">
+            <div class="row">
+                <div class="col-md-5" id="padrightblock">
+                    <div class="card" style="margin-bottom: 5px;text-align: center;">
+                        <div class="" id="">
+                            <div style="position: absolute; top:10px;left:10px;">
+                                SHARE YOUR DASHBOARD
+                                <a href="" id="fblink" target="_blank">
+                                    <img src="./icons/fb.png" alt="facebook"> &nbsp;
+                                </a>
+                                <a href="" id="tweetlink" target="_blank">
+                                    <img src="./icons/twitter.png" alt="twitter"> &nbsp;
+                                </a>
+                                <a href="https://treemama.org/365-days-of-trees/dashboard/" id="shareLink">
+                                    <img src="./icons/link.png" alt="link">
+                                </a>
+                            </div>
+                            <br>
+                            <br>
+                            <span id="projecthead">Total count of trees</span> <br>
+                            <b id="sbheadfont">0</b>
+                        </div>
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-md-6" style="padding-right:2px;">
+                            <div class="card" id="" style="margin-bottom: 5px;text-align: center;">
+                                <div class="card-body" id="pad011">
+                                        <span id="projecthead1">Number of Conifers</span> <br>
+                                        <div id="acresBound">
+                                            <b id="sbheadfont1">0</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding-left:2px;">
+                            <div class="card" id="" style="margin-bottom: 5px;text-align: center;">
+                                <div class="card-body" id="pad011">
+                                        <span id="projecthead1">Number of Broadleaf</span> <br>
+                                        <div id="acresBound">
+                                            <b id="sbheadfont2">0</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card"  id="textcenter">
+                        <div class="card-body" id="paddlow">
+                            <div id="fonthead1">
+                                <b id="smallfont">Tree Species</b> <br>
+                                <p id="smallfont">(Click graph to filter) <button class="btn-sm btn-link" style="position: absolute; right: 5px;" onclick="showAllMarkers();">Show all</button></p>
+                            </div>
+                            <div id="chartWrapper">
+                                <div id="chartContainer" ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7" id="padleftblock">
+                    <div id="mapid" class="mapbox"></div>
+                </div>
+            </div>
+        </div>
+        <!--Jquery-->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+        <!-- Fire Auth -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+        <!-- Firestore DB -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+        <!--Canvas graph-->
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+        <!--Papa parse CSV parsing-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.js"></script>
+        <!--Leaflet-->
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+        <!--Marker cluster-->
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+        <!--Overlapping markers spiderify-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
+        <!--Heat map-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+        <!--Leaflet omnivore-->
+        <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+        <!--Moment js for timezone | date -->
+        <script src="https://momentjs.com/downloads/moment.min.js"></script>
+        <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>
