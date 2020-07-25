@@ -108,7 +108,20 @@ oms = '',
       //   }
       // }).addTo(mymap);
       // markerGroup = L.layerGroup().addTo(mymap);
-      markerGroup = L.markerClusterGroup();
+      markerGroup = L.markerClusterGroup({iconCreateFunction: function (cluster) {
+        var childCount = cluster.getChildCount();
+    
+        var c = ' marker-cluster-';
+        if (childCount < 10) {
+          c += 'small';
+        } else if (childCount < 100) {
+          c += 'medium';
+        } else {
+          c += 'large';
+        }
+    
+        return new L.DivIcon({ html: '<div><span style="font-weight:bold;font-size:1.5em;">' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+      }});
 
       var len = filteredList.length;
       $("#sbheadfont").text(len);
@@ -164,7 +177,7 @@ oms = '',
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
           }
 
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          circle.bindPopup("<div style='max-height:500px;width:400px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
 
@@ -276,7 +289,20 @@ oms = '',
       //   singleMarkerMode: true
       // }).addTo(mymap);
       // markerGroup = L.layerGroup().addTo(mymap);
-      markerGroup = L.markerClusterGroup();
+      markerGroup = L.markerClusterGroup({iconCreateFunction: function (cluster) {
+        var childCount = cluster.getChildCount();
+    
+        var c = ' marker-cluster-';
+        if (childCount < 10) {
+          c += 'small';
+        } else if (childCount < 100) {
+          c += 'medium';
+        } else {
+          c += 'large';
+        }
+    
+        return new L.DivIcon({ html: '<div><span style="font-weight:bold;font-size:1.5em;">' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+      }});
       heatGroup = L.layerGroup().addTo(mymap);
 
       var watershedList = ["thornton creek", "piper's creek", "taylor creek", "mapes creek", "longfellow creek", "seloa beach creek", "fauntleroy creek", "puget creek", "ravenna (lower) creek", "inverness creek"];
@@ -572,7 +598,20 @@ oms = '',
       // }).addTo(mymap);
 
       // markerGroup = L.layerGroup().addTo(mymap);
-      markerGroup = L.markerClusterGroup();
+      markerGroup = L.markerClusterGroup({iconCreateFunction: function (cluster) {
+        var childCount = cluster.getChildCount();
+    
+        var c = ' marker-cluster-';
+        if (childCount < 10) {
+          c += 'small';
+        } else if (childCount < 100) {
+          c += 'medium';
+        } else {
+          c += 'large';
+        }
+    
+        return new L.DivIcon({ html: '<div><span style="font-weight:bold;font-size:1.5em;">' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+      }});
 
       var tempConifers = 0, tempBroadleaf = 0;
       scientNameObj = [];
@@ -624,7 +663,7 @@ oms = '',
             tempImgTag = "<br><img src='" + aH["photo"]["url"] + "' height='200' style='max-width:100%;'/>";
           }
 
-          circle.bindPopup("<div style='max-height:500px;width:450px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
+          circle.bindPopup("<div style='max-height:500px;width:400px;overflow-y:scroll;' class='row'><div class='col-6'>" + tempImgTag + "</div><div class='col-6'>" + "<b>Species Name (Common):</b> " + aH["speciesNameCommon"] + "<br><b>Species Name (Scientific):</b> " + aH["speciesNameScientific"] + "<br><b>Tree Type:</b> " + aH["treeType"] + "<br><b>DBH:</b> " + aH["dbh"] + "<br><b>Username:</b> " + aH["username"] + "<br><b>Is Validated:</b> " + aH["isValidated"] + "<br><b>Land Use Category:</b> " + aH["landUseCategory"] + "<br><b>Location Type:</b> " + aH["locationType"] + "<br> <b>Created at:</b> " +  moment(aH["created_at"].toDate()).tz("US/Pacific").format('LLLL') +  "<br><b>Notes:</b> " + aH["notes"] +  "</div></div>", {
             maxWidth : 450
         });
 
