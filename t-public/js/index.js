@@ -156,7 +156,7 @@ oms = '',
             iconSize: [35, 45], // size of the icon
           }); 
 
-          var tempcoordinates = fuzzyLatLng(lat, long, 2); 
+          var tempcoordinates = fuzzyLatLng(lat, long, 0.5); 
           // console.log('or ', lat, long, 'new ', tempcoordinates);
 
           var circle = L.marker([tempcoordinates.latitude, tempcoordinates.longitude], {icon: confierIcon});
@@ -641,7 +641,7 @@ oms = '',
               iconSize: [35, 45], // size of the iconm
           }); 
 
-          var tempcoordinates = fuzzyLatLng(lat, long, 2); 
+          var tempcoordinates = fuzzyLatLng(lat, long, 0.5); 
           // console.log('or ', lat, long, 'new ', tempcoordinates);
 
           var circle = L.marker([tempcoordinates.latitude, tempcoordinates.longitude], {icon: confierIcon});
