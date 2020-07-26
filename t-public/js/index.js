@@ -21,7 +21,7 @@ oms = '',
     tofKeys = [] //empty x graph data initialize,
     // iconsPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/public/icons/", // path to icons on treemama.org
     // kmlPath = "https://treemama.org/wp-content/themes/nimva-child/dashboard/public/u1.kml";
-    iconsPath = "https://ayushnarula.com/temp-public/icons/",
+    iconsPath = "https://ayushnarula.com/t-public/icons/",
     kmlPath = "u1.kml";
 
     window.onload = function() {
