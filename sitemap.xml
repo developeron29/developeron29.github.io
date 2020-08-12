@@ -1,13 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-<url>
-  <loc>http://ayushnarula.com/</loc>
-  <lastmod>2014-01-07T20:20:02+00:00</lastmod>
-</url>
+<?xml version="1.0" encoding="utf-8"?>
+<!--Created using XmlSitemapGenerator.org - Free HTML, RSS and XML sitemap generator-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>http://ayushnarula.com/twopoint/</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/countries.html</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/3d.html</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/quotes.html</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/projects.html</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/about.html</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/presentations.html</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/</loc>
+  </url>
+  <url>
+    <loc>http://ayushnarula.com/twopoint/d3exp.html</loc>
+  </url>
 </urlset>
+<!--<guid value="b2856568-ba8c-4763-93c2-1f93bafc2bed" />-->
+<!--Created using XmlSitemapGenerator.org - Free HTML, RSS and XML sitemap generator-->
