@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: ayushnarula.com
+Token: 1fbda1082ec1d05ecdf538d732e654114fc486434096382f5d2da4069342e5b0
