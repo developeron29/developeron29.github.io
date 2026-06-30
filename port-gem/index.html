@@ -1,80 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>3D Loader Fix</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayush Narula - 3D Portfolio</title>
 
 <style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        background: #f3f4f6;
-        font-family: system-ui;
-    }
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #f3f4f6;
+    font-family: system-ui;
+}
 
-    /* HARD FORCED LOADER */
-    #loader {
-        position: fixed !important;
-        inset: 0 !important;
-        width: 100vw;
-        height: 100vh;
-        background: #f3f4f6;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 2147483647 !important; /* MAX INT Z-INDEX */
-        font-size: 22px;
-        color: #333;
-    }
+/* ---------------- LOADER ---------------- */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    font-size: 22px;
+    color: #4b5563;
+}
 
-    #loading-progress {
-        margin-top: 10px;
-        font-size: 14px;
-        opacity: 0.7;
-    }
-
-    #webgl-container {
-        position: fixed;
-        inset: 0;
-        z-index: 1;
-    }
-
-    canvas {
-        position: fixed;
-        inset: 0;
-        z-index: 1;
-        display: block;
-    }
-
-    .hero-text {
-        position: absolute;
-        top: 50%;
-        left: 8%;
-        transform: translateY(-50%);
-        z-index: 5;
-        max-width: 500px;
-        background: rgba(255,255,255,0.8);
-        padding: 30px;
-        border-radius: 20px;
-    }
+/* ---------------- WEBGL (HIDDEN INITIALLY) ---------------- */
+#webgl-container {
+    position: fixed;
+    inset: 0;
+    opacity: 0;              /* 🔥 hidden until ready */
+    transition: opacity 0.8s ease;
+}
 </style>
+
 </head>
 
 <body>
 
-<!-- IMPORTANT: loader must be FIRST in DOM -->
+<!-- LOADER -->
 <div id="loader">
-    Loading Experience...
-    <div id="loading-progress">0%</div>
+    Loading 3D Experience...
+    <div id="progress">0%</div>
 </div>
 
-<div class="hero-text">
-    <h1>Ayush Narula</h1>
-    <p>3D + AI Developer</p>
-</div>
-
+<!-- WEBGL -->
 <div id="webgl-container"></div>
 
 <script type="importmap">
@@ -87,92 +59,110 @@
 </script>
 
 <script type="module">
+
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-/* ---------------- DEBUG: prove JS runs ---------------- */
-console.log("JS STARTED");
-
-/* ---------------- LOADER ELEMENTS ---------------- */
 const loaderEl = document.getElementById("loader");
-const progressEl = document.getElementById("loading-progress");
+const progressEl = document.getElementById("progress");
+const webglEl = document.getElementById("webgl-container");
 
-/* If loader doesn't exist -> stop immediately */
-if (!loaderEl) {
-    alert("Loader not found in DOM");
-}
-
-/* ---------------- SCENE ---------------- */
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    100
+);
 camera.position.set(0, 1.5, 6);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(innerWidth, innerHeight);
-document.getElementById("webgl-container").appendChild(renderer.domElement);
+const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+webglEl.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
 
 /* ---------------- LIGHT ---------------- */
 scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(-3, 2, 2);
+scene.add(light);
 
 /* ---------------- LOADING MANAGER ---------------- */
 const manager = new THREE.LoadingManager();
 
 manager.onProgress = (_, loaded, total) => {
-    const pct = Math.round((loaded / total) * 100);
-    progressEl.textContent = pct + "%";
+    const percent = Math.round((loaded / total) * 100);
+    progressEl.textContent = percent + "%";
 };
 
 manager.onLoad = () => {
     progressEl.textContent = "100%";
 
-    console.log("ALL LOADED");
-
-    setTimeout(() => {
-        loaderEl.style.opacity = "0";
-        setTimeout(() => loaderEl.remove(), 500);
-    }, 300);
+    // 🔥 reveal everything ONLY when fully ready
+    loaderEl.style.display = "none";
+    webglEl.style.opacity = "1";
 };
 
-/* ---------------- LOADER ---------------- */
-const gltf = new GLTFLoader(manager);
+/* ---------------- LOADERS ---------------- */
+const gltfLoader = new GLTFLoader(manager);
 
 let city;
+let mixer;
 
 /* MODEL 1 */
-gltf.load("globe.glb", (g) => {
-    city = g.scene;
-    city.scale.set(2,2,2);
-    city.position.z = -2;
+gltfLoader.load("globe.glb", (gltf) => {
+    city = gltf.scene;
+    city.position.set(0, 0, -2);
+    city.scale.set(2, 2, 2);
     scene.add(city);
 });
 
 /* MODEL 2 */
-gltf.load("waving.glb", (g) => {
-    const model = g.scene;
-    model.scale.set(0.012,0.012,0.012);
-    model.position.set(4.2,-1.2,0);
+gltfLoader.load("waving.glb", (gltf) => {
+    const model = gltf.scene;
+    model.scale.set(0.012, 0.012, 0.012);
+    model.position.set(4.2, -1.2, 0);
     scene.add(model);
+
+    mixer = new THREE.AnimationMixer(model);
+
+    if (gltf.animations.length > 0) {
+        mixer.clipAction(gltf.animations[0]).play();
+    }
 });
 
-/* ---------------- LOOP ---------------- */
+/* ---------------- ANIMATE ---------------- */
+const clock = new THREE.Clock();
+
 function animate() {
     requestAnimationFrame(animate);
+
+    const delta = clock.getDelta();
+
+    if (mixer) mixer.update(delta);
     if (city) city.rotation.y += 0.005;
+
     controls.update();
     renderer.render(scene, camera);
 }
+
 animate();
 
 /* ---------------- RESIZE ---------------- */
-addEventListener("resize", () => {
-    camera.aspect = innerWidth / innerHeight;
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth, innerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
 </script>
 
 </body>
