@@ -1,27 +1,210 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8"/><title>ayushnarula.com</title></head>
-<body style="padding-top: 0px !important;">
-    
-<xmp theme="zephyr">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush Narula - 3D & AI Developer</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f3f4f6; 
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #111827; 
+        }
+        
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 8%; 
+            transform: translateY(-50%);
+            z-index: 10;
+            max-width: 500px;
+            pointer-events: none; 
+            
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 1);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin: 0 0 15px 0;
+            line-height: 1.1;
+            background: linear-gradient(90deg, #059669, #7c3aed); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        p {
+            font-size: 1.4rem;
+            color: #4b5563; 
+            margin: 0;
+            line-height: 1.5;
+        }
 
-# 3d animator and illustrator
+        #webgl-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
 
-<div style="text-align: right;">
-    <img src="./img/file.png" alt="ayush" height="200px"/> <br/>
-    <!-- <a href="#">Blog</a> -->
-</div>
-
-hello, I am Ayush. 
-
-I make art. I'll upload links to my upcoming anime soon
-
-</xmp><script type="text/javascript" src="js/StrapDown.js/strapdown.js"></script>
-<nav  class="navbar navbar-expand-lg bg-body-tertiary" style="padding-top: 350px;">
-    <div class="container-fluid">
-        &copy; ayushnarula.com 
+    <div class="hero-text">
+        <h1>Hi! This is Ayush Narula,</h1>
+        <p>welcome to my website! I am a 3D and AI developer. </p>
+        <p>I am an artist too.</p>
     </div>
-</nav>
+
+    <div id="webgl-container"></div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        // 1. Scene Setup
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0xf3f4f6, 0.015); 
+
+        // 2. Camera Setup
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 1.5, 6);
+
+        // 3. Renderer Setup
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping; 
+        renderer.toneMappingExposure = 1.1;
+        document.getElementById('webgl-container').appendChild(renderer.domElement);
+
+        // Position variable for elements moved to the right
+        const characterX = 4.2; 
+        
+        // 4. Controls Setup
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enableZoom = false; 
+        controls.maxPolarAngle = Math.PI / 2 + 0.1; 
+        // Camera targets right-of-center to balance the scene
+        controls.target.set(1.5, 0.5, 0); 
+
+        // 5. Lighting Setup
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2); 
+        scene.add(ambientLight);
+
+        const fillLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        fillLight.position.set(-3, 2, 2);
+        scene.add(fillLight);
+
+        // 6. Character Platform / Pedestal
+        const platformGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.1, 32);
+        const platformMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x000000 
+        });
+        const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+        platform.position.set(characterX, -1.25, 0); 
+        scene.add(platform);
+
+        // 7. Hanging Light Setup
+        const bulbGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+        const bulbMaterial = new THREE.MeshBasicMaterial({ color: 0xfff0c0 });
+        const bulb = new THREE.Mesh(bulbGeometry, bulbMaterial);
+        bulb.position.set(characterX, 1.4, 0); 
+        scene.add(bulb);
+
+        const bulbLight = new THREE.PointLight(0xfff0c0, 4, 8);
+        bulbLight.position.set(characterX, 1.4, 0);
+        scene.add(bulbLight);
+
+        const cordGeometry = new THREE.CylinderGeometry(0.01, 0.01, 2);
+        const cordMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 }); 
+        const cord = new THREE.Mesh(cordGeometry, cordMaterial);
+        cord.position.set(characterX, 2.4, 0); 
+        scene.add(cord);
+
+// 8. Load City Background (GLB)
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load('globe.glb', (gltf) => {
+            const city = gltf.scene;
+            
+            // INCREASED X position from -1.5 to 5.0 
+            // This will push the entire city model to the right of the screen
+            city.position.set(0, 0, -2); 
+            
+            // Keeping the scale at 15
+            city.scale.set(2, 2, 2); 
+            // city.rotation.y = Math.PI / 5;
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Increment rotation on the Y-axis slightly each frame
+                city.rotation.y += 0.005; 
+
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            scene.add(city);
+        }, undefined, (error) => {
+            console.error('Error loading the city GLB:', error);
+        });
+
+        // 9. Load Character & Animation (FBX)
+        const clock = new THREE.Clock();
+        let mixer;
+
+        const fbxLoader = new FBXLoader();
+        fbxLoader.load('waving.fbx', (fbx) => {
+            fbx.scale.set(0.012, 0.012, 0.012); 
+            fbx.position.set(characterX, -1.2, 0); 
+            fbx.rotation.y = -Math.PI / 6;
+
+            mixer = new THREE.AnimationMixer(fbx);
+            const wavingAction = mixer.clipAction(fbx.animations[0]);
+            wavingAction.play();
+
+            scene.add(fbx);
+        }, undefined, (error) => {
+            console.error('Error loading the FBX:', error);
+        });
+
+        // 10. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            const delta = clock.getDelta();
+            if (mixer) mixer.update(delta);
+            controls.update(); 
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 11. Resize Handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
