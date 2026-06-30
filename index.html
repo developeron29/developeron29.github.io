@@ -1,210 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayush Narula - 3D & AI Developer</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #f3f4f6; 
-            font-family: 'Inter', system-ui, sans-serif;
-            color: #111827; 
-        }
-        
-        .hero-text {
-            position: absolute;
-            top: 50%;
-            left: 8%; 
-            transform: translateY(-50%);
-            z-index: 10;
-            max-width: 500px;
-            pointer-events: none; 
-            
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 1);
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin: 0 0 15px 0;
-            line-height: 1.1;
-            background: linear-gradient(90deg, #059669, #7c3aed); 
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        p {
-            font-size: 1.4rem;
-            color: #4b5563; 
-            margin: 0;
-            line-height: 1.5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayush Narula - 3D Portfolio</title>
 
-        #webgl-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-        }
-    </style>
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+}
+
+/* sky */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #cfe8ff 0%, #f7fbff 50%, #ffffff 100%);
+    z-index: -1;
+}
+
+/* hero */
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    transform: translateY(-50%);
+    z-index: 10;
+    max-width: 500px;
+    pointer-events: none;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 24px;
+}
+
+/* loader */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #cfe8ff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.bar {
+    width: 240px;
+    height: 6px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+}
+
+/* canvas */
+#webgl {
+    position: absolute;
+    inset: 0;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="hero-text">
-        <h1>Hi! This is Ayush Narula,</h1>
-        <p>welcome to my website! I am a 3D and AI developer. </p>
-        <p>I am an artist too.</p>
-    </div>
+<div id="loader">
+    <div>Loading Experience...</div>
+    <div id="progress">0%</div>
+    <div class="bar"><div class="bar-fill" id="bar"></div></div>
+</div>
 
-    <div id="webgl-container"></div>
+<div class="hero-text">
+    <h1>Hi, I'm <span class="moving-rainbow-text"> Ayush Narula </span></h1>
+    <p>Welcome to my website</p>
+    <p>I am an AI and 3D Developer. I am artist too.</p>
+</div>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
+<style>
+    .moving-rainbow-text {
+  /* Set a large bold font for maximum visibility */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: oblique;
+  font-size: 2.5rem;
+  font-weight: bold;
+  
+  /* Create the rainbow pattern (start and end with the same color for a seamless loop) */
+  background-image: linear-gradient(
+    to right,
+    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000
+  );
+  
+  /* Make the background wider than the text so it has room to move */
+  background-size: 200% auto;
+  
+  /* Clip the background to the text and make the original text color invisible */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Apply the animation loop */
+  animation: moveRainbow 4s linear infinite;
+}
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+/* Keyframes to shift the background position continuously */
+@keyframes moveRainbow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
 
-        // 1. Scene Setup
-        const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0xf3f4f6, 0.015); 
+</style>
 
-        // 2. Camera Setup
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.set(0, 1.5, 6);
+<div id="webgl"></div>
 
-        // 3. Renderer Setup
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping; 
-        renderer.toneMappingExposure = 1.1;
-        document.getElementById('webgl-container').appendChild(renderer.domElement);
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 
-        // Position variable for elements moved to the right
-        const characterX = 4.2; 
-        
-        // 4. Controls Setup
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.enableZoom = false; 
-        controls.maxPolarAngle = Math.PI / 2 + 0.1; 
-        // Camera targets right-of-center to balance the scene
-        controls.target.set(1.5, 0.5, 0); 
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
 
-        // 5. Lighting Setup
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2); 
-        scene.add(ambientLight);
+/* 🌟 POST PROCESSING (BLOOM) */
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-        const fillLight = new THREE.DirectionalLight(0xffffff, 1.0);
-        fillLight.position.set(-3, 2, 2);
-        scene.add(fillLight);
+/* ---------------- LOADER ---------------- */
 
-        // 6. Character Platform / Pedestal
-        const platformGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.1, 32);
-        const platformMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x000000 
-        });
-        const platform = new THREE.Mesh(platformGeometry, platformMaterial);
-        platform.position.set(characterX, -1.25, 0); 
-        scene.add(platform);
+const loaderUI = document.getElementById('loader');
+const progressText = document.getElementById('progress');
+const bar = document.getElementById('bar');
 
-        // 7. Hanging Light Setup
-        const bulbGeometry = new THREE.SphereGeometry(0.08, 16, 16);
-        const bulbMaterial = new THREE.MeshBasicMaterial({ color: 0xfff0c0 });
-        const bulb = new THREE.Mesh(bulbGeometry, bulbMaterial);
-        bulb.position.set(characterX, 1.4, 0); 
-        scene.add(bulb);
+const manager = new THREE.LoadingManager();
 
-        const bulbLight = new THREE.PointLight(0xfff0c0, 4, 8);
-        bulbLight.position.set(characterX, 1.4, 0);
-        scene.add(bulbLight);
+manager.onProgress = (url, loaded, total) => {
+    const p = Math.round((loaded / total) * 100);
+    progressText.textContent = p + "%";
+    bar.style.width = p + "%";
+};
 
-        const cordGeometry = new THREE.CylinderGeometry(0.01, 0.01, 2);
-        const cordMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 }); 
-        const cord = new THREE.Mesh(cordGeometry, cordMaterial);
-        cord.position.set(characterX, 2.4, 0); 
-        scene.add(cord);
+manager.onLoad = () => {
+    loaderUI.style.transition = "0.8s ease";
+    loaderUI.style.opacity = "0";
+    setTimeout(() => loaderUI.remove(), 800);
 
-// 8. Load City Background (GLB)
-        const gltfLoader = new GLTFLoader();
-        gltfLoader.load('globe.glb', (gltf) => {
-            const city = gltf.scene;
-            
-            // INCREASED X position from -1.5 to 5.0 
-            // This will push the entire city model to the right of the screen
-            city.position.set(0, 0, -2); 
-            
-            // Keeping the scale at 15
-            city.scale.set(2, 2, 2); 
-            // city.rotation.y = Math.PI / 5;
-            function animate() {
-                requestAnimationFrame(animate);
+    startIntro();
+};
 
-                // Increment rotation on the Y-axis slightly each frame
-                city.rotation.y += 0.005; 
+/* ---------------- SCENE ---------------- */
 
-                renderer.render(scene, camera);
-            }
-            animate();
-            
-            scene.add(city);
-        }, undefined, (error) => {
-            console.error('Error loading the city GLB:', error);
-        });
+const scene = new THREE.Scene();
+// scene.background = new THREE.Color(0xcfe8ff); 
+scene.fog = new THREE.FogExp2(0xcfe8ff, 0.01);
 
-        // 9. Load Character & Animation (FBX)
-        const clock = new THREE.Clock();
-        let mixer;
+/* ---------------- CAMERA ---------------- */
 
-        const fbxLoader = new FBXLoader();
-        fbxLoader.load('waving.fbx', (fbx) => {
-            fbx.scale.set(0.012, 0.012, 0.012); 
-            fbx.position.set(characterX, -1.2, 0); 
-            fbx.rotation.y = -Math.PI / 6;
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+camera.position.set(0, 2.5, 12);
 
-            mixer = new THREE.AnimationMixer(fbx);
-            const wavingAction = mixer.clipAction(fbx.animations[0]);
-            wavingAction.play();
+/* ---------------- RENDERER ---------------- */
 
-            scene.add(fbx);
-        }, undefined, (error) => {
-            console.error('Error loading the FBX:', error);
-        });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+document.getElementById('webgl').appendChild(renderer.domElement);
 
-        // 10. Animation Loop
-        function animate() {
-            requestAnimationFrame(animate);
-            const delta = clock.getDelta();
-            if (mixer) mixer.update(delta);
-            controls.update(); 
-            renderer.render(scene, camera);
-        }
-        animate();
+/* ---------------- BLOOM SETUP ---------------- */
 
-        // 11. Resize Handling
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+
+const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(innerWidth, innerHeight),
+    0.9,   // strength
+    0.6,   // radius
+    0.2    // threshold
+);
+
+composer.addPass(bloomPass);
+
+/* ---------------- CONTROLS ---------------- */
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.enableZoom = false;
+controls.target.set(1.5, 0.5, 0);
+
+/* ---------------- LIGHTS ---------------- */
+// 
+scene.add(new THREE.AmbientLight(0xffffff, 1.3));
+
+const sun = new THREE.DirectionalLight(0xffffff, 1.2);
+sun.position.set(-5, 6, 3);
+scene.add(sun);
+
+/* ---------------- OBJECTS ---------------- */
+
+const characterX = 4.2;
+
+// platform
+const platform = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.2, 1.2, 0.1, 32),
+    new THREE.MeshStandardMaterial({ color: 0x000000 })
+);
+platform.position.set(characterX, -1.25, 0);
+scene.add(platform);
+
+// glowing bulb (bloom reacts strongly here)
+const bulb = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 16, 16),
+    new THREE.MeshBasicMaterial({ color: 0xfff3c0 })
+);
+bulb.position.set(characterX, 1.4, 0);
+// scene.add(bulb);
+
+const bulbLight = new THREE.PointLight(0xfff3c0, 5, 12);
+bulbLight.position.copy(bulb.position);
+scene.add(bulbLight);
+
+/* ---------------- LOADERS ---------------- */
+
+const gltfLoader = new GLTFLoader(manager);
+const fbxLoader = new FBXLoader(manager);
+
+let city;
+let character;
+
+/* ---------------- CITY ---------------- */
+
+gltfLoader.load('globe.glb', (gltf) => {
+    city = gltf.scene;
+    city.position.set(0, 0, -2);
+    city.scale.set(2, 2, 2);
+    scene.add(city);
+});
+
+/* ---------------- CHARACTER ---------------- */
+
+fbxLoader.load('waving.fbx', (fbx) => {
+    character = fbx;
+    fbx.scale.set(0.012, 0.012, 0.012);
+    fbx.position.set(characterX, -1.2, 0);
+    fbx.rotation.y = -Math.PI / 6;
+
+    const mixer = new THREE.AnimationMixer(fbx);
+    mixer.clipAction(fbx.animations[0]).play();
+
+    character.mixer = mixer;
+
+    scene.add(fbx);
+});
+
+/* ---------------- MOUSE INTERACTION ---------------- */
+
+const mouse = new THREE.Vector2();
+window.addEventListener('mousemove', (e) => {
+    mouse.x = (e.clientX / innerWidth) * 2 - 1;
+});
+
+/* ---------------- CINEMATIC INTRO ---------------- */
+
+function startIntro() {
+    let t = 0;
+
+    const startZ = 12;
+    const endZ = 6;
+
+    function animateIntro() {
+        t += 0.01;
+
+        camera.position.z = THREE.MathUtils.lerp(startZ, endZ, t);
+        camera.position.y = THREE.MathUtils.lerp(2.5, 1.5, t);
+
+        if (t < 1) requestAnimationFrame(animateIntro);
+    }
+
+    animateIntro();
+}
+
+/* ---------------- ANIMATE ---------------- */
+
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    const delta = clock.getDelta();
+
+    if (character?.mixer) character.mixer.update(delta);
+
+    if (city) city.rotation.y += 0.003;
+
+    /* subtle character follow mouse */
+    if (character) {
+        character.rotation.y = -Math.PI / 6 + mouse.x * 0.3;
+    }
+
+    controls.update();
+
+    /* BLOOM RENDER */
+    composer.render();
+}
+
+animate();
+
+/* ---------------- RESIZE ---------------- */
+
+window.addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(innerWidth, innerHeight);
+    composer.setSize(innerWidth, innerHeight);
+});
+</script>
+
 </body>
 </html>
